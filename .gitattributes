@@ -1,0 +1,16 @@
+build/linux/**              text eol=lf   encoding=utf-8-unix
+build/macos/**              text eol=lf   encoding=utf-8-unix
+build/mingw/**              text eol=lf   encoding=utf-8-unix
+build/msvc/**               text eol=crlf encoding=cp932-dos
+build/unix-common/**        text eol=lf   encoding=utf-8-unix
+src/**                      text eol=crlf encoding=utf-8-with-signature-dos
+test/build/linux/**         text eol=lf   encoding=utf-8-unix
+test/build/macos/**         text eol=lf   encoding=utf-8-unix
+test/build/mingw/**         text eol=lf   encoding=utf-8-unix
+test/build/msvc/**          text eol=crlf encoding=cp932-dos
+test/build/unix-common/**   text eol=lf   encoding=utf-8-unix
+test/src/**                 text eol=crlf encoding=utf-8-with-signature-dos
+
+ChangeLog.md    text eol=crlf encoding=utf-8-dos
+LICENSE         text eol=crlf encoding=utf-8-dos
+README.md       text eol=crlf encoding=utf-8-dos
