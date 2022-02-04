@@ -61,7 +61,7 @@ Binary data pack / unpack functions.
 
 ### Circular buffer
 
-A circular buffer class.
+A circular buffer class without implicit dynamic memory allocation.
 
 #### Dependencies
 
