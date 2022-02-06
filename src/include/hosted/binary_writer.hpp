@@ -36,7 +36,7 @@ public:
     using value_type = typename cun::BinaryWriter<T>::value_type;
 
     ArrayBinaryWriter() = delete;
-    explicit ArrayBinaryWriter(std::array<T, N>& buf) : cun::BinaryWriter<T>(buf.data(), N) {
+    explicit ArrayBinaryWriter(std::array<T, N>& buf) noexcept : cun::BinaryWriter<T>(buf.data(), N) {
         static_assert(N > 0, "ArrayBinaryWriter: std::array<T, 0> is not allowed.");
     }
     virtual ~ArrayBinaryWriter() = default;
@@ -69,7 +69,7 @@ private:
 
 public:
     ContainerBinaryWriter() = delete;
-    explicit ContainerBinaryWriter(ContainerT<T>& buf) : m_buf { buf } {}
+    explicit ContainerBinaryWriter(ContainerT<T>& buf) noexcept : m_buf { buf } {}
     virtual ~ContainerBinaryWriter() = default;
     ContainerBinaryWriter(const ContainerBinaryWriter&) = delete;
     ContainerBinaryWriter(ContainerBinaryWriter&&) = delete;
@@ -145,7 +145,7 @@ private:
 
 public:
     StreamBinaryWriter() = delete;
-    explicit StreamBinaryWriter(std::ostream& buf) : m_buf { buf } {}
+    explicit StreamBinaryWriter(std::ostream& buf) noexcept : m_buf { buf } {}
     virtual ~StreamBinaryWriter() = default;
     StreamBinaryWriter(const StreamBinaryWriter&) = delete;
     StreamBinaryWriter(StreamBinaryWriter&&) = delete;
@@ -232,7 +232,7 @@ private:
 
 public:
     StringBinaryWriter() = delete;
-    explicit StringBinaryWriter(std::string& buf) : m_buf { buf } {}
+    explicit StringBinaryWriter(std::string& buf) noexcept : m_buf { buf } {}
     virtual ~StringBinaryWriter() = default;
     StringBinaryWriter(const StringBinaryWriter&) = delete;
     StringBinaryWriter(StringBinaryWriter&&) = delete;

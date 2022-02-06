@@ -44,7 +44,7 @@ private:
 
 public:
     Logger() = default;
-    explicit Logger(const int facility) : m_facility(facility) {}
+    explicit Logger(const int facility) noexcept : m_facility(facility) {}
 
     bool open(const char * const tag) noexcept {
         if (m_opened) {

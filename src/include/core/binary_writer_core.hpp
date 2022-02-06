@@ -59,7 +59,7 @@ private:
 
 public:
     BinaryWriter() = delete;
-    BinaryWriter(value_type *buf, size_type n) :
+    BinaryWriter(value_type *buf, size_type n) noexcept :
         m_buf { buf },
         m_bufsize { n } {}
     virtual ~BinaryWriter() = default;
@@ -141,7 +141,7 @@ private:
     value_type m_buf[N];
 
 public:
-    BufferedBinaryWriter() : cun::BinaryWriter<T>(m_buf, N) {}
+    BufferedBinaryWriter() noexcept : cun::BinaryWriter<T>(m_buf, N) {}
     virtual ~BufferedBinaryWriter() = default;
     BufferedBinaryWriter(const BufferedBinaryWriter&) = delete;
     BufferedBinaryWriter(BufferedBinaryWriter&&) = delete;

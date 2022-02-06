@@ -33,8 +33,8 @@ private:
     std::uint32_t m_count { 0 };
 
 public:
-    UnitTest() : m_out { std::cout } {}
-    explicit UnitTest(std::ostream& out) : m_out { out } {}
+    UnitTest() noexcept : m_out { std::cout } {}
+    explicit UnitTest(std::ostream& out) noexcept : m_out { out } {}
 
     void comment(const char * const s = "") const {
         assert(s != nullptr);
