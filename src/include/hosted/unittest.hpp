@@ -91,7 +91,7 @@ public:
     ut.echo(s)
 
 #define CUN_UNITTEST_EVAL(ut, ...) \
-    ut.testlog(#__VA_ARGS__, (__VA_ARGS__)) 
+    ut.testlog(#__VA_ARGS__, (__VA_ARGS__))
 
 #define CUN_UNITTEST_EXEC(ut, ...) \
     ut.testlog(#__VA_ARGS__); __VA_ARGS__

@@ -110,7 +110,7 @@ public:
     }
 
     bool push(const value_type *data, const size_type n) override {
-        if (n == 0)  {
+        if (n == 0) {
             return true;
         } else if (data == nullptr) {
             return false;
@@ -188,7 +188,7 @@ public:
     }
 
     bool push(const value_type *data, const size_type n) override {
-        if (n == 0)  {
+        if (n == 0) {
             return true;
         } else if (data == nullptr) {
             return false;
@@ -273,7 +273,7 @@ public:
     }
 
     bool push(const value_type *data, const size_type n) override {
-        if (n == 0)  {
+        if (n == 0) {
             return true;
         } else if (data == nullptr) {
             return false;
