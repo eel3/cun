@@ -17,7 +17,7 @@ CPPFLAGS        =
 LDFLAGS         =
 LDLIBS         := -lstdc++
 
-WARNADD        :=
+WARNADD        := -Wno-sizeof-pointer-div
 
 # ----------------------------------------------------------
 
