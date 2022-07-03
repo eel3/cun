@@ -9,7 +9,6 @@
 // C++ standard library
 #include <chrono>
 #include <condition_variable>
-#include <cstddef>
 #include <mutex>
 #include <queue>
 #include <utility>
@@ -24,7 +23,7 @@ namespace cun {
 template <typename T>
 class Mailbox final {
 public:
-    using size_type = std::size_t;
+    using size_type = typename std::queue<T>::size_type;
     using value_type = T;
 
 private:
