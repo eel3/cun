@@ -52,7 +52,7 @@ public:
     void pop(value_type& val) {
         std::unique_lock<std::mutex> lck(m_mutex);
         m_cond.wait(lck, [this]{ return !m_queue.empty(); });
-        val = m_queue.front();
+        val = std::move(m_queue.front());
         m_queue.pop();
     }
 
@@ -63,7 +63,7 @@ public:
                 return !m_queue.empty();
             });
         if (have_some) {
-            val = m_queue.front();
+            val = std::move(m_queue.front());
             m_queue.pop();
         }
         return have_some;
@@ -71,7 +71,20 @@ public:
 
     void push(const value_type& val) {
         std::lock_guard<std::mutex> lck(m_mutex);
-        m_queue.emplace(val);
+        m_queue.push(val);
+        m_cond.notify_one();
+    }
+
+    void push(value_type&& val) {
+        std::lock_guard<std::mutex> lck(m_mutex);
+        m_queue.push(std::move(val));
+        m_cond.notify_one();
+    }
+
+    template <typename... Args>
+    void emplace(Args&& ... args) {
+        std::lock_guard<std::mutex> lck(m_mutex);
+        m_queue.emplace(std::forward<Args>(args) ...);
         m_cond.notify_one();
     }
 
@@ -85,7 +98,7 @@ public:
         if (m_queue.empty()) {
             return false;
         };
-        val = m_queue.front();
+        val = std::move(m_queue.front());
         m_queue.pop();
         return true;
     }
