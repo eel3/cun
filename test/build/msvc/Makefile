@@ -28,6 +28,7 @@ target_name       = test_binary_writer.exe \
                     test_byte_packer.exe \
                     test_circular_buffer.exe \
                     test_cstrutil.exe \
+                    test_event_loop.exe \
                     test_logger.exe \
                     test_mailbox.exe \
                     test_misc.exe \

@@ -101,6 +101,19 @@ None.
 * core
     * data_writer.hpp
 
+### Event loop toolbox
+
+An event loop toolbox.
+
+#### Dependencies
+
+* Mailbox
+
+#### Files
+
+* hosted
+    * event_loop.hpp
+
 ### Logger
 
 A logger class.
