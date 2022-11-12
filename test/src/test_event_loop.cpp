@@ -27,11 +27,11 @@ using std::uintptr_t;
 using namespace cun;
 
 enum class EventType {
-    event_on_test_1,
-    event_on_test_2,
-    event_on_test_3,
-    event_on_destroy,
-    event_on_destroy_event_loop
+    on_test_1,
+    on_test_2,
+    on_test_3,
+    on_destroy,
+    on_destroy_event_loop
 };
 
 void test_no_event(UnitTest& ut)
@@ -87,18 +87,18 @@ void test_with_event(UnitTest& ut)
     CUN_UNITTEST_NL(ut);
 
     std::map<EventType, EventLoop<EventType>::event_proc> entry {
-        make_pair(EventType::event_on_test_1, test_1),
-        make_pair(EventType::event_on_test_2, test_2),
-        make_pair(EventType::event_on_test_3, test_3),
+        make_pair(EventType::on_test_1, test_1),
+        make_pair(EventType::on_test_2, test_2),
+        make_pair(EventType::on_test_3, test_3),
     };
 
     CUN_UNITTEST_EXEC(ut, EventLoop<EventType> el { entry });
     CUN_UNITTEST_EXEC(ut, auto results = reinterpret_cast<void *>(static_cast<uintptr_t>(0xDEADBEEF)));
     CUN_UNITTEST_NL(ut);
 
-    CUN_UNITTEST_EVAL(ut, el.post_event(EventType::event_on_test_1, &ut));
-    CUN_UNITTEST_EVAL(ut, el.send_event(EventType::event_on_test_2, &ut, results));
-    CUN_UNITTEST_EVAL(ut, !el.send_event(EventType::event_on_test_3, &ut, results));
+    CUN_UNITTEST_EVAL(ut, el.post_event(EventType::on_test_1, &ut));
+    CUN_UNITTEST_EVAL(ut, el.send_event(EventType::on_test_2, &ut, results));
+    CUN_UNITTEST_EVAL(ut, !el.send_event(EventType::on_test_3, &ut, results));
     CUN_UNITTEST_NL(ut);
 
     CUN_UNITTEST_RESET(ut);
@@ -146,29 +146,29 @@ public:
 #define ENTRY(type, fn) \
         make_pair(EventType::type, [this](void *args, void *results) { return fn(args, results); })
 
-            ENTRY(event_on_test_1, on_test_1),
-            ENTRY(event_on_test_2, on_test_2),
-            ENTRY(event_on_test_3, on_test_3),
-            ENTRY(event_on_destroy, on_destroy),
+            ENTRY(on_test_1, on_test_1),
+            ENTRY(on_test_2, on_test_2),
+            ENTRY(on_test_3, on_test_3),
+            ENTRY(on_destroy, on_destroy),
 
 #undef ENTRY
         }},
         m_ut { ut } {}
 
     virtual ~InheritedEventLoop() {
-        (void) send_event(EventType::event_on_destroy);
+        (void) send_event(EventType::on_destroy);
     }
 
     bool test_1() {
-        return post_event(EventType::event_on_test_1, ARGS);
+        return post_event(EventType::on_test_1, ARGS);
     }
 
     bool test_2() {
-        return send_event(EventType::event_on_test_2, ARGS, RESULTS);
+        return send_event(EventType::on_test_2, ARGS, RESULTS);
     }
 
     bool test_3() {
-        return send_event(EventType::event_on_test_3, ARGS, RESULTS);
+        return send_event(EventType::on_test_3, ARGS, RESULTS);
     }
 };
 

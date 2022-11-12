@@ -26,7 +26,7 @@ namespace cun {
 /** Event loop toolbox class. */
 template <
     typename EventTypeT,
-    EventTypeT ON_DESTROY = EventTypeT::event_on_destroy_event_loop,
+    EventTypeT ON_DESTROY = EventTypeT::on_destroy_event_loop,
     typename ReturnT = bool,
     ReturnT ERROR = false
 >
