@@ -12,6 +12,7 @@
 #include <map>
 #include <thread>
 #include <tuple>
+#include <type_traits>
 #include <utility>
 
 // C++ user library
@@ -26,17 +27,21 @@ namespace cun {
 /** Event loop toolbox class. */
 template <
     typename EventTypeT,
-    EventTypeT ON_DESTROY = EventTypeT::on_destroy_event_loop,
+    typename ContextPtrT = void *,
     typename ReturnT = bool,
-    ReturnT ERROR = false
+    ReturnT ERROR = false,
+    EventTypeT ON_DESTROY = EventTypeT::on_destroy_event_loop
 >
 class EventLoop {
+    static_assert(std::is_pointer<ContextPtrT>(), "CircularBuffer: ContextPtrT must be a pointer type.");
+
 public:
-    using event_proc = std::function<ReturnT (void *, void *)>;
+    using event_proc = std::function<ReturnT (ContextPtrT, void *, void *)>;
 
 private:
     using mail_type = std::tuple<EventTypeT, std::promise<ReturnT>, void *, void *>;
 
+    ContextPtrT m_context;
     Mailbox<mail_type> m_mailbox;
     std::map<EventTypeT, event_proc> m_event_entry;
     std::thread m_thread;
@@ -53,7 +58,7 @@ private:
             auto retval = ERROR;
             auto p = m_event_entry.find(request);
             if (p != m_event_entry.end()) {
-                retval = p->second(get<2>(mail), get<3>(mail));
+                retval = p->second(m_context, get<2>(mail), get<3>(mail));
             }
 
             auto pr = std::move(get<1>(mail));
@@ -73,7 +78,9 @@ private:
     }
 
 public:
-    explicit EventLoop(std::map<EventTypeT, event_proc> event_entry = {}) :
+    EventLoop(std::map<EventTypeT, event_proc> event_entry = {},
+              ContextPtrT context = nullptr) :
+        m_context { context },
         m_event_entry { event_entry } {
         m_thread = std::thread { [this]{ main_loop(); } };
     }
