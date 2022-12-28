@@ -277,7 +277,62 @@ void test_remap_range(UnitTest& ut)
     CUN_UNITTEST_TITLE(ut, "Test code: Miscellaneous - remap_range.");
     CUN_UNITTEST_NL(ut);
 
-    CUN_UNITTEST_COMMENT(ut, "TODO: write test code.");
+    CUN_UNITTEST_NAME(ut, "same range, minimum width");
+    CUN_UNITTEST_EVAL(ut, remap_range(0, 0, 0, 0, 0) == 0);
+    CUN_UNITTEST_EVAL(ut, remap_range(1, 1, 1, 1, 1) == 1);
+    CUN_UNITTEST_EVAL(ut, remap_range(-1, -1, -1, -1, -1) == -1);
+    CUN_UNITTEST_NL(ut);
+
+    CUN_UNITTEST_NAME(ut, "different range, minimum width");
+    CUN_UNITTEST_EVAL(ut, remap_range(0, 0, 0, 2, 2) == 2);
+    CUN_UNITTEST_EVAL(ut, remap_range(0, 0, 0, -2, -2) == -2);
+    CUN_UNITTEST_EVAL(ut, remap_range(2, 2, 2, -2, -2) == -2);
+    CUN_UNITTEST_EVAL(ut, remap_range(-2, -2, -2, 2, 2) == 2);
+    CUN_UNITTEST_NL(ut);
+
+    CUN_UNITTEST_NAME(ut, "same range");
+    CUN_UNITTEST_EVAL(ut, remap_range(1, 1, 10, 1, 10) == 1);
+    CUN_UNITTEST_EVAL(ut, remap_range(10, 1, 10, 1, 10) == 10);
+    CUN_UNITTEST_EVAL(ut, remap_range(-10, -10, -1, -10, -1) == -10);
+    CUN_UNITTEST_EVAL(ut, remap_range(-1, -10, -1, -10, -1) == -1);
+    CUN_UNITTEST_NL(ut);
+
+    CUN_UNITTEST_NAME(ut, "different range, same width (1)");
+    CUN_UNITTEST_EVAL(ut, remap_range(1, 1, 10, 6, 15) == 6);
+    CUN_UNITTEST_EVAL(ut, remap_range(10, 1, 10, 6, 15) == 15);
+    CUN_UNITTEST_EVAL(ut, remap_range(1, 1, 10, 11, 20) == 11);
+    CUN_UNITTEST_EVAL(ut, remap_range(10, 1, 10, 11, 20) == 20);
+    CUN_UNITTEST_EVAL(ut, remap_range(-10, -10, -1, -15, -6) == -15);
+    CUN_UNITTEST_EVAL(ut, remap_range(-1, -10, -1, -15, -6) == -6);
+    CUN_UNITTEST_EVAL(ut, remap_range(-10, -10, -1, -20, -11) == -20);
+    CUN_UNITTEST_EVAL(ut, remap_range(-1, -10, -1, -20, -11) == -11);
+    CUN_UNITTEST_NL(ut);
+
+    CUN_UNITTEST_NAME(ut, "different range, different width");
+    CUN_UNITTEST_EVAL(ut, remap_range(1, 1, 10, 1, 20) == 1);
+    CUN_UNITTEST_EVAL(ut, remap_range(5, 1, 10, 1, 20) == 9);
+    CUN_UNITTEST_EVAL(ut, remap_range(6, 1, 10, 1, 20) == 11);
+    CUN_UNITTEST_EVAL(ut, remap_range(10, 1, 10, 1, 20) == 20);
+    CUN_UNITTEST_EVAL(ut, remap_range(1, 1, 10, 11, 30) == 11);
+    CUN_UNITTEST_EVAL(ut, remap_range(5, 1, 10, 11, 30) == 19);
+    CUN_UNITTEST_EVAL(ut, remap_range(6, 1, 10, 11, 30) == 21);
+    CUN_UNITTEST_EVAL(ut, remap_range(10, 1, 10, 11, 30) == 30);
+    CUN_UNITTEST_EVAL(ut, remap_range(-10, -10, -1, -20, -1) == -20);
+    CUN_UNITTEST_EVAL(ut, remap_range(-6, -10, -1, -20, -1) == -12);
+    CUN_UNITTEST_EVAL(ut, remap_range(-5, -10, -1, -20, -1) == -10);
+    CUN_UNITTEST_EVAL(ut, remap_range(-1, -10, -1, -20, -1) == -1);
+    CUN_UNITTEST_EVAL(ut, remap_range(-10, -10, -1, -30, -11) == -30);
+    CUN_UNITTEST_EVAL(ut, remap_range(-6, -10, -1, -30, -11) == -22);
+    CUN_UNITTEST_EVAL(ut, remap_range(-5, -10, -1, -30, -11) == -20);
+    CUN_UNITTEST_EVAL(ut, remap_range(-1, -10, -1, -30, -11) == -11);
+    CUN_UNITTEST_NL(ut);
+
+    CUN_UNITTEST_NAME(ut, "std::pair version");
+    CUN_UNITTEST_EVAL(ut, remap_range(0, std::make_pair(0, 0), std::make_pair(0, 0)) == 0);
+    CUN_UNITTEST_EVAL(ut, remap_range(2, std::make_pair(2, 2), std::make_pair(-2, -2)) == -2);
+    CUN_UNITTEST_EVAL(ut, remap_range(1, std::make_pair(1, 10), std::make_pair(1, 10)) == 1);
+    CUN_UNITTEST_EVAL(ut, remap_range(10, std::make_pair(1, 10), std::make_pair(11, 20)) == 20);
+    CUN_UNITTEST_EVAL(ut, remap_range(1, std::make_pair(1, 10), std::make_pair(1, 20)) == 1);
     CUN_UNITTEST_NL(ut);
 
     CUN_UNITTEST_RESET(ut);

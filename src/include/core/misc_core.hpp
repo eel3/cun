@@ -9,6 +9,7 @@
 // C++ standard library
 #include <cassert>
 #include <cstddef>
+#include <type_traits>
 
 namespace cun {
 
@@ -92,12 +93,18 @@ constexpr const T remap_range(const T& n,
                               const T& out_low,
                               const T& out_high) noexcept
 {
+    static_assert(std::is_arithmetic<T>(), "cun::remap_range: T must be a arithmetic type.");
+
     assert((in_low <= in_high) &&
            cun::within_range(n, in_low, in_high) &&
            (out_low <= out_high));
 
-    const auto in_scale = in_high - in_low;
-    const auto out_scale = out_high - out_low;
+    constexpr T MINSCALE = static_cast<T>(1);
+
+    const auto in_scale =
+        in_high == in_low ? MINSCALE : in_high - in_low;
+    const auto out_scale =
+        out_high == out_low ? MINSCALE : out_high - out_low;
 
     return (n - in_low) * out_scale / in_scale + out_low;
 }
