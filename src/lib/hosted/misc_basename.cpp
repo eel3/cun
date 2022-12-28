@@ -51,16 +51,11 @@ std::string basename(const std::string& s)
     if (s.empty()) {
         return DOT;
     }
-    if (s == SEP) {
-        return SEP;
-    }
-#if defined(_WIN32) || defined(_WIN64)
-    if (s == WSEP) {
-        return WSEP;
-    }
-#endif /* defined(_WIN32) || defined(_WIN64) */
 
     const auto path = trim_right(s, SEPS);
+    if (path.empty()) {
+        return std::string { s.back() };
+    }
 
     auto pos = path.find_last_of(SEPS);
     return (pos == std::string::npos) ? path : path.substr(pos + 1);

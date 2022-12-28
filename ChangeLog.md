@@ -7,6 +7,7 @@ ChangeLog
 ### Fixed
 
 * Library: Miscellaneous: remap_range: Fix division by zero error.
+* Library: Miscellaneous: basename: Fix behavior when an argument contain only separator charactors.
 
 [0.0.0.2022112701] - 2022-11-27
 -------------------------------
