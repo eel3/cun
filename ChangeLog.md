@@ -4,9 +4,13 @@ ChangeLog
 [0.0.0.2022122801] - 2022-12-28
 -------------------------------
 
+### Added
+
+* Unit test: Miscellaneous
+
 ### Fixed
 
-* Library: Miscellaneous: remap_range: Fix division by zero error.
+* Library: Miscellaneous: remap_range: Fix potential division by zero error.
 * Library: Miscellaneous: basename: Fix behavior when an argument contain only separator charactors.
 
 [0.0.0.2022112701] - 2022-11-27
