@@ -4,6 +4,10 @@ ChangeLog
 [0.0.0.2022122901] - 2022-12-29
 -------------------------------
 
+### Added
+
+* Unit test: C-string utility
+
 ### Fixed
 
 * Library: C-string utility: cun_cstrutil_tol: Fix potential null pointer access error.
