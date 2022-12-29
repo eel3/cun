@@ -40,7 +40,9 @@ bool cun_cstrutil_tol(const char * const s,
     }
 
     *retval = n;
-    *endp = ep;
+    if (endp != nullptr) {
+        *endp = ep;
+    }
 
     return true;
 }

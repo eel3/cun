@@ -1,6 +1,13 @@
 ChangeLog
 =========
 
+[0.0.0.2022122901] - 2022-12-29
+-------------------------------
+
+### Fixed
+
+* Library: C-string utility: cun_cstrutil_tol: Fix potential null pointer access error.
+
 [0.0.0.2022122801] - 2022-12-28
 -------------------------------
 
