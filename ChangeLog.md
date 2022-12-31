@@ -14,6 +14,7 @@ ChangeLog
 
 ### Fixed
 
+* Library: String utility: join: Fix an inappropriate addition of separator.
 * Unit test: C-string utility: Use CUN_UNITTEST_NAME instead of CUN_UNITTEST_COMMENT.
 
 [0.0.0.2022122901] - 2022-12-29

@@ -72,20 +72,20 @@ StringT<CharT> join(const ContainerT<StringT<CharT>>& container, StringT<CharT>&
 template <typename CharT, std::size_t N>
 StringT<CharT> join(const std::array<StringT<CharT>, N>& container, const CharT *sep = nullptr)
 {
-    switch (container.size()) {
-    case 0:
+    if (container.empty()) {
         return "";
-    case 1:
-        return container.front();
-    default:
-        if (sep == nullptr) {
-            sep = "";
-        }
-        return std::accumulate(container.cbegin(), container.cend(), StringT<CharT> {}, [sep](auto& acc, auto& s){
-            return acc + sep + s;
-        });
     }
-    /*NOTREACHED*/
+
+    if (sep == nullptr) {
+        sep = "";
+    }
+
+    auto p = container.cbegin();
+    ++p;
+
+    return std::accumulate(p, container.cend(), *container.cbegin(), [sep](auto& acc, auto& s){
+        return acc + sep + s;
+    });
 }
 
 template <typename CharT, std::size_t N>
