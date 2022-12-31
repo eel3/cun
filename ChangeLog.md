@@ -4,6 +4,10 @@ ChangeLog
 [0.0.0.2022123101] - 2022-12-31
 -------------------------------
 
+### Added
+
+* Unit test: String utility
+
 ### Fixed
 
 * Unit test: C-string utility: Use CUN_UNITTEST_NAME instead of CUN_UNITTEST_COMMENT.
