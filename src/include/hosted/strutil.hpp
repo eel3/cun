@@ -42,22 +42,35 @@ template <
     class CharT,
     template <typename T, typename Allocator = std::allocator<T>> class ContainerT
 >
-StringT<CharT> join(const ContainerT<StringT<CharT>>& container, const StringT<CharT>& sep = {})
+StringT<CharT> join(const ContainerT<StringT<CharT>>& container, const CharT *sep = nullptr)
 {
     if (container.empty()) {
         return "";
     }
 
+    if (sep == nullptr) {
+        sep = "";
+    }
+
     auto p = container.cbegin();
     ++p;
 
-    return std::accumulate(p, container.cend(), *container.cbegin(), [&sep](auto& acc, auto& s){
+    return std::accumulate(p, container.cend(), *container.cbegin(), [sep](auto& acc, auto& s){
         return acc + sep + s;
     });
 }
 
+template <
+    class CharT,
+    template <typename T, typename Allocator = std::allocator<T>> class ContainerT
+>
+StringT<CharT> join(const ContainerT<StringT<CharT>>& container, StringT<CharT>& sep)
+{
+    return join(container, sep.c_str());
+}
+
 template <typename CharT, std::size_t N>
-StringT<CharT> join(const std::array<StringT<CharT>, N>& container, const StringT<CharT>& sep = {})
+StringT<CharT> join(const std::array<StringT<CharT>, N>& container, const CharT *sep = nullptr)
 {
     switch (container.size()) {
     case 0:
@@ -65,11 +78,20 @@ StringT<CharT> join(const std::array<StringT<CharT>, N>& container, const String
     case 1:
         return container.front();
     default:
-        return std::accumulate(container.cbegin(), container.cend(), "", [&sep](auto& acc, auto& s){
+        if (sep == nullptr) {
+            sep = "";
+        }
+        return std::accumulate(container.cbegin(), container.cend(), StringT<CharT> {}, [sep](auto& acc, auto& s){
             return acc + sep + s;
         });
     }
     /*NOTREACHED*/
+}
+
+template <typename CharT, std::size_t N>
+StringT<CharT> join(const std::array<StringT<CharT>, N>& container, const StringT<CharT>& sep)
+{
+    return join(container, sep.c_str());
 }
 
 } // namespace strutil

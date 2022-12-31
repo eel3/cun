@@ -8,6 +8,10 @@ ChangeLog
 
 * Unit test: String utility
 
+### Changed
+
+* Library: String utility: Improve API.
+
 ### Fixed
 
 * Unit test: C-string utility: Use CUN_UNITTEST_NAME instead of CUN_UNITTEST_COMMENT.
