@@ -1,6 +1,13 @@
 ChangeLog
 =========
 
+[0.0.0.2022123101] - 2022-12-31
+-------------------------------
+
+### Fixed
+
+* Unit test: C-string utility: Use CUN_UNITTEST_NAME instead of CUN_UNITTEST_COMMENT.
+
 [0.0.0.2022122901] - 2022-12-29
 -------------------------------
 

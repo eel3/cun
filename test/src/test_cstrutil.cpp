@@ -136,7 +136,7 @@ void test_tol(UnitTest& ut)
     CUN_UNITTEST_EXEC(ut, char *endp);
     CUN_UNITTEST_NL(ut);
 
-    CUN_UNITTEST_COMMENT(ut, "invalid argument");
+    CUN_UNITTEST_NAME(ut, "invalid argument");
     CUN_UNITTEST_EXEC(ut, retval = 0);
     CUN_UNITTEST_EXEC(ut, endp = nullptr);
     CUN_UNITTEST_EVAL(ut, !cun_cstrutil_tol(nullptr, &retval, &endp, 0));
@@ -150,7 +150,7 @@ void test_tol(UnitTest& ut)
     CUN_UNITTEST_EVAL(ut, retval == 0);
     CUN_UNITTEST_NL(ut);
 
-    CUN_UNITTEST_COMMENT(ut, "not number");
+    CUN_UNITTEST_NAME(ut, "not number");
     CUN_UNITTEST_EXEC(ut, retval = ~0);
     CUN_UNITTEST_EXEC(ut, endp = nullptr);
     CUN_UNITTEST_EVAL(ut, !cun_cstrutil_tol("", &retval, &endp, 0));
@@ -161,7 +161,7 @@ void test_tol(UnitTest& ut)
     CUN_UNITTEST_EVAL(ut, retval == ~0);
     CUN_UNITTEST_NL(ut);
 
-    CUN_UNITTEST_COMMENT(ut, "typical OK pattern");
+    CUN_UNITTEST_NAME(ut, "typical OK pattern");
     CUN_UNITTEST_EXEC(ut, retval = 0);
     CUN_UNITTEST_EXEC(ut, endp = nullptr);
     CUN_UNITTEST_EVAL(ut, cun_cstrutil_tol("1", &retval, &endp, 0));
@@ -174,7 +174,7 @@ void test_tol(UnitTest& ut)
     CUN_UNITTEST_EVAL(ut, *endp == 'b');
     CUN_UNITTEST_NL(ut);
 
-    CUN_UNITTEST_COMMENT(ut, "huge number");
+    CUN_UNITTEST_NAME(ut, "huge number");
     CUN_UNITTEST_EXEC(ut, retval = 0);
     CUN_UNITTEST_EVAL(ut, !cun_cstrutil_tol(NG_MIN_NUMBER, &retval, nullptr, 0));
     CUN_UNITTEST_EVAL(ut, retval == 0);
@@ -187,7 +187,7 @@ void test_tol(UnitTest& ut)
     CUN_UNITTEST_EVAL(ut, retval == LONG_MAX);
     CUN_UNITTEST_NL(ut);
 
-    CUN_UNITTEST_COMMENT(ut, "base test");
+    CUN_UNITTEST_NAME(ut, "base test");
     CUN_UNITTEST_EXEC(ut, retval = 0);
     CUN_UNITTEST_EVAL(ut, cun_cstrutil_tol("10", &retval, nullptr, 0));
     CUN_UNITTEST_EVAL(ut, retval == 10);
@@ -217,7 +217,7 @@ void test_tol(UnitTest& ut)
     CUN_UNITTEST_EVAL(ut, retval == 127);
     CUN_UNITTEST_NL(ut);
 
-    CUN_UNITTEST_COMMENT(ut, "C++ version");
+    CUN_UNITTEST_NAME(ut, "C++ version");
     CUN_UNITTEST_EXEC(ut, retval = 0);
     CUN_UNITTEST_EVAL(ut, tol("10", retval));
     CUN_UNITTEST_EVAL(ut, retval == 10);
@@ -242,7 +242,7 @@ void test_tol_strict(UnitTest& ut)
     CUN_UNITTEST_EXEC(ut, long retval);
     CUN_UNITTEST_NL(ut);
 
-    CUN_UNITTEST_COMMENT(ut, "not number");
+    CUN_UNITTEST_NAME(ut, "not number");
     CUN_UNITTEST_EXEC(ut, retval = 0);
     CUN_UNITTEST_EVAL(ut, !cun_cstrutil_tol_strict("byte", &retval, 0));
     CUN_UNITTEST_EVAL(ut, retval == 0);
@@ -250,13 +250,13 @@ void test_tol_strict(UnitTest& ut)
     CUN_UNITTEST_EVAL(ut, retval == 0);
     CUN_UNITTEST_NL(ut);
 
-    CUN_UNITTEST_COMMENT(ut, "typical OK pattern");
+    CUN_UNITTEST_NAME(ut, "typical OK pattern");
     CUN_UNITTEST_EXEC(ut, retval = 0);
     CUN_UNITTEST_EVAL(ut, cun_cstrutil_tol_strict("1", &retval, 0));
     CUN_UNITTEST_EVAL(ut, retval == 1);
     CUN_UNITTEST_NL(ut);
 
-    CUN_UNITTEST_COMMENT(ut, "C++ version");
+    CUN_UNITTEST_NAME(ut, "C++ version");
     CUN_UNITTEST_EXEC(ut, retval = 0);
     CUN_UNITTEST_EVAL(ut, tol_strict("10", retval));
     CUN_UNITTEST_EVAL(ut, retval == 10);
@@ -276,7 +276,7 @@ void test_copy(UnitTest& ut)
     CUN_UNITTEST_EXEC(ut, char buf[8]);
     CUN_UNITTEST_NL(ut);
 
-    CUN_UNITTEST_COMMENT(ut, "invalid argument");
+    CUN_UNITTEST_NAME(ut, "invalid argument");
     CUN_UNITTEST_EXEC(ut, buf[0] = '\xFF');
     CUN_UNITTEST_EVAL(ut, copy(nullptr, sizeof(buf), "test") == nullptr);
     CUN_UNITTEST_EVAL(ut, copy(buf, 0, "test") == buf);
@@ -285,7 +285,7 @@ void test_copy(UnitTest& ut)
     CUN_UNITTEST_EVAL(ut, buf[0] == '\xFF');
     CUN_UNITTEST_NL(ut);
 
-    CUN_UNITTEST_COMMENT(ut, "minimum buffer size");
+    CUN_UNITTEST_NAME(ut, "minimum buffer size");
     CUN_UNITTEST_EXEC(ut, buf[0] = '\xFF');
     CUN_UNITTEST_EVAL(ut, copy(buf, 1, "test") == buf);
     CUN_UNITTEST_EVAL(ut, buf[0] == '\0');
@@ -294,7 +294,7 @@ void test_copy(UnitTest& ut)
     CUN_UNITTEST_EVAL(ut, std::strcmp(buf, "t") == 0);
     CUN_UNITTEST_NL(ut);
 
-    CUN_UNITTEST_COMMENT(ut, "maximum buffer size");
+    CUN_UNITTEST_NAME(ut, "maximum buffer size");
     CUN_UNITTEST_EXEC(ut, std::memset(buf, '\xFF', sizeof(buf)));
     CUN_UNITTEST_EVAL(ut, copy(buf, 4, "test") == buf);
     CUN_UNITTEST_EVAL(ut, std::strcmp(buf, "tes") == 0);
@@ -307,13 +307,13 @@ void test_copy(UnitTest& ut)
     CUN_UNITTEST_EVAL(ut, std::strcmp(buf, "test") == 0);
     CUN_UNITTEST_NL(ut);
 
-    CUN_UNITTEST_COMMENT(ut, "minimum source string");
+    CUN_UNITTEST_NAME(ut, "minimum source string");
     CUN_UNITTEST_EXEC(ut, std::memset(buf, '\xFF', sizeof(buf)));
     CUN_UNITTEST_EVAL(ut, copy(buf, sizeof(buf), "") == buf);
     CUN_UNITTEST_EVAL(ut, std::strcmp(buf, "") == 0);
     CUN_UNITTEST_NL(ut);
 
-    CUN_UNITTEST_COMMENT(ut, "maximum source string");
+    CUN_UNITTEST_NAME(ut, "maximum source string");
     CUN_UNITTEST_EXEC(ut, std::memset(buf, '\xFF', sizeof(buf)));
     CUN_UNITTEST_EVAL(ut, copy(buf, sizeof(buf), "DEADBE") == buf);
     CUN_UNITTEST_EVAL(ut, std::strcmp(buf, "DEADBE") == 0);
