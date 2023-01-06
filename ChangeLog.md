@@ -13,6 +13,7 @@ ChangeLog
 
 ### Changed
 
+* Library: Repeat call function utility: Improve header file organization.
 * Unit test: Miscellaneous: basename: Improve the order of test.
 
 ### Fixed

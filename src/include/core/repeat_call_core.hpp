@@ -3,12 +3,11 @@
 //
 // Repeat call function utility.
 
-#ifndef CUN_REPEAT_CALL_HPP_INCLUDED
-#define CUN_REPEAT_CALL_HPP_INCLUDED
+#ifndef CUN_REPEAT_CALL_CORE_HPP_INCLUDED
+#define CUN_REPEAT_CALL_CORE_HPP_INCLUDED
 
 // C++ standard library
 #include <cstdint>
-#include <memory>
 
 /* ---------------------------------------------------------------------- */
 /*  */
@@ -69,29 +68,8 @@ constexpr auto create(const size_type repeat_times, ActionT action)
     return cun::repeat_call::Context<ActionT>(repeat_times, action);
 }
 
-/** Repeat call factory function (heap). */
-template <typename ActionT>
-constexpr auto alloc_create(const size_type repeat_times, ActionT action)
-{
-    return new cun::repeat_call::Context<ActionT>(repeat_times, action);
-}
-
-/** Repeat call factory function (shared_ptr). */
-template <typename ActionT>
-constexpr auto shared_create(const size_type repeat_times, ActionT action)
-{
-    return std::make_shared<cun::repeat_call::Context<ActionT>>(repeat_times, action);
-}
-
-/** Repeat call factory function (unique_ptr). */
-template <typename ActionT>
-constexpr auto unique_create(const size_type repeat_times, ActionT action)
-{
-    return std::make_unique<cun::repeat_call::Context<ActionT>>(repeat_times, action);
-}
-
 } // namespace repeat_call
 
 } // namespace cun
 
-#endif // ndef CUN_REPEAT_CALL_HPP_INCLUDED
+#endif // ndef CUN_REPEAT_CALL_CORE_HPP_INCLUDED
