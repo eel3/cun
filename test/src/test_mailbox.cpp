@@ -5,6 +5,7 @@
 
 // C++ standard library
 #include <cstdlib>
+#include <string>
 
 // C++ user library
 #include "mailbox.hpp"
@@ -12,6 +13,7 @@
 
 int main()
 {
+    using std::string;
     using cun::Mailbox;
 
     auto ut = CUN_UNITTEST_MAKE();
@@ -19,11 +21,88 @@ int main()
     CUN_UNITTEST_TITLE(ut, "Test code: Mailbox.");
     CUN_UNITTEST_NL(ut);
 
-    CUN_UNITTEST_EXEC(ut, Mailbox<int> mbox);
-    CUN_UNITTEST_EXEC(ut, (void) mbox);
+    CUN_UNITTEST_EXEC(ut, Mailbox<string> mbox);
+    CUN_UNITTEST_EXEC(ut, string val);
     CUN_UNITTEST_NL(ut);
 
-    CUN_UNITTEST_COMMENT(ut, "TODO: write test code.");
+    CUN_UNITTEST_NAME(ut, "Default parameter check");
+    CUN_UNITTEST_EVAL(ut, mbox.empty());
+    CUN_UNITTEST_EVAL(ut, mbox.size() == 0);
+    CUN_UNITTEST_NL(ut);
+
+    CUN_UNITTEST_EVAL(ut, val.empty());
+    CUN_UNITTEST_EVAL(ut, !mbox.pop(val, 10));
+    CUN_UNITTEST_EVAL(ut, val.empty());
+    CUN_UNITTEST_EVAL(ut, !mbox.try_pop(val));
+    CUN_UNITTEST_EVAL(ut, val.empty());
+    CUN_UNITTEST_NL(ut);
+
+    CUN_UNITTEST_NAME(ut, "Push data");
+    CUN_UNITTEST_EXEC(ut, string s1 { "1" });
+    CUN_UNITTEST_EXEC(ut, mbox.push(s1));
+    CUN_UNITTEST_EVAL(ut, !mbox.empty());
+    CUN_UNITTEST_EVAL(ut, mbox.size() == 1);
+    CUN_UNITTEST_NL(ut);
+
+    CUN_UNITTEST_EXEC(ut, mbox.push(string { "2" }));
+    CUN_UNITTEST_EVAL(ut, mbox.size() == 2);
+    CUN_UNITTEST_NL(ut);
+
+    CUN_UNITTEST_EXEC(ut, string s3 { "3" });
+    CUN_UNITTEST_EXEC(ut, mbox.emplace(s3));
+    CUN_UNITTEST_EXEC(ut, mbox.emplace(string { "4" }));
+    CUN_UNITTEST_EVAL(ut, mbox.size() == 4);
+    CUN_UNITTEST_NL(ut);
+
+    CUN_UNITTEST_NAME(ut, "Pop data: have some mails");
+    CUN_UNITTEST_EXEC(ut, val = mbox.pop());
+    CUN_UNITTEST_EVAL(ut, mbox.size() == 3);
+    CUN_UNITTEST_EVAL(ut, val == "1");
+    CUN_UNITTEST_NL(ut);
+
+    CUN_UNITTEST_EXEC(ut, mbox.pop(val));
+    CUN_UNITTEST_EVAL(ut, mbox.size() == 2);
+    CUN_UNITTEST_EVAL(ut, val == "2");
+    CUN_UNITTEST_NL(ut);
+
+    CUN_UNITTEST_EVAL(ut, mbox.pop(val, 10));
+    CUN_UNITTEST_EVAL(ut, mbox.size() == 1);
+    CUN_UNITTEST_EVAL(ut, val == "3");
+    CUN_UNITTEST_NL(ut);
+
+    CUN_UNITTEST_EVAL(ut, mbox.try_pop(val));
+    CUN_UNITTEST_EVAL(ut, mbox.empty());
+    CUN_UNITTEST_EVAL(ut, val == "4");
+    CUN_UNITTEST_NL(ut);
+
+    CUN_UNITTEST_NAME(ut, "Pop data: have no mail");
+    CUN_UNITTEST_EXEC(ut, val.clear());
+    CUN_UNITTEST_EVAL(ut, val.empty());
+    CUN_UNITTEST_EVAL(ut, !mbox.pop(val, 10));
+    CUN_UNITTEST_EVAL(ut, val.empty());
+    CUN_UNITTEST_EVAL(ut, !mbox.try_pop(val));
+    CUN_UNITTEST_EVAL(ut, val.empty());
+    CUN_UNITTEST_NL(ut);
+
+    CUN_UNITTEST_NAME(ut, "Clear data");
+    CUN_UNITTEST_EXEC(ut, mbox.push("A"));
+    CUN_UNITTEST_EXEC(ut, mbox.push("B"));
+    CUN_UNITTEST_EXEC(ut, mbox.push("C"));
+    CUN_UNITTEST_EVAL(ut, !mbox.empty());
+    CUN_UNITTEST_EVAL(ut, mbox.size() == 3);
+    CUN_UNITTEST_NL(ut);
+
+    CUN_UNITTEST_EXEC(ut, mbox.clear());
+    CUN_UNITTEST_EVAL(ut, mbox.empty());
+    CUN_UNITTEST_EVAL(ut, mbox.size() == 0);
+    CUN_UNITTEST_NL(ut);
+
+    CUN_UNITTEST_EXEC(ut, val.clear());
+    CUN_UNITTEST_EVAL(ut, val.empty());
+    CUN_UNITTEST_EVAL(ut, !mbox.pop(val, 10));
+    CUN_UNITTEST_EVAL(ut, val.empty());
+    CUN_UNITTEST_EVAL(ut, !mbox.try_pop(val));
+    CUN_UNITTEST_EVAL(ut, val.empty());
     CUN_UNITTEST_NL(ut);
 
     return EXIT_SUCCESS;

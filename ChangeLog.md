@@ -4,6 +4,10 @@ ChangeLog
 [0.0.0.2023010601] - 2023-01-06
 -------------------------------
 
+### Added
+
+* Unit test: Mailbox
+
 ### Changed
 
 * Unit test: Miscellaneous: basename: Improve the order of test.
