@@ -61,14 +61,14 @@ public:
     }
 };
 
-/** Repeat call builder function (stack). */
+/** Repeat call factory function (stack). */
 template <typename ActionT>
 constexpr auto create(const size_type repeat_times, ActionT action)
 {
     return cun::repeat_call::Context<ActionT>(repeat_times, action);
 }
 
-/** Repeat call builder function (heap). */
+/** Repeat call factory function (heap). */
 template <typename ActionT>
 constexpr auto alloc_create(const size_type repeat_times, ActionT action)
 {

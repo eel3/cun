@@ -15,6 +15,7 @@ ChangeLog
 ### Fixed
 
 * Library: Repeat call function utility: Fix a possible Context::expired() return wrong value.
+* Library: Repeat call function utility: s/builder/factory/g.
 
 [0.0.0.2022123101] - 2022-12-31
 -------------------------------
