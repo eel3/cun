@@ -355,21 +355,21 @@ void test_basename(UnitTest& ut)
     CUN_UNITTEST_NAME(ut, "only separator");
     CUN_UNITTEST_EVAL(ut, cun::basename("/") == "/");
     CUN_UNITTEST_EVAL(ut, cun::basename(string("/")) == "/");
+    CUN_UNITTEST_EVAL(ut, cun::basename("//") == "/");
+    CUN_UNITTEST_EVAL(ut, cun::basename(string("//")) == "/");
+    CUN_UNITTEST_NL(ut);
+
 #if defined(_WIN32) || defined(_WIN64)
     CUN_UNITTEST_EVAL(ut, cun::basename("\\") == "\\");
     CUN_UNITTEST_EVAL(ut, cun::basename(string("\\")) == "\\");
-#endif /* defined(_WIN32) || defined(_WIN64) */
-    CUN_UNITTEST_EVAL(ut, cun::basename("//") == "/");
-    CUN_UNITTEST_EVAL(ut, cun::basename(string("//")) == "/");
-#if defined(_WIN32) || defined(_WIN64)
     CUN_UNITTEST_EVAL(ut, cun::basename("\\\\") == "\\");
     CUN_UNITTEST_EVAL(ut, cun::basename(string("\\\\")) == "\\");
     CUN_UNITTEST_EVAL(ut, cun::basename("/\\") == "\\");
     CUN_UNITTEST_EVAL(ut, cun::basename(string("/\\")) == "\\");
     CUN_UNITTEST_EVAL(ut, cun::basename("\\/") == "/");
     CUN_UNITTEST_EVAL(ut, cun::basename(string("\\/")) == "/");
-#endif /* defined(_WIN32) || defined(_WIN64) */
     CUN_UNITTEST_NL(ut);
+#endif /* defined(_WIN32) || defined(_WIN64) */
 
     CUN_UNITTEST_NAME(ut, "no separator");
     CUN_UNITTEST_EVAL(ut, cun::basename("a") == "a");
@@ -379,59 +379,55 @@ void test_basename(UnitTest& ut)
     CUN_UNITTEST_NAME(ut, "start with separator");
     CUN_UNITTEST_EVAL(ut, cun::basename("/a") == "a");
     CUN_UNITTEST_EVAL(ut, cun::basename(string("/a")) == "a");
+    CUN_UNITTEST_EVAL(ut, cun::basename("//a") == "a");
+    CUN_UNITTEST_EVAL(ut, cun::basename(string("//a")) == "a");
+    CUN_UNITTEST_NL(ut);
+
 #if defined(_WIN32) || defined(_WIN64)
     CUN_UNITTEST_EVAL(ut, cun::basename("\\a") == "a");
     CUN_UNITTEST_EVAL(ut, cun::basename(string("\\a")) == "a");
-#endif /* defined(_WIN32) || defined(_WIN64) */
-    CUN_UNITTEST_EVAL(ut, cun::basename("//a") == "a");
-    CUN_UNITTEST_EVAL(ut, cun::basename(string("//a")) == "a");
-#if defined(_WIN32) || defined(_WIN64)
     CUN_UNITTEST_EVAL(ut, cun::basename("\\\\a") == "a");
     CUN_UNITTEST_EVAL(ut, cun::basename(string("\\\\a")) == "a");
-#endif /* defined(_WIN32) || defined(_WIN64) */
     CUN_UNITTEST_NL(ut);
+#endif /* defined(_WIN32) || defined(_WIN64) */
 
     CUN_UNITTEST_NAME(ut, "end with separator");
     CUN_UNITTEST_EVAL(ut, cun::basename("a/") == "a");
     CUN_UNITTEST_EVAL(ut, cun::basename(string("a/")) == "a");
+    CUN_UNITTEST_EVAL(ut, cun::basename("a//") == "a");
+    CUN_UNITTEST_EVAL(ut, cun::basename(string("a//")) == "a");
+    CUN_UNITTEST_NL(ut);
+
 #if defined(_WIN32) || defined(_WIN64)
     CUN_UNITTEST_EVAL(ut, cun::basename("a\\") == "a");
     CUN_UNITTEST_EVAL(ut, cun::basename(string("a\\")) == "a");
-#endif /* defined(_WIN32) || defined(_WIN64) */
-    CUN_UNITTEST_EVAL(ut, cun::basename("a//") == "a");
-    CUN_UNITTEST_EVAL(ut, cun::basename(string("a//")) == "a");
-#if defined(_WIN32) || defined(_WIN64)
     CUN_UNITTEST_EVAL(ut, cun::basename("a\\\\") == "a");
     CUN_UNITTEST_EVAL(ut, cun::basename(string("a\\\\")) == "a");
-#endif /* defined(_WIN32) || defined(_WIN64) */
     CUN_UNITTEST_NL(ut);
+#endif /* defined(_WIN32) || defined(_WIN64) */
 
     CUN_UNITTEST_NAME(ut, "multiple separators");
     CUN_UNITTEST_EVAL(ut, cun::basename("/a/b") == "b");
     CUN_UNITTEST_EVAL(ut, cun::basename(string("/a/b")) == "b");
+    CUN_UNITTEST_EVAL(ut, cun::basename("a/b") == "b");
+    CUN_UNITTEST_EVAL(ut, cun::basename(string("a/b")) == "b");
+    CUN_UNITTEST_EVAL(ut, cun::basename("/a/b/") == "b");
+    CUN_UNITTEST_EVAL(ut, cun::basename(string("/a/b/")) == "b");
+    CUN_UNITTEST_EVAL(ut, cun::basename("a/b/") == "b");
+    CUN_UNITTEST_EVAL(ut, cun::basename(string("a/b/")) == "b");
+    CUN_UNITTEST_NL(ut);
+
 #if defined(_WIN32) || defined(_WIN64)
     CUN_UNITTEST_EVAL(ut, cun::basename("\\a\\b") == "b");
     CUN_UNITTEST_EVAL(ut, cun::basename(string("\\a\\b")) == "b");
-#endif /* defined(_WIN32) || defined(_WIN64) */
-    CUN_UNITTEST_EVAL(ut, cun::basename("a/b") == "b");
-    CUN_UNITTEST_EVAL(ut, cun::basename(string("a/b")) == "b");
-#if defined(_WIN32) || defined(_WIN64)
     CUN_UNITTEST_EVAL(ut, cun::basename("a\\b") == "b");
     CUN_UNITTEST_EVAL(ut, cun::basename(string("a\\b")) == "b");
-#endif /* defined(_WIN32) || defined(_WIN64) */
-    CUN_UNITTEST_EVAL(ut, cun::basename("/a/b/") == "b");
-    CUN_UNITTEST_EVAL(ut, cun::basename(string("/a/b/")) == "b");
-#if defined(_WIN32) || defined(_WIN64)
     CUN_UNITTEST_EVAL(ut, cun::basename("\\a\\b\\") == "b");
     CUN_UNITTEST_EVAL(ut, cun::basename(string("\\a\\b\\")) == "b");
-#endif /* defined(_WIN32) || defined(_WIN64) */
-    CUN_UNITTEST_EVAL(ut, cun::basename("a/b/") == "b");
-    CUN_UNITTEST_EVAL(ut, cun::basename(string("a/b/")) == "b");
-#if defined(_WIN32) || defined(_WIN64)
     CUN_UNITTEST_EVAL(ut, cun::basename("a\\b\\") == "b");
     CUN_UNITTEST_EVAL(ut, cun::basename(string("a\\b\\")) == "b");
-#endif /* defined(_WIN32) || defined(_WIN64) */
     CUN_UNITTEST_NL(ut);
+#endif /* defined(_WIN32) || defined(_WIN64) */
 
     CUN_UNITTEST_RESET(ut);
 }
