@@ -37,6 +37,7 @@ private:
 public:
     Context(const size_type repeat_times, ActionT action) :
         MAX_REPEAT_TIMES { repeat_times },
+        m_working { repeat_times != 0 },
         m_action { action } {}
 
     bool expired() const noexcept {
@@ -47,13 +48,12 @@ public:
         if (!m_working) {
             return false;
         }
-        if ((MAX_REPEAT_TIMES >= 0) && (m_repeat_times >= MAX_REPEAT_TIMES)) {
-            m_working = false;
-            return false;
-        }
 
         if (m_action()) {
             m_repeat_times++;
+            if ((MAX_REPEAT_TIMES >= 0) && (m_repeat_times >= MAX_REPEAT_TIMES)) {
+                m_working = false;
+            }
         } else {
             m_working = false;
         }
