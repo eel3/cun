@@ -7,6 +7,7 @@ ChangeLog
 ### Added
 
 * Library: Repeat call function utility: shared_create: The first implementation.
+* Library: Repeat call function utility: unique_create: The first implementation.
 * Unit test: Mailbox
 
 ### Changed

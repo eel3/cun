@@ -83,6 +83,13 @@ constexpr auto shared_create(const size_type repeat_times, ActionT action)
     return std::make_shared<cun::repeat_call::Context<ActionT>>(repeat_times, action);
 }
 
+/** Repeat call factory function (unique_ptr). */
+template <typename ActionT>
+constexpr auto unique_create(const size_type repeat_times, ActionT action)
+{
+    return std::make_unique<cun::repeat_call::Context<ActionT>>(repeat_times, action);
+}
+
 } // namespace repeat_call
 
 } // namespace cun
