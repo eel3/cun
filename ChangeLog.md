@@ -4,6 +4,10 @@ ChangeLog
 [0.0.0.2023011101] - 2023-01-11
 -------------------------------
 
+### Added
+
+* Unit test: Sequence utility
+
 ### Changed
 
 * Unit test: Repeat call function utility: Improve code style.
