@@ -25,7 +25,8 @@ include-dirs   := $(addprefix -I ,$(include-core-dir) $(include-hosted-dir) $(VP
 object-files   := byte_packer_core.o \
                   cstrutil_copy.o cstrutil_is_ctype.o cstrutil_to_numeric.o \
                   misc_basename.o \
-                  strutil_to_numeric.o
+                  strutil_to_numeric.o \
+                  system_tick.o
 
 depend-files   := $(subst .o,.d,$(object-files))
 

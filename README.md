@@ -204,6 +204,20 @@ None.
     * strutil.hpp
     * strutil_to_numeric.cpp
 
+### System tick utility
+
+Utility functions for system tick.
+
+#### Dependencies
+
+None.
+
+#### Files
+
+* hosted
+    * system_tick.cpp
+    * system_tick.hpp
+
 ### Unit test utility
 
 Utility functions for unit test.

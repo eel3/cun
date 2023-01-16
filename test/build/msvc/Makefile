@@ -34,7 +34,8 @@ target_name       = test_binary_writer.exe \
                     test_misc.exe \
                     test_repeat_call.exe \
                     test_sequtil.exe \
-                    test_strutil.exe
+                    test_strutil.exe \
+                    test_system_tick.exe
 
 lib_object_files  = 
 
