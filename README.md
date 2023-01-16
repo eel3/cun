@@ -86,7 +86,8 @@ None.
     * cstrutil.h
     * cstrutil.hpp
     * cstrutil_copy.cpp
-    * cstrutil_to_numeric_.cpp
+    * cstrutil_is_ctype.cpp
+    * cstrutil_to_numeric.cpp
 
 ### Data writer interface
 
@@ -151,8 +152,8 @@ None.
 #### Files
 
 * core
-    * misc_core.hpp
     * misc.h
+    * misc_core.hpp
 * embedded
     * misc.hpp
 * hosted
@@ -170,6 +171,10 @@ None.
 #### Files
 
 * core
+    * repeat_call_core.hpp
+* embedded
+    * repeat_call.hpp
+* hosted
     * repeat_call.hpp
 
 ### Sequence utility
@@ -197,7 +202,7 @@ None.
 
 * hosted
     * strutil.hpp
-    * strutil_to_numeric_.cpp
+    * strutil_to_numeric.cpp
 
 ### Unit test utility
 
