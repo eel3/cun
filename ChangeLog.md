@@ -6,6 +6,7 @@ ChangeLog
 
 ### Changed
 
+* Unit test: Mailbox: Improve some test cases.
 * Unit test: System tick utility: Improve test cases.
 
 [0.0.0.2023011601] - 2023-01-16

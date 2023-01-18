@@ -9,12 +9,14 @@
 
 // C++ user library
 #include "mailbox.hpp"
+#include "system_tick.hpp"
 #include "unittest.hpp"
 
 int main()
 {
     using std::string;
     using cun::Mailbox;
+    using cun::system_tick::millis;
 
     auto ut = CUN_UNITTEST_MAKE();
 
@@ -23,6 +25,7 @@ int main()
 
     CUN_UNITTEST_EXEC(ut, Mailbox<string> mbox);
     CUN_UNITTEST_EXEC(ut, string val);
+    CUN_UNITTEST_EXEC(ut, std::chrono::milliseconds::rep t1, t2);
     CUN_UNITTEST_NL(ut);
 
     CUN_UNITTEST_NAME(ut, "Default parameter check");
@@ -31,7 +34,10 @@ int main()
     CUN_UNITTEST_NL(ut);
 
     CUN_UNITTEST_EVAL(ut, val.empty());
-    CUN_UNITTEST_EVAL(ut, !mbox.pop(val, 10));
+    CUN_UNITTEST_EXEC(ut, t1 = millis());
+    CUN_UNITTEST_EVAL(ut, !mbox.pop(val, 100));
+    CUN_UNITTEST_EXEC(ut, t2 = millis());
+    CUN_UNITTEST_EVAL(ut, t2 - t1 >= 100);
     CUN_UNITTEST_EVAL(ut, val.empty());
     CUN_UNITTEST_EVAL(ut, !mbox.try_pop(val));
     CUN_UNITTEST_EVAL(ut, val.empty());
@@ -65,7 +71,10 @@ int main()
     CUN_UNITTEST_EVAL(ut, val == "2");
     CUN_UNITTEST_NL(ut);
 
-    CUN_UNITTEST_EVAL(ut, mbox.pop(val, 10));
+    CUN_UNITTEST_EXEC(ut, t1 = millis());
+    CUN_UNITTEST_EVAL(ut, mbox.pop(val, 100));
+    CUN_UNITTEST_EXEC(ut, t2 = millis());
+    CUN_UNITTEST_EVAL(ut, t2 - t1 < 100);
     CUN_UNITTEST_EVAL(ut, mbox.size() == 1);
     CUN_UNITTEST_EVAL(ut, val == "3");
     CUN_UNITTEST_NL(ut);
@@ -78,7 +87,10 @@ int main()
     CUN_UNITTEST_NAME(ut, "Pop data: have no mail");
     CUN_UNITTEST_EXEC(ut, val.clear());
     CUN_UNITTEST_EVAL(ut, val.empty());
-    CUN_UNITTEST_EVAL(ut, !mbox.pop(val, 10));
+    CUN_UNITTEST_EXEC(ut, t1 = millis());
+    CUN_UNITTEST_EVAL(ut, !mbox.pop(val, 100));
+    CUN_UNITTEST_EXEC(ut, t2 = millis());
+    CUN_UNITTEST_EVAL(ut, t2 - t1 >= 100);
     CUN_UNITTEST_EVAL(ut, val.empty());
     CUN_UNITTEST_EVAL(ut, !mbox.try_pop(val));
     CUN_UNITTEST_EVAL(ut, val.empty());
@@ -99,7 +111,10 @@ int main()
 
     CUN_UNITTEST_EXEC(ut, val.clear());
     CUN_UNITTEST_EVAL(ut, val.empty());
-    CUN_UNITTEST_EVAL(ut, !mbox.pop(val, 10));
+    CUN_UNITTEST_EXEC(ut, t1 = millis());
+    CUN_UNITTEST_EVAL(ut, !mbox.pop(val, 100));
+    CUN_UNITTEST_EXEC(ut, t2 = millis());
+    CUN_UNITTEST_EVAL(ut, t2 - t1 >= 100);
     CUN_UNITTEST_EVAL(ut, val.empty());
     CUN_UNITTEST_EVAL(ut, !mbox.try_pop(val));
     CUN_UNITTEST_EVAL(ut, val.empty());
