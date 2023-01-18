@@ -30,7 +30,8 @@ int main()
         CUN_UNITTEST_EXEC(ut, const auto t1 = millis());
         CUN_UNITTEST_EXEC(ut, sleep_for(timeout));
         CUN_UNITTEST_EXEC(ut, const auto t2 = millis());
-        CUN_UNITTEST_EVAL(ut, t2 - t1 >= 100);
+        CUN_UNITTEST_EXEC(ut, const auto elapsed = t2 - t1);
+        CUN_UNITTEST_EVAL(ut, elapsed >= 100 && elapsed < 120);
     }
     CUN_UNITTEST_NL(ut);
 
@@ -39,7 +40,8 @@ int main()
         CUN_UNITTEST_EXEC(ut, const auto t1 = micros());
         CUN_UNITTEST_EXEC(ut, sleep_for(timeout));
         CUN_UNITTEST_EXEC(ut, const auto t2 = micros());
-        CUN_UNITTEST_EVAL(ut, t2 - t1 >= 100000);
+        CUN_UNITTEST_EXEC(ut, const auto elapsed = t2 - t1);
+        CUN_UNITTEST_EVAL(ut, elapsed >= 100000 && elapsed < 120000);
     }
     CUN_UNITTEST_NL(ut);
 
@@ -48,7 +50,8 @@ int main()
         CUN_UNITTEST_EXEC(ut, const auto t1 = nanos());
         CUN_UNITTEST_EXEC(ut, sleep_for(timeout));
         CUN_UNITTEST_EXEC(ut, const auto t2 = nanos());
-        CUN_UNITTEST_EVAL(ut, t2 - t1 >= 100000000);
+        CUN_UNITTEST_EXEC(ut, const auto elapsed = t2 - t1);
+        CUN_UNITTEST_EVAL(ut, elapsed >= 100000000 && elapsed < 120000000);
     }
     CUN_UNITTEST_NL(ut);
 
