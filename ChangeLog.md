@@ -6,6 +6,7 @@ ChangeLog
 
 ### Added
 
+* Library: Sleep utility: The first implementation.
 * Library: System tick utility: Add new APIs.
 
 ### Changed

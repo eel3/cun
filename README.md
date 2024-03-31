@@ -190,6 +190,20 @@ None.
 * hosted
     * sequtil.hpp
 
+### Sleep utility
+
+Utility functions to sleep / delay current thread.
+
+#### Dependencies
+
+None.
+
+#### Files
+
+* hosted
+    * sleep.cpp
+    * sleep.hpp
+
 ### String utility
 
 Utility functions for std::string.
