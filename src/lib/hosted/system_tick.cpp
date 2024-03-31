@@ -34,19 +34,23 @@ namespace cun {
 
 namespace system_tick {
 
-std::chrono::milliseconds::rep millis() noexcept
+using std::chrono::milliseconds;
+using std::chrono::microseconds;
+using std::chrono::nanoseconds;
+
+milliseconds::rep millis() noexcept
 {
-    return get_tick<std::chrono::milliseconds>();
+    return get_tick<milliseconds>();
 }
 
-std::chrono::microseconds::rep micros() noexcept
+microseconds::rep micros() noexcept
 {
-    return get_tick<std::chrono::microseconds>();
+    return get_tick<microseconds>();
 }
 
-std::chrono::nanoseconds::rep nanos() noexcept
+nanoseconds::rep nanos() noexcept
 {
-    return get_tick<std::chrono::nanoseconds>();
+    return get_tick<nanoseconds>();
 }
 
 } // namespace system_tick
