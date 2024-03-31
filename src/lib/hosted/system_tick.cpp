@@ -34,9 +34,15 @@ namespace cun {
 
 namespace system_tick {
 
+using std::chrono::seconds;
 using std::chrono::milliseconds;
 using std::chrono::microseconds;
 using std::chrono::nanoseconds;
+
+seconds::rep secs() noexcept
+{
+    return get_tick<seconds>();
+}
 
 milliseconds::rep millis() noexcept
 {

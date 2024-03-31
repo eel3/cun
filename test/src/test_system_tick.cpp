@@ -25,6 +25,16 @@ int main()
     CUN_UNITTEST_EXEC(ut, constexpr std::chrono::milliseconds timeout { 100 });
     CUN_UNITTEST_NL(ut);
 
+    CUN_UNITTEST_NAME(ut, "secs");
+    {
+        CUN_UNITTEST_EXEC(ut, const auto t1 = secs());
+        CUN_UNITTEST_EXEC(ut, sleep_for(std::chrono::seconds { 1 }));
+        CUN_UNITTEST_EXEC(ut, const auto t2 = secs());
+        CUN_UNITTEST_EXEC(ut, const auto elapsed = t2 - t1);
+        CUN_UNITTEST_EVAL(ut, elapsed >= 1 && elapsed < 2);
+    }
+    CUN_UNITTEST_NL(ut);
+
     CUN_UNITTEST_NAME(ut, "millis");
     {
         CUN_UNITTEST_EXEC(ut, const auto t1 = millis());

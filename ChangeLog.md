@@ -4,6 +4,10 @@ ChangeLog
 [0.0.0.2024033101] - 2024-03-31
 -------------------------------
 
+### Added
+
+* Library: System tick utility: Add new APIs.
+
 ### Changed
 
 * Library: System tick utility: Improve code style.

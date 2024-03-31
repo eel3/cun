@@ -17,6 +17,7 @@ namespace cun {
 
 namespace system_tick {
 
+extern std::chrono::seconds::rep secs() noexcept;
 extern std::chrono::milliseconds::rep millis() noexcept;
 extern std::chrono::microseconds::rep micros() noexcept;
 extern std::chrono::nanoseconds::rep nanos() noexcept;
