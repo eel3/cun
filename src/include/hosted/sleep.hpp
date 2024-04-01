@@ -17,10 +17,10 @@ namespace cun {
 
 namespace sleep {
 
-extern void secs(const std::chrono::seconds::rep r) noexcept;
-extern void millis(const std::chrono::milliseconds::rep r) noexcept;
-extern void micros(const std::chrono::microseconds::rep r) noexcept;
-extern void nanos(const std::chrono::nanoseconds::rep r) noexcept;
+extern void secs(const std::chrono::seconds::rep& r) noexcept;
+extern void millis(const std::chrono::milliseconds::rep& r) noexcept;
+extern void micros(const std::chrono::microseconds::rep& r) noexcept;
+extern void nanos(const std::chrono::nanoseconds::rep& r) noexcept;
 
 } // namespace sleep
 
