@@ -7,6 +7,7 @@ ChangeLog
 ### Fixed
 
 * Unit test: Sleep utility: Fix a possible failing test.
+* Unit test: System tick utility: Fix a possible failing test.
 
 [0.0.0.2024040101] - 2024-04-01
 -------------------------------
