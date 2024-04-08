@@ -57,6 +57,18 @@ constexpr void wait_until(PredicateT pred)
     }
 }
 
+/* ---------------------------------------------------------------------- */
+/*  */
+/* ---------------------------------------------------------------------- */
+
+template <typename PredicateT>
+constexpr void wait_while(PredicateT pred)
+{
+    while (pred()) {
+        std::this_thread::sleep_for(std::chrono::milliseconds { 1 });
+    }
+}
+
 } // namespace cun
 
 #endif // ndef CUN_MISC_HPP_INCLUDED
