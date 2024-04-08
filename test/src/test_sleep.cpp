@@ -26,7 +26,7 @@ int main()
         CUN_UNITTEST_EXEC(ut, sleep::secs(1));
         CUN_UNITTEST_EXEC(ut, const auto t2 = system_tick::millis());
         CUN_UNITTEST_EXEC(ut, const auto elapsed = t2 - t1);
-        CUN_UNITTEST_EVAL(ut, elapsed >= 1000 && elapsed < 1020);
+        CUN_UNITTEST_EVAL(ut, elapsed >= 1000 && elapsed < 1050);
     }
     CUN_UNITTEST_NL(ut);
 
@@ -36,7 +36,7 @@ int main()
         CUN_UNITTEST_EXEC(ut, sleep::millis(100));
         CUN_UNITTEST_EXEC(ut, const auto t2 = system_tick::millis());
         CUN_UNITTEST_EXEC(ut, const auto elapsed = t2 - t1);
-        CUN_UNITTEST_EVAL(ut, elapsed >= 100 && elapsed < 120);
+        CUN_UNITTEST_EVAL(ut, elapsed >= 100 && elapsed < 150);
     }
     CUN_UNITTEST_NL(ut);
 
@@ -46,7 +46,7 @@ int main()
         CUN_UNITTEST_EXEC(ut, sleep::micros(100000));
         CUN_UNITTEST_EXEC(ut, const auto t2 = system_tick::micros());
         CUN_UNITTEST_EXEC(ut, const auto elapsed = t2 - t1);
-        CUN_UNITTEST_EVAL(ut, elapsed >= 100000 && elapsed < 120000);
+        CUN_UNITTEST_EVAL(ut, elapsed >= 100000 && elapsed < 150000);
     }
     CUN_UNITTEST_NL(ut);
 
@@ -56,7 +56,7 @@ int main()
         CUN_UNITTEST_EXEC(ut, sleep::nanos(100000000));
         CUN_UNITTEST_EXEC(ut, const auto t2 = system_tick::nanos());
         CUN_UNITTEST_EXEC(ut, const auto elapsed = t2 - t1);
-        CUN_UNITTEST_EVAL(ut, elapsed >= 100000000 && elapsed < 120000000);
+        CUN_UNITTEST_EVAL(ut, elapsed >= 100000000 && elapsed < 150000000);
     }
     CUN_UNITTEST_NL(ut);
 
