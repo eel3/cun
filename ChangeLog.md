@@ -6,6 +6,7 @@ ChangeLog
 
 ### Added
 
+* Library: Miscellaneous: wait_until: The first implementation.
 * Library: Software timer: The first implementation.
 
 ### Changed

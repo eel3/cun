@@ -8,6 +8,7 @@
 
 // C++ standard library
 #include <string>
+#include <thread>
 #include <utility>
 
 // For this library
@@ -42,6 +43,18 @@ constexpr const T remap_range(const T& n,
                               const std::pair<T, T>& out_range) noexcept
 {
     return cun::remap_range(n, in_range.first, in_range.second, out_range.first, out_range.second);
+}
+
+/* ---------------------------------------------------------------------- */
+/*  */
+/* ---------------------------------------------------------------------- */
+
+template <typename PredicateT>
+constexpr void wait_until(PredicateT pred)
+{
+    while (!pred()) {
+        std::this_thread::sleep_for(std::chrono::milliseconds { 1 });
+    }
 }
 
 } // namespace cun

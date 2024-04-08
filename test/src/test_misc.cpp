@@ -432,6 +432,35 @@ void test_basename(UnitTest& ut)
     CUN_UNITTEST_RESET(ut);
 }
 
+void test_wait_until(UnitTest& ut)
+{
+    CUN_UNITTEST_TITLE(ut, "Test code: Miscellaneous - wait_until.");
+    CUN_UNITTEST_NL(ut);
+
+    CUN_UNITTEST_EXEC(ut, int count);
+    CUN_UNITTEST_NL(ut);
+
+    CUN_UNITTEST_NAME(ut, "try 1 times");
+    CUN_UNITTEST_EXEC(ut, count = 0);
+    CUN_UNITTEST_EXEC(ut, wait_until([&count]{ ++count; return true; }));
+    CUN_UNITTEST_EVAL(ut, count == 1);
+    CUN_UNITTEST_NL(ut);
+
+    CUN_UNITTEST_NAME(ut, "try 2 times");
+    CUN_UNITTEST_EXEC(ut, count = 0);
+    CUN_UNITTEST_EXEC(ut, wait_until([&count]{ ++count; return count >= 2; }));
+    CUN_UNITTEST_EVAL(ut, count == 2);
+    CUN_UNITTEST_NL(ut);
+
+    CUN_UNITTEST_NAME(ut, "try 10 times");
+    CUN_UNITTEST_EXEC(ut, count = 0);
+    CUN_UNITTEST_EXEC(ut, wait_until([&count]{ ++count; return count >= 10; }));
+    CUN_UNITTEST_EVAL(ut, count == 10);
+    CUN_UNITTEST_NL(ut);
+
+    CUN_UNITTEST_RESET(ut);
+}
+
 } // namespace
 
 int main()
@@ -449,6 +478,7 @@ int main()
     test_clamp_ex(ut);
     test_remap_range(ut);
     test_basename(ut);
+    test_wait_until(ut);
 
     return EXIT_SUCCESS;
 }
