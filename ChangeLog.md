@@ -7,6 +7,7 @@ ChangeLog
 ### Changed
 
 * Unit test: Circular buffer: Change test name.
+* Unit test: Mailbox: Change test name.
 
 ### Fixed
 

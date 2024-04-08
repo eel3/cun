@@ -28,7 +28,7 @@ int main()
     CUN_UNITTEST_EXEC(ut, std::chrono::milliseconds::rep t1, t2);
     CUN_UNITTEST_NL(ut);
 
-    CUN_UNITTEST_NAME(ut, "Default parameter check");
+    CUN_UNITTEST_NAME(ut, "default parameter check");
     CUN_UNITTEST_EVAL(ut, mbox.empty());
     CUN_UNITTEST_EVAL(ut, mbox.size() == 0);
     CUN_UNITTEST_NL(ut);
@@ -43,7 +43,7 @@ int main()
     CUN_UNITTEST_EVAL(ut, val.empty());
     CUN_UNITTEST_NL(ut);
 
-    CUN_UNITTEST_NAME(ut, "Push data");
+    CUN_UNITTEST_NAME(ut, "push data");
     CUN_UNITTEST_EXEC(ut, string s1 { "1" });
     CUN_UNITTEST_EXEC(ut, mbox.push(s1));
     CUN_UNITTEST_EVAL(ut, !mbox.empty());
@@ -60,7 +60,7 @@ int main()
     CUN_UNITTEST_EVAL(ut, mbox.size() == 4);
     CUN_UNITTEST_NL(ut);
 
-    CUN_UNITTEST_NAME(ut, "Pop data: have some mails");
+    CUN_UNITTEST_NAME(ut, "pop data: have some mails");
     CUN_UNITTEST_EXEC(ut, val = mbox.pop());
     CUN_UNITTEST_EVAL(ut, mbox.size() == 3);
     CUN_UNITTEST_EVAL(ut, val == "1");
@@ -84,7 +84,7 @@ int main()
     CUN_UNITTEST_EVAL(ut, val == "4");
     CUN_UNITTEST_NL(ut);
 
-    CUN_UNITTEST_NAME(ut, "Pop data: have no mail");
+    CUN_UNITTEST_NAME(ut, "pop data: have no mail");
     CUN_UNITTEST_EXEC(ut, val.clear());
     CUN_UNITTEST_EVAL(ut, val.empty());
     CUN_UNITTEST_EXEC(ut, t1 = millis());
@@ -96,7 +96,7 @@ int main()
     CUN_UNITTEST_EVAL(ut, val.empty());
     CUN_UNITTEST_NL(ut);
 
-    CUN_UNITTEST_NAME(ut, "Clear data");
+    CUN_UNITTEST_NAME(ut, "clear data");
     CUN_UNITTEST_EXEC(ut, mbox.push("A"));
     CUN_UNITTEST_EXEC(ut, mbox.push("B"));
     CUN_UNITTEST_EXEC(ut, mbox.push("C"));
