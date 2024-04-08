@@ -204,6 +204,19 @@ None.
     * sleep.cpp
     * sleep.hpp
 
+### Software timer
+
+A simple software timer.
+
+#### Dependencies
+
+None.
+
+#### Files
+
+* hosted
+    * soft_timer.hpp
+
 ### String utility
 
 Utility functions for std::string.

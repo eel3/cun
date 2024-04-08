@@ -4,6 +4,10 @@ ChangeLog
 [0.0.0.2024040801] - 2024-04-08
 -------------------------------
 
+### Added
+
+* Library: Software timer: The first implementation.
+
 ### Changed
 
 * Unit test: Circular buffer: Change test name.

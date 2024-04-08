@@ -35,6 +35,7 @@ target-name      := test_binary_writer \
                     test_repeat_call \
                     test_sequtil \
                     test_sleep \
+                    test_soft_timer \
                     test_strutil \
                     test_system_tick
 
