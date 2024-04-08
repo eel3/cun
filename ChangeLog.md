@@ -4,6 +4,10 @@ ChangeLog
 [0.0.0.2024040801] - 2024-04-08
 -------------------------------
 
+### Changed
+
+* Unit test: Circular buffer: Change test name.
+
 ### Fixed
 
 * Unit test: Sleep utility: Fix a possible failing test.
