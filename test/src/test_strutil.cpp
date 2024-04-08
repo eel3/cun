@@ -32,8 +32,7 @@ void test_tol_strict(UnitTest& ut)
 
     CUN_UNITTEST_NAME(ut, "typical NG pattern");
     try {
-        CUN_UNITTEST_ECHO(ut, "const auto n = tol_strict(\"1024byte\")");
-        const auto n = tol_strict("1024byte");
+        CUN_UNITTEST_EXEC(ut, const auto n = tol_strict("1024byte"));
         CUN_UNITTEST_EVAL(ut, n == 1024);
     } catch (const std::invalid_argument& e) {
         CUN_UNITTEST_EVAL(ut, true);

@@ -8,6 +8,7 @@ ChangeLog
 
 * Unit test: Circular buffer: Change test name.
 * Unit test: Mailbox: Change test name.
+* Unit test: String utility: tol_strict: Use CUN_UNITTEST_EXEC instead of CUN_UNITTEST_ECHO.
 
 ### Fixed
 
