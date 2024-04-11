@@ -64,18 +64,13 @@ private:
         }
     }
 
-    void main_loop(std::promise<void>& pr_init, std::future<void>& fu_fin) noexcept {
-        using std::chrono::steady_clock;
-
+    void main_loop(std::promise<void>& pr_init,
+                   std::future<void>& fu_fin,
+                   std::chrono::steady_clock::time_point next_action_time) noexcept {
         m_expired = false;
         m_repeat_times = 0;
 
         pr_init.set_value();
-
-        auto next_action_time = steady_clock::now();
-        if (!m_run_immediately) {
-            next_action_time += m_period;
-        }
 
         while (fu_fin.wait_until(next_action_time) == std::future_status::timeout) {
             next_action_time += m_period;
@@ -174,6 +169,11 @@ public:
             return false;
         }
 
+        auto next_action_time = std::chrono::steady_clock::now();
+        if (!m_run_immediately) {
+            next_action_time += m_period;
+        }
+
         std::promise<void> pr_init;
         auto fu_init = pr_init.get_future();
 
@@ -182,8 +182,9 @@ public:
 
         m_thread = std::thread { [this,
                                   pr = std::move(pr_init),
-                                  fu = std::move(fu_fin)]() mutable {
-            main_loop(pr, fu);
+                                  fu = std::move(fu_fin),
+                                  &next_action_time]() mutable {
+            main_loop(pr, fu, next_action_time);
         }};
         fu_init.get();
 

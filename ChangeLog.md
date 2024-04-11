@@ -7,6 +7,7 @@ ChangeLog
 ### Changed
 
 * Library: Add an inline namespace to some utilities.
+* Library: Software timer: Improve a first timing the timer is triggered.
 * Unit test: Change coding style of importing symbols in namespaces.
 
 [0.0.0.2024040801] - 2024-04-08
