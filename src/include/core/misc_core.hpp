@@ -13,6 +13,8 @@
 
 namespace cun {
 
+inline namespace misc {
+
 /* ---------------------------------------------------------------------- */
 /*  */
 /* ---------------------------------------------------------------------- */
@@ -108,6 +110,8 @@ constexpr const T remap_range(const T& n,
 
     return (n - in_low) * out_scale / in_scale + out_low;
 }
+
+} // inline namespace misc
 
 } // namespace cun
 

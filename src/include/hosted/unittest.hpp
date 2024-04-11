@@ -17,6 +17,8 @@
 
 namespace cun {
 
+inline namespace unittest {
+
 /** Utility class for unit testing. */
 class UnitTest final {
 private:
@@ -77,6 +79,8 @@ public:
               << LINE << endl;
     }
 };
+
+} // inline namespace unittest
 
 } // namespace cun
 

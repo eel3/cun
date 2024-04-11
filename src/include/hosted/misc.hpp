@@ -16,6 +16,8 @@
 
 namespace cun {
 
+inline namespace misc {
+
 /* ---------------------------------------------------------------------- */
 /*  */
 /* ---------------------------------------------------------------------- */
@@ -68,6 +70,8 @@ constexpr void wait_while(PredicateT pred)
         std::this_thread::sleep_for(std::chrono::milliseconds { 1 });
     }
 }
+
+} // inline namespace misc
 
 } // namespace cun
 

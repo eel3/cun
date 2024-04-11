@@ -16,6 +16,8 @@
 
 namespace cun {
 
+inline namespace binary_writer {
+
 /* ---------------------------------------------------------------------- */
 /*  */
 /* ---------------------------------------------------------------------- */
@@ -162,6 +164,8 @@ using ByteWriter = cun::BinaryWriter<std::uint8_t>;
 /** A byte data writer class containing a fixed buffer array. */
 template <cun::ByteWriter::size_type N>
 using BufferedByteWriter = cun::BufferedBinaryWriter<cun::ByteWriter::value_type, N>;
+
+} // inline namespace binary_writer
 
 } // namespace cun
 

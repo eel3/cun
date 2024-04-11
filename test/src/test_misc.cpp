@@ -20,7 +20,8 @@ namespace {
 using std::string;
 
 // C++ user library
-using namespace cun;
+using namespace cun::misc;
+using cun::UnitTest;
 
 void test_BZERO(UnitTest& ut)
 {

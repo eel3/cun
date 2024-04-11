@@ -46,6 +46,8 @@ inline string trim_right(const string& s, const string& chars = "\t\n\v\f\r ")
 
 namespace cun {
 
+inline namespace misc {
+
 std::string basename(const std::string& s)
 {
     if (s.empty()) {
@@ -65,5 +67,7 @@ std::string basename(const char * const s)
 {
     return (s == nullptr) ? DOT : cun::basename(std::string { s });
 }
+
+} // inline namespace misc
 
 } // namespace cun

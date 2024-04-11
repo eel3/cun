@@ -20,6 +20,8 @@
 
 namespace cun {
 
+inline namespace logger {
+
 /** A logger class. */
 class Logger final {
 private:
@@ -98,6 +100,8 @@ public:
         debug_print(ANDROID_LOG_FATAL, "fatal", fmt, args ...);
     }
 };
+
+} // inline namespace logger
 
 } // namespace cun
 

@@ -20,6 +20,8 @@
 
 namespace cun {
 
+inline namespace circular_buffer {
+
 /** A circular buffer class. */
 template <typename T, std::size_t N, typename IndexT = std::atomic_size_t>
 class CircularBuffer final {
@@ -192,6 +194,8 @@ public:
         return size_of_used(m_rp, m_wp);
     }
 };
+
+} // inline namespace circular_buffer
 
 } // namespace cun
 

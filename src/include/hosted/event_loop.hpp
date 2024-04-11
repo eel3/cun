@@ -24,6 +24,8 @@
 
 namespace cun {
 
+inline namespace event_loop {
+
 /** Event loop toolbox class. */
 template <
     typename EventTypeT,
@@ -116,6 +118,8 @@ public:
         }
     }
 };
+
+} // inline namespace event_loop
 
 } // namespace cun
 

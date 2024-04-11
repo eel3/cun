@@ -24,6 +24,8 @@
 
 namespace cun {
 
+inline namespace binary_writer {
+
 /* ---------------------------------------------------------------------- */
 /*  */
 /* ---------------------------------------------------------------------- */
@@ -316,6 +318,8 @@ using StreamByteWriter = cun::StreamBinaryWriter<cun::ByteWriter::value_type>;
 
 /** A byte data writer class writing data to a std::string. */
 using StringByteWriter = cun::StringBinaryWriter<cun::ByteWriter::value_type>;
+
+} // inline namespace binary_writer
 
 } // namespace cun
 

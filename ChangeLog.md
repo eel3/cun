@@ -6,6 +6,7 @@ ChangeLog
 
 ### Changed
 
+* Library: Add an inline namespace to some utilities.
 * Unit test: Change coding style of importing symbols in namespaces.
 
 [0.0.0.2024040801] - 2024-04-08

@@ -19,6 +19,8 @@
 
 namespace cun {
 
+inline namespace mailbox {
+
 /** Inter-thread communication mailbox class. */
 template <typename T>
 class Mailbox final {
@@ -103,6 +105,8 @@ public:
         return true;
     }
 };
+
+} // inline namespace mailbox
 
 } // namespace cun
 

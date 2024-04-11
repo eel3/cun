@@ -22,7 +22,8 @@ namespace {
 using std::uint8_t;
 
 // C++ user library
-using namespace cun;
+using namespace cun::binary_writer;
+using cun::UnitTest;
 
 void test_ByteWriter(UnitTest& ut)
 {

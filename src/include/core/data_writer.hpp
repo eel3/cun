@@ -15,6 +15,8 @@
 
 namespace cun {
 
+inline namespace data_writer {
+
 /** A data writer interface class. */
 template <typename T>
 class IDataWriter {
@@ -39,6 +41,8 @@ public:
     virtual bool push(const value_type *data, const size_type n) = 0;
     virtual size_type size() const noexcept = 0;
 };
+
+} // inline namespace data_writer
 
 } // namespace cun
 
