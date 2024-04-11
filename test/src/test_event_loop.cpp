@@ -22,7 +22,8 @@ using std::ostringstream;
 using std::uintptr_t;
 
 // C++ user library
-using namespace cun;
+using cun::EventLoop;
+using cun::UnitTest;
 
 enum class EventType {
     on_test_1,

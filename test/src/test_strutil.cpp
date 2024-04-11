@@ -22,8 +22,8 @@ using std::string;
 using std::vector;
 
 // C++ user library
-using namespace cun;
-using namespace strutil;
+using namespace cun::strutil;
+using cun::UnitTest;
 
 void test_tol_strict(UnitTest& ut)
 {

@@ -15,8 +15,8 @@
 namespace {
 
 // C++ user library
-using namespace cun;
-using namespace cstrutil;
+using namespace cun::cstrutil;
+using cun::UnitTest;
 
 void test_is_alpha(UnitTest& ut)
 {

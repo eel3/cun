@@ -13,8 +13,8 @@
 namespace {
 
 // C++ user library
-using namespace cun;
-using namespace byte_packer;
+using namespace cun::byte_packer;
+using cun::UnitTest;
 
 void test_pack_carray(UnitTest& ut)
 {

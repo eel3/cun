@@ -21,7 +21,8 @@ int main()
 
     // C++ user library
     using namespace cun::soft_timer;
-    using namespace cun::system_tick;
+    namespace sleep = cun::sleep;
+    namespace system_tick = cun::system_tick;
 
     auto ut = CUN_UNITTEST_MAKE();
 
@@ -154,7 +155,7 @@ int main()
         CUN_UNITTEST_EXEC(ut, auto timer = create(milliseconds { 10 }, [&count]{ ++count; }));
         CUN_UNITTEST_EVAL(ut, !timer.expired());
         CUN_UNITTEST_EVAL(ut, timer.start());
-        CUN_UNITTEST_EXEC(ut, while (count < 5) cun::sleep::millis(10));
+        CUN_UNITTEST_EXEC(ut, while (count < 5) sleep::millis(10));
         CUN_UNITTEST_EVAL(ut, !timer.expired());
         CUN_UNITTEST_EVAL(ut, count >= 5);
         CUN_UNITTEST_EVAL(ut, timer.stop());
@@ -166,7 +167,7 @@ int main()
         CUN_UNITTEST_EXEC(ut, auto timer = create(milliseconds { 10 }, FOREVER, [&count]{ ++count; }));
         CUN_UNITTEST_EVAL(ut, !timer.expired());
         CUN_UNITTEST_EVAL(ut, timer.start());
-        CUN_UNITTEST_EXEC(ut, while (count < 5) cun::sleep::millis(10));
+        CUN_UNITTEST_EXEC(ut, while (count < 5) sleep::millis(10));
         CUN_UNITTEST_EVAL(ut, !timer.expired());
         CUN_UNITTEST_EVAL(ut, count >= 5);
         CUN_UNITTEST_EVAL(ut, timer.stop());
@@ -178,7 +179,7 @@ int main()
         CUN_UNITTEST_EXEC(ut, auto timer = create(milliseconds { 10 }, FOREVER, true, [&count]{ ++count; }));
         CUN_UNITTEST_EVAL(ut, !timer.expired());
         CUN_UNITTEST_EVAL(ut, timer.start());
-        CUN_UNITTEST_EXEC(ut, while (count < 5) cun::sleep::millis(10));
+        CUN_UNITTEST_EXEC(ut, while (count < 5) sleep::millis(10));
         CUN_UNITTEST_EVAL(ut, !timer.expired());
         CUN_UNITTEST_EVAL(ut, count >= 5);
         CUN_UNITTEST_EVAL(ut, timer.stop());
@@ -192,9 +193,9 @@ int main()
         CUN_UNITTEST_EXEC(ut, auto timer = create(milliseconds { 10 }, 3, [&count]{ ++count; }));
         CUN_UNITTEST_EVAL(ut, !timer.expired());
         CUN_UNITTEST_EVAL(ut, timer.start());
-        CUN_UNITTEST_EXEC(ut, while (!timer.expired()) cun::sleep::millis(10));
+        CUN_UNITTEST_EXEC(ut, while (!timer.expired()) sleep::millis(10));
         CUN_UNITTEST_EVAL(ut, timer.expired());
-        CUN_UNITTEST_EXEC(ut, cun::sleep::millis(100));
+        CUN_UNITTEST_EXEC(ut, sleep::millis(100));
         CUN_UNITTEST_EVAL(ut, count == 3);
         CUN_UNITTEST_EVAL(ut, timer.stop());
         CUN_UNITTEST_EVAL(ut, !timer.expired());
@@ -205,9 +206,9 @@ int main()
         CUN_UNITTEST_EXEC(ut, auto timer = create(milliseconds { 10 }, 3, true, [&count]{ ++count; }));
         CUN_UNITTEST_EVAL(ut, !timer.expired());
         CUN_UNITTEST_EVAL(ut, timer.start());
-        CUN_UNITTEST_EXEC(ut, while (!timer.expired()) cun::sleep::millis(10));
+        CUN_UNITTEST_EXEC(ut, while (!timer.expired()) sleep::millis(10));
         CUN_UNITTEST_EVAL(ut, timer.expired());
-        CUN_UNITTEST_EXEC(ut, cun::sleep::millis(100));
+        CUN_UNITTEST_EXEC(ut, sleep::millis(100));
         CUN_UNITTEST_EVAL(ut, count == 3);
         CUN_UNITTEST_EVAL(ut, timer.stop());
         CUN_UNITTEST_EVAL(ut, !timer.expired());
@@ -217,10 +218,10 @@ int main()
     CUN_UNITTEST_NAME(ut, "run immediately");
     {
         CUN_UNITTEST_EXEC(ut, milliseconds::rep t1, t2);
-        CUN_UNITTEST_EXEC(ut, auto timer = create(milliseconds { 100 }, 1, false, [&t2]{ t2 = millis(); }));
-        CUN_UNITTEST_EXEC(ut, t1 = millis());
+        CUN_UNITTEST_EXEC(ut, auto timer = create(milliseconds { 100 }, 1, false, [&t2]{ t2 = system_tick::millis(); }));
+        CUN_UNITTEST_EXEC(ut, t1 = system_tick::millis());
         CUN_UNITTEST_EVAL(ut, timer.start());
-        CUN_UNITTEST_EXEC(ut, while (!timer.expired()) cun::sleep::millis(10));
+        CUN_UNITTEST_EXEC(ut, while (!timer.expired()) sleep::millis(10));
         CUN_UNITTEST_EVAL(ut, timer.stop());
         CUN_UNITTEST_EXEC(ut, const auto elapsed = t2 - t1);
         CUN_UNITTEST_EVAL(ut, elapsed >= 100 && elapsed < 150);
@@ -228,10 +229,10 @@ int main()
     CUN_UNITTEST_NL(ut);
     {
         CUN_UNITTEST_EXEC(ut, milliseconds::rep t1, t2);
-        CUN_UNITTEST_EXEC(ut, auto timer = create(milliseconds { 100 }, 1, true, [&t2]{ t2 = millis(); }));
-        CUN_UNITTEST_EXEC(ut, t1 = millis());
+        CUN_UNITTEST_EXEC(ut, auto timer = create(milliseconds { 100 }, 1, true, [&t2]{ t2 = system_tick::millis(); }));
+        CUN_UNITTEST_EXEC(ut, t1 = system_tick::millis());
         CUN_UNITTEST_EVAL(ut, timer.start());
-        CUN_UNITTEST_EXEC(ut, while (!timer.expired()) cun::sleep::millis(10));
+        CUN_UNITTEST_EXEC(ut, while (!timer.expired()) sleep::millis(10));
         CUN_UNITTEST_EVAL(ut, timer.stop());
         CUN_UNITTEST_EXEC(ut, const auto elapsed = t2 - t1);
         CUN_UNITTEST_EVAL(ut, elapsed >= 0 && elapsed < 50);
@@ -243,12 +244,12 @@ int main()
         CUN_UNITTEST_EXEC(ut, std::atomic_uint count { 0 });
         CUN_UNITTEST_EXEC(ut, auto timer = create(milliseconds { 10 }, [&count]{ ++count; }));
         CUN_UNITTEST_EVAL(ut, timer.start());
-        CUN_UNITTEST_EXEC(ut, while (count < 5) cun::sleep::millis(10));
+        CUN_UNITTEST_EXEC(ut, while (count < 5) sleep::millis(10));
         CUN_UNITTEST_EVAL(ut, timer.stop());
         CUN_UNITTEST_EVAL(ut, count >= 5);
         CUN_UNITTEST_EXEC(ut, count = 0);
         CUN_UNITTEST_EVAL(ut, timer.start());
-        CUN_UNITTEST_EXEC(ut, while (count < 5) cun::sleep::millis(10));
+        CUN_UNITTEST_EXEC(ut, while (count < 5) sleep::millis(10));
         CUN_UNITTEST_EVAL(ut, timer.stop());
         CUN_UNITTEST_EVAL(ut, count >= 5);
     }
@@ -257,12 +258,12 @@ int main()
         CUN_UNITTEST_EXEC(ut, std::atomic_uint count { 0 });
         CUN_UNITTEST_EXEC(ut, auto timer = create(milliseconds { 10 }, 3, [&count]{ ++count; }));
         CUN_UNITTEST_EVAL(ut, timer.start());
-        CUN_UNITTEST_EXEC(ut, while (!timer.expired()) cun::sleep::millis(10));
+        CUN_UNITTEST_EXEC(ut, while (!timer.expired()) sleep::millis(10));
         CUN_UNITTEST_EVAL(ut, count == 3);
         CUN_UNITTEST_EVAL(ut, timer.stop());
         CUN_UNITTEST_EXEC(ut, count = 0);
         CUN_UNITTEST_EVAL(ut, timer.start());
-        CUN_UNITTEST_EXEC(ut, while (!timer.expired()) cun::sleep::millis(10));
+        CUN_UNITTEST_EXEC(ut, while (!timer.expired()) sleep::millis(10));
         CUN_UNITTEST_EVAL(ut, timer.stop());
         CUN_UNITTEST_EVAL(ut, count == 3);
     }
@@ -273,11 +274,11 @@ int main()
         CUN_UNITTEST_EXEC(ut, std::atomic_uint count { 0 });
         CUN_UNITTEST_EXEC(ut, auto timer = create(milliseconds { 10 }, 3, [&count]{ ++count; }));
         CUN_UNITTEST_EVAL(ut, timer.start());
-        CUN_UNITTEST_EXEC(ut, while (!timer.expired()) cun::sleep::millis(10));
+        CUN_UNITTEST_EXEC(ut, while (!timer.expired()) sleep::millis(10));
         CUN_UNITTEST_EVAL(ut, count == 3);
         CUN_UNITTEST_EXEC(ut, count = 0);
         CUN_UNITTEST_EVAL(ut, timer.restart());
-        CUN_UNITTEST_EXEC(ut, while (!timer.expired()) cun::sleep::millis(10));
+        CUN_UNITTEST_EXEC(ut, while (!timer.expired()) sleep::millis(10));
         CUN_UNITTEST_EVAL(ut, timer.stop());
         CUN_UNITTEST_EVAL(ut, count == 3);
     }
@@ -297,7 +298,7 @@ int main()
     {
         CUN_UNITTEST_EXEC(ut, auto timer = create(milliseconds { 10 }, []{}));
         CUN_UNITTEST_EVAL(ut, timer.start());
-        CUN_UNITTEST_EXEC(ut, cun::sleep::millis(100));
+        CUN_UNITTEST_EXEC(ut, sleep::millis(100));
     }
     CUN_UNITTEST_NL(ut);
 

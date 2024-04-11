@@ -21,8 +21,8 @@ using std::isspace;
 using std::string;
 
 // C++ user library
-using namespace cun;
-using namespace sequtil;
+using namespace cun::sequtil;
+using cun::UnitTest;
 
 struct Action final {
     int accumulator { 0 };

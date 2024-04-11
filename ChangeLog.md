@@ -1,6 +1,13 @@
 ChangeLog
 =========
 
+[0.0.0.2024041101] - 2024-04-11
+-------------------------------
+
+### Changed
+
+* Unit test: Change coding style of importing symbols in namespaces.
+
 [0.0.0.2024040801] - 2024-04-08
 -------------------------------
 

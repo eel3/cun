@@ -13,7 +13,8 @@
 
 int main()
 {
-    using namespace cun;
+    namespace sleep = cun::sleep;
+    namespace system_tick = cun::system_tick;
 
     auto ut = CUN_UNITTEST_MAKE();
 

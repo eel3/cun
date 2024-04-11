@@ -13,7 +13,10 @@
 
 int main()
 {
+    // C++ standard library
     using std::uint8_t;
+
+    // C++ user library
     using cun::CircularBuffer;
 
     auto ut = CUN_UNITTEST_MAKE();
