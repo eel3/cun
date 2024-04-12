@@ -9,6 +9,7 @@ ChangeLog
 * Library: Mailbox: pop: Make it possible to set a flexible timeout value.
 * Library: Miscellaneous: wait_until: Make it possible to specify a polling interval.
 * Library: Miscellaneous: wait_while: Make it possible to specify a polling interval.
+* Library: Software timer: Make it possible to set a flexible timer interval value.
 * Unit test: Use chrono_literals.
 * Unit test: Software timer: Use std::this_thread::sleep_for instead of cun::sleep::millis.
 
