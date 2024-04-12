@@ -15,6 +15,7 @@
 int main()
 {
     // C++ standard library
+    using namespace std::literals::chrono_literals;
     using std::this_thread::sleep_for;
 
     // C++ user library
@@ -25,13 +26,10 @@ int main()
     CUN_UNITTEST_TITLE(ut, "Test code: System tick utility.");
     CUN_UNITTEST_NL(ut);
 
-    CUN_UNITTEST_EXEC(ut, constexpr std::chrono::milliseconds timeout { 100 });
-    CUN_UNITTEST_NL(ut);
-
     CUN_UNITTEST_NAME(ut, "secs");
     {
         CUN_UNITTEST_EXEC(ut, const auto t1 = system_tick::secs());
-        CUN_UNITTEST_EXEC(ut, sleep_for(std::chrono::seconds { 1 }));
+        CUN_UNITTEST_EXEC(ut, sleep_for(1s));
         CUN_UNITTEST_EXEC(ut, const auto t2 = system_tick::secs());
         CUN_UNITTEST_EXEC(ut, const auto elapsed = t2 - t1);
         CUN_UNITTEST_EVAL(ut, elapsed >= 1 && elapsed < 2);
@@ -41,7 +39,7 @@ int main()
     CUN_UNITTEST_NAME(ut, "millis");
     {
         CUN_UNITTEST_EXEC(ut, const auto t1 = system_tick::millis());
-        CUN_UNITTEST_EXEC(ut, sleep_for(timeout));
+        CUN_UNITTEST_EXEC(ut, sleep_for(100ms));
         CUN_UNITTEST_EXEC(ut, const auto t2 = system_tick::millis());
         CUN_UNITTEST_EXEC(ut, const auto elapsed = t2 - t1);
         CUN_UNITTEST_EVAL(ut, elapsed >= 100 && elapsed < 150);
@@ -51,7 +49,7 @@ int main()
     CUN_UNITTEST_NAME(ut, "micros");
     {
         CUN_UNITTEST_EXEC(ut, const auto t1 = system_tick::micros());
-        CUN_UNITTEST_EXEC(ut, sleep_for(timeout));
+        CUN_UNITTEST_EXEC(ut, sleep_for(100ms));
         CUN_UNITTEST_EXEC(ut, const auto t2 = system_tick::micros());
         CUN_UNITTEST_EXEC(ut, const auto elapsed = t2 - t1);
         CUN_UNITTEST_EVAL(ut, elapsed >= 100000 && elapsed < 150000);
@@ -61,7 +59,7 @@ int main()
     CUN_UNITTEST_NAME(ut, "nanos");
     {
         CUN_UNITTEST_EXEC(ut, const auto t1 = system_tick::nanos());
-        CUN_UNITTEST_EXEC(ut, sleep_for(timeout));
+        CUN_UNITTEST_EXEC(ut, sleep_for(100ms));
         CUN_UNITTEST_EXEC(ut, const auto t2 = system_tick::nanos());
         CUN_UNITTEST_EXEC(ut, const auto elapsed = t2 - t1);
         CUN_UNITTEST_EVAL(ut, elapsed >= 100000000 && elapsed < 150000000);
