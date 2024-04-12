@@ -58,12 +58,11 @@ public:
         m_queue.pop();
     }
 
-    bool pop(value_type& val, const std::chrono::milliseconds::rep& timeout) {
+    template <typename RepT, typename PeriodT>
+    bool pop(value_type& val, const std::chrono::duration<RepT, PeriodT>& timeout) {
         std::unique_lock<std::mutex> lck(m_mutex);
         const auto have_some =
-            m_cond.wait_for(lck, std::chrono::milliseconds { timeout }, [this]{
-                return !m_queue.empty();
-            });
+            m_cond.wait_for(lck, timeout, [this]{ return !m_queue.empty(); });
         if (have_some) {
             val = std::move(m_queue.front());
             m_queue.pop();

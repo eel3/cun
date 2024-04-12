@@ -4,6 +4,7 @@
 // Test code: Mailbox.
 
 // C++ standard library
+#include <chrono>
 #include <cstdlib>
 #include <string>
 
@@ -15,6 +16,7 @@
 int main()
 {
     // C++ standard library
+    using namespace std::literals::chrono_literals;
     using std::string;
 
     // C++ user library
@@ -38,7 +40,7 @@ int main()
 
     CUN_UNITTEST_EVAL(ut, val.empty());
     CUN_UNITTEST_EXEC(ut, t1 = system_tick::millis());
-    CUN_UNITTEST_EVAL(ut, !mbox.pop(val, 100));
+    CUN_UNITTEST_EVAL(ut, !mbox.pop(val, 100ms));
     CUN_UNITTEST_EXEC(ut, t2 = system_tick::millis());
     CUN_UNITTEST_EVAL(ut, t2 - t1 >= 100);
     CUN_UNITTEST_EVAL(ut, val.empty());
@@ -75,7 +77,7 @@ int main()
     CUN_UNITTEST_NL(ut);
 
     CUN_UNITTEST_EXEC(ut, t1 = system_tick::millis());
-    CUN_UNITTEST_EVAL(ut, mbox.pop(val, 100));
+    CUN_UNITTEST_EVAL(ut, mbox.pop(val, 100ms));
     CUN_UNITTEST_EXEC(ut, t2 = system_tick::millis());
     CUN_UNITTEST_EVAL(ut, t2 - t1 < 100);
     CUN_UNITTEST_EVAL(ut, mbox.size() == 1);
@@ -91,7 +93,7 @@ int main()
     CUN_UNITTEST_EXEC(ut, val.clear());
     CUN_UNITTEST_EVAL(ut, val.empty());
     CUN_UNITTEST_EXEC(ut, t1 = system_tick::millis());
-    CUN_UNITTEST_EVAL(ut, !mbox.pop(val, 100));
+    CUN_UNITTEST_EVAL(ut, !mbox.pop(val, 100ms));
     CUN_UNITTEST_EXEC(ut, t2 = system_tick::millis());
     CUN_UNITTEST_EVAL(ut, t2 - t1 >= 100);
     CUN_UNITTEST_EVAL(ut, val.empty());
@@ -115,7 +117,7 @@ int main()
     CUN_UNITTEST_EXEC(ut, val.clear());
     CUN_UNITTEST_EVAL(ut, val.empty());
     CUN_UNITTEST_EXEC(ut, t1 = system_tick::millis());
-    CUN_UNITTEST_EVAL(ut, !mbox.pop(val, 100));
+    CUN_UNITTEST_EVAL(ut, !mbox.pop(val, 100ms));
     CUN_UNITTEST_EXEC(ut, t2 = system_tick::millis());
     CUN_UNITTEST_EVAL(ut, t2 - t1 >= 100);
     CUN_UNITTEST_EVAL(ut, val.empty());
