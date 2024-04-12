@@ -10,6 +10,7 @@ ChangeLog
 * Library: Miscellaneous: wait_until: Make it possible to specify a polling interval.
 * Library: Miscellaneous: wait_while: Make it possible to specify a polling interval.
 * Unit test: Use chrono_literals.
+* Unit test: Software timer: Use std::this_thread::sleep_for instead of cun::sleep::millis.
 
 [0.0.0.2024041101] - 2024-04-11
 -------------------------------
