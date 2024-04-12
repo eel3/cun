@@ -7,6 +7,7 @@ ChangeLog
 ### Changed
 
 * Library: Mailbox: pop: Make it possible to set a flexible timeout value.
+* Library: Miscellaneous: wait_until: Make it possible to specify a polling interval.
 * Unit test: Use chrono_literals.
 
 [0.0.0.2024041101] - 2024-04-11

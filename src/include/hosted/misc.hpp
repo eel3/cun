@@ -7,6 +7,7 @@
 #define CUN_MISC_HPP_INCLUDED
 
 // C++ standard library
+#include <chrono>
 #include <string>
 #include <thread>
 #include <utility>
@@ -51,11 +52,11 @@ constexpr const T remap_range(const T& n,
 /*  */
 /* ---------------------------------------------------------------------- */
 
-template <typename PredicateT>
-constexpr void wait_until(PredicateT pred)
+template <typename RepT, typename PeriodT, typename PredicateT>
+constexpr void wait_until(const std::chrono::duration<RepT, PeriodT>& poll_interval, PredicateT pred)
 {
     while (!pred()) {
-        std::this_thread::sleep_for(std::chrono::milliseconds { 1 });
+        std::this_thread::sleep_for(poll_interval);
     }
 }
 

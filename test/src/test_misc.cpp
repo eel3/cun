@@ -4,6 +4,7 @@
 // Test code: Miscellaneous.
 
 // C++ standard library
+#include <chrono>
 #include <cstdlib>
 #include <cstring>
 #include <string>
@@ -435,6 +436,8 @@ void test_basename(UnitTest& ut)
 
 void test_wait_until(UnitTest& ut)
 {
+    using namespace std::literals::chrono_literals;
+
     CUN_UNITTEST_TITLE(ut, "Test code: Miscellaneous - wait_until.");
     CUN_UNITTEST_NL(ut);
 
@@ -443,19 +446,19 @@ void test_wait_until(UnitTest& ut)
 
     CUN_UNITTEST_NAME(ut, "try 1 times");
     CUN_UNITTEST_EXEC(ut, count = 0);
-    CUN_UNITTEST_EXEC(ut, wait_until([&count]{ ++count; return true; }));
+    CUN_UNITTEST_EXEC(ut, wait_until(0ms, [&count]{ ++count; return true; }));
     CUN_UNITTEST_EVAL(ut, count == 1);
     CUN_UNITTEST_NL(ut);
 
     CUN_UNITTEST_NAME(ut, "try 2 times");
     CUN_UNITTEST_EXEC(ut, count = 0);
-    CUN_UNITTEST_EXEC(ut, wait_until([&count]{ ++count; return count >= 2; }));
+    CUN_UNITTEST_EXEC(ut, wait_until(0ms, [&count]{ ++count; return count >= 2; }));
     CUN_UNITTEST_EVAL(ut, count == 2);
     CUN_UNITTEST_NL(ut);
 
     CUN_UNITTEST_NAME(ut, "try 10 times");
     CUN_UNITTEST_EXEC(ut, count = 0);
-    CUN_UNITTEST_EXEC(ut, wait_until([&count]{ ++count; return count >= 10; }));
+    CUN_UNITTEST_EXEC(ut, wait_until(0ms, [&count]{ ++count; return count >= 10; }));
     CUN_UNITTEST_EVAL(ut, count == 10);
     CUN_UNITTEST_NL(ut);
 
