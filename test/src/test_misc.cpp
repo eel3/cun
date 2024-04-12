@@ -467,6 +467,8 @@ void test_wait_until(UnitTest& ut)
 
 void test_wait_while(UnitTest& ut)
 {
+    using namespace std::literals::chrono_literals;
+
     CUN_UNITTEST_TITLE(ut, "Test code: Miscellaneous - wait_while.");
     CUN_UNITTEST_NL(ut);
 
@@ -475,19 +477,19 @@ void test_wait_while(UnitTest& ut)
 
     CUN_UNITTEST_NAME(ut, "try 1 times");
     CUN_UNITTEST_EXEC(ut, count = 0);
-    CUN_UNITTEST_EXEC(ut, wait_while([&count]{ ++count; return false; }));
+    CUN_UNITTEST_EXEC(ut, wait_while(0ms, [&count]{ ++count; return false; }));
     CUN_UNITTEST_EVAL(ut, count == 1);
     CUN_UNITTEST_NL(ut);
 
     CUN_UNITTEST_NAME(ut, "try 2 times");
     CUN_UNITTEST_EXEC(ut, count = 0);
-    CUN_UNITTEST_EXEC(ut, wait_while([&count]{ ++count; return count < 2; }));
+    CUN_UNITTEST_EXEC(ut, wait_while(0ms, [&count]{ ++count; return count < 2; }));
     CUN_UNITTEST_EVAL(ut, count == 2);
     CUN_UNITTEST_NL(ut);
 
     CUN_UNITTEST_NAME(ut, "try 10 times");
     CUN_UNITTEST_EXEC(ut, count = 0);
-    CUN_UNITTEST_EXEC(ut, wait_while([&count]{ ++count; return count < 10; }));
+    CUN_UNITTEST_EXEC(ut, wait_while(0ms, [&count]{ ++count; return count < 10; }));
     CUN_UNITTEST_EVAL(ut, count == 10);
     CUN_UNITTEST_NL(ut);
 
