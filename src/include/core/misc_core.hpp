@@ -42,7 +42,7 @@ constexpr const T& max(const T& x, const T& y) noexcept
 template <typename T>
 constexpr const T& min(const T& x, const T& y) noexcept
 {
-    return (x < y) ? x : y;
+    return (x > y) ? y : x;
 }
 
 /* ---------------------------------------------------------------------- */
