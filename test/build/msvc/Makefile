@@ -59,7 +59,7 @@ ccdefs      = /MTd /Zi /D WIN32;_DEBUG;_CONSOLE;WINVER=$(win_ver);_WIN32_WINNT=$
 ccdefs      = /MT /D WIN32;NDEBUG;_CONSOLE;WINVER=$(win_ver);_WIN32_WINNT=$(win_ver);_CRT_SECURE_NO_WARNINGS;_WINDOWS
 !endif
 
-CXXFLAGS    = /nologo /EHsc /GL /GS /RTCs /RTCu /W4 $(ccdefs:;= /D ) /I $(include_dirs: = /I )
+CXXFLAGS    = /nologo /std:c++17 /EHsc /GL /GS /RTCs /RTCu /W4 $(ccdefs:;= /D ) /I $(include_dirs: = /I )
 
 #-----------------------------------------------------------
 
