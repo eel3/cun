@@ -13,7 +13,7 @@ Target environments
 
 Windows, Linux, macOS.
 
-CUN is written in ISO C++14, and so probably works fine on other OS.
+CUN is written in ISO C++17, and so probably works fine on other OS.
 
 Set up
 ------
