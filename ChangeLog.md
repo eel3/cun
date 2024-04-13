@@ -8,6 +8,7 @@ ChangeLog
 
 * Build: Update C++ language standard from C++14 to C++17.
 * Build: Windows: Make sure to specify C++ language standard.
+* Library: Miscellaneous: max: Fix algorithm when comparing equal values.
 
 [0.0.0.2024041201] - 2024-04-12
 -------------------------------

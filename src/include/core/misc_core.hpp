@@ -32,7 +32,7 @@ constexpr std::size_t nelems(const T (&)[N]) noexcept
 template <typename T>
 constexpr const T& max(const T& x, const T& y) noexcept
 {
-    return (x > y) ? x : y;
+    return (x < y) ? y : x;
 }
 
 /* ---------------------------------------------------------------------- */
