@@ -35,6 +35,8 @@ private:
     ActionT m_action;
 
 public:
+    Context() = delete;
+
     Context(const size_type repeat_times, ActionT action) :
         MAX_REPEAT_TIMES { repeat_times },
         m_working { repeat_times != 0 },

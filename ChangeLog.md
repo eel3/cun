@@ -1,6 +1,13 @@
 ChangeLog
 =========
 
+[0.0.0.2024042401] - 2024-04-24
+-------------------------------
+
+### Changed
+
+* Library: Repeat call function utility: Remove the default constructor.
+
 [0.0.0.2024041301] - 2024-04-13
 -------------------------------
 
