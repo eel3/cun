@@ -8,6 +8,7 @@
 
 // C++ standard library
 #include <cstdint>
+#include <type_traits>
 
 /* ---------------------------------------------------------------------- */
 /*  */
@@ -16,6 +17,13 @@
 namespace cun {
 
 namespace repeat_call {
+
+/** std::forward alternative. */
+template <typename T>
+constexpr T&& forward(std::remove_reference_t<T>& t) noexcept
+{
+    return static_cast<T&&>(t);
+}
 
 /** Repeat count type. */
 using size_type = std::int_fast32_t;
@@ -37,7 +45,7 @@ private:
 public:
     Context() = delete;
 
-    Context(const size_type repeat_times, ActionT action) :
+    Context(const size_type repeat_times, ActionT&& action) :
         MAX_REPEAT_TIMES { repeat_times },
         m_working { repeat_times != 0 },
         m_action { action } {}
@@ -65,9 +73,9 @@ public:
 
 /** Repeat call factory function (stack). */
 template <typename ActionT>
-constexpr auto create(const size_type repeat_times, ActionT action)
+constexpr auto create(const size_type repeat_times, ActionT&& action)
 {
-    return cun::repeat_call::Context<ActionT>(repeat_times, action);
+    return cun::repeat_call::Context<ActionT>(repeat_times, forward<ActionT>(action));
 }
 
 } // namespace repeat_call

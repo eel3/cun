@@ -8,6 +8,7 @@ ChangeLog
 
 * Library: Miscellaneous: Use universal reference in some functions.
 * Library: Repeat call function utility: Remove the default constructor.
+* Library: Repeat call function utility: Use universal reference in factory functions and the constructor.
 * Library: Sequence utility: Use universal reference in some functions.
 * Library: Software timer: Use universal reference in factory functions and constructors.
 
