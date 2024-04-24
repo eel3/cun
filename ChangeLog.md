@@ -8,6 +8,7 @@ ChangeLog
 
 * Library: Miscellaneous: Use universal reference in some functions.
 * Library: Repeat call function utility: Remove the default constructor.
+* Library: Sequence utility: Use universal reference in some functions.
 
 [0.0.0.2024041301] - 2024-04-13
 -------------------------------

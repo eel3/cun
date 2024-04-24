@@ -18,19 +18,19 @@ namespace sequtil {
 /* ---------------------------------------------------------------------- */
 
 template <typename SequenceT, typename PredicateT>
-bool all_of(const SequenceT& seq, PredicateT pred)
+bool all_of(const SequenceT& seq, PredicateT&& pred)
 {
     return std::all_of(seq.cbegin(), seq.cend(), pred);
 }
 
 template <typename SequenceT, typename PredicateT>
-bool any_of(const SequenceT& seq, PredicateT pred)
+bool any_of(const SequenceT& seq, PredicateT&& pred)
 {
     return std::any_of(seq.cbegin(), seq.cend(), pred);
 }
 
 template <typename SequenceT, typename PredicateT>
-bool none_of(const SequenceT& seq, PredicateT pred)
+bool none_of(const SequenceT& seq, PredicateT&& pred)
 {
     return std::none_of(seq.cbegin(), seq.cend(), pred);
 }
@@ -62,7 +62,7 @@ bool not_contain(const SequenceT& seq, const ValueT& value)
 /* ---------------------------------------------------------------------- */
 
 template <typename SequenceT, typename PredicateT, typename ActionT>
-ActionT for_each_if(SequenceT& seq, PredicateT pred, ActionT action)
+ActionT for_each_if(SequenceT& seq, PredicateT&& pred, ActionT&& action)
 {
     (void) cun::sequtil::for_each(seq, [&pred, &action](auto& v) {
         if (pred(v)) {
@@ -77,7 +77,7 @@ ActionT for_each_if(SequenceT& seq, PredicateT pred, ActionT action)
 /* ---------------------------------------------------------------------- */
 
 template <typename SequenceT, typename PredicateT>
-void trim_front_if(SequenceT& seq, PredicateT pred)
+void trim_front_if(SequenceT& seq, PredicateT&& pred)
 {
     auto p = std::find_if_not(seq.cbegin(), seq.cend(), pred);
     if (p == seq.cbegin()) {
@@ -90,7 +90,7 @@ void trim_front_if(SequenceT& seq, PredicateT pred)
 }
 
 template <typename SequenceT, typename PredicateT>
-void trim_back_if(SequenceT& seq, PredicateT pred)
+void trim_back_if(SequenceT& seq, PredicateT&& pred)
 {
     auto p = std::find_if_not(seq.crbegin(), seq.crend(), pred);
     if (p == seq.crbegin()) {
@@ -103,7 +103,7 @@ void trim_back_if(SequenceT& seq, PredicateT pred)
 }
 
 template <typename SequenceT, typename PredicateT>
-void trim_if(SequenceT& seq, PredicateT pred)
+void trim_if(SequenceT& seq, PredicateT&& pred)
 {
     cun::sequtil::trim_back_if(seq, pred);
     cun::sequtil::trim_front_if(seq, pred);
