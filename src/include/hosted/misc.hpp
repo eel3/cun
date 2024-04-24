@@ -53,7 +53,7 @@ constexpr const T remap_range(const T& n,
 /* ---------------------------------------------------------------------- */
 
 template <typename RepT, typename PeriodT, typename PredicateT>
-constexpr void wait_until(const std::chrono::duration<RepT, PeriodT>& poll_interval, PredicateT pred)
+constexpr void wait_until(const std::chrono::duration<RepT, PeriodT>& poll_interval, PredicateT&& pred)
 {
     while (!pred()) {
         std::this_thread::sleep_for(poll_interval);
@@ -65,7 +65,7 @@ constexpr void wait_until(const std::chrono::duration<RepT, PeriodT>& poll_inter
 /* ---------------------------------------------------------------------- */
 
 template <typename RepT, typename PeriodT, typename PredicateT>
-constexpr void wait_while(const std::chrono::duration<RepT, PeriodT>& poll_interval, PredicateT pred)
+constexpr void wait_while(const std::chrono::duration<RepT, PeriodT>& poll_interval, PredicateT&& pred)
 {
     while (pred()) {
         std::this_thread::sleep_for(poll_interval);
