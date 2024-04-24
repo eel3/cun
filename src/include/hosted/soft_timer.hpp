@@ -96,14 +96,14 @@ private:
 public:
     SoftTimer() = delete;
 
-    SoftTimer(const duration& period, ActionT action) :
+    SoftTimer(const duration& period, ActionT&& action) :
         m_period { period },
         m_action { action }
     {
         check_period(period);
     }
 
-    SoftTimer(const duration& period, const size_type repeat_times, ActionT action) :
+    SoftTimer(const duration& period, const size_type repeat_times, ActionT&& action) :
         m_max_repeat_times { repeat_times >= 0 ? repeat_times : FOREVER },
         m_period { period },
         m_action { action }
@@ -112,7 +112,7 @@ public:
         check_repeat_times(repeat_times);
     }
 
-    SoftTimer(const duration& period, const size_type repeat_times, const bool run_immediately, ActionT action) :
+    SoftTimer(const duration& period, const size_type repeat_times, const bool run_immediately, ActionT&& action) :
         m_max_repeat_times { repeat_times >= 0 ? repeat_times : FOREVER },
         m_period { period },
         m_run_immediately { run_immediately },
@@ -213,23 +213,23 @@ public:
 
 /** Simple software timer factory function (stack). */
 template <typename RepT, typename PeriodT, typename ActionT>
-constexpr auto create(const std::chrono::duration<RepT, PeriodT>& period, ActionT action)
+constexpr auto create(const std::chrono::duration<RepT, PeriodT>& period, ActionT&& action)
 {
-    return std::move(cun::soft_timer::SoftTimer<RepT, PeriodT, ActionT>(period, action));
+    return std::move(cun::soft_timer::SoftTimer<RepT, PeriodT, ActionT>(period, std::forward<ActionT>(action)));
 }
 
 /** Simple software timer factory function (stack). */
 template <typename RepT, typename PeriodT, typename ActionT>
-constexpr auto create(const std::chrono::duration<RepT, PeriodT>& period, const size_type repeat_times, ActionT action)
+constexpr auto create(const std::chrono::duration<RepT, PeriodT>& period, const size_type repeat_times, ActionT&& action)
 {
-    return std::move(cun::soft_timer::SoftTimer<RepT, PeriodT, ActionT>(period, repeat_times, action));
+    return std::move(cun::soft_timer::SoftTimer<RepT, PeriodT, ActionT>(period, repeat_times, std::forward<ActionT>(action)));
 }
 
 /** Simple software timer factory function (stack). */
 template <typename RepT, typename PeriodT, typename ActionT>
-constexpr auto create(const std::chrono::duration<RepT, PeriodT>& period, const size_type repeat_times, const bool run_immediately, ActionT action)
+constexpr auto create(const std::chrono::duration<RepT, PeriodT>& period, const size_type repeat_times, const bool run_immediately, ActionT&& action)
 {
-    return std::move(cun::soft_timer::SoftTimer<RepT, PeriodT, ActionT>(period, repeat_times, run_immediately, action));
+    return std::move(cun::soft_timer::SoftTimer<RepT, PeriodT, ActionT>(period, repeat_times, run_immediately, std::forward<ActionT>(action)));
 }
 
 /* ---------------------------------------------------------------------- */
@@ -238,23 +238,23 @@ constexpr auto create(const std::chrono::duration<RepT, PeriodT>& period, const 
 
 /** Simple software timer factory function (heap). */
 template <typename RepT, typename PeriodT, typename ActionT>
-constexpr auto alloc_create(const std::chrono::duration<RepT, PeriodT>& period, ActionT action)
+constexpr auto alloc_create(const std::chrono::duration<RepT, PeriodT>& period, ActionT&& action)
 {
-    return new cun::soft_timer::SoftTimer<RepT, PeriodT, ActionT>(period, action);
+    return new cun::soft_timer::SoftTimer<RepT, PeriodT, ActionT>(period, std::forward<ActionT>(action));
 }
 
 /** Simple software timer factory function (heap). */
 template <typename RepT, typename PeriodT, typename ActionT>
-constexpr auto alloc_create(const std::chrono::duration<RepT, PeriodT>& period, const size_type repeat_times, ActionT action)
+constexpr auto alloc_create(const std::chrono::duration<RepT, PeriodT>& period, const size_type repeat_times, ActionT&& action)
 {
-    return new cun::soft_timer::SoftTimer<RepT, PeriodT, ActionT>(period, repeat_times, action);
+    return new cun::soft_timer::SoftTimer<RepT, PeriodT, ActionT>(period, repeat_times, std::forward<ActionT>(action));
 }
 
 /** Simple software timer factory function (heap). */
 template <typename RepT, typename PeriodT, typename ActionT>
-constexpr auto alloc_create(const std::chrono::duration<RepT, PeriodT>& period, const size_type repeat_times, const bool run_immediately, ActionT action)
+constexpr auto alloc_create(const std::chrono::duration<RepT, PeriodT>& period, const size_type repeat_times, const bool run_immediately, ActionT&& action)
 {
-    return new cun::soft_timer::SoftTimer<RepT, PeriodT, ActionT>(period, repeat_times, run_immediately, action);
+    return new cun::soft_timer::SoftTimer<RepT, PeriodT, ActionT>(period, repeat_times, run_immediately, std::forward<ActionT>(action));
 }
 
 /* ---------------------------------------------------------------------- */
@@ -263,23 +263,23 @@ constexpr auto alloc_create(const std::chrono::duration<RepT, PeriodT>& period, 
 
 /** Simple software timer factory function (shared_ptr). */
 template <typename RepT, typename PeriodT, typename ActionT>
-constexpr auto shared_create(const std::chrono::duration<RepT, PeriodT>& period, ActionT action)
+constexpr auto shared_create(const std::chrono::duration<RepT, PeriodT>& period, ActionT&& action)
 {
-    return std::make_shared<cun::soft_timer::SoftTimer<RepT, PeriodT, ActionT>>(period, action);
+    return std::make_shared<cun::soft_timer::SoftTimer<RepT, PeriodT, ActionT>>(period, std::forward<ActionT>(action));
 }
 
 /** Simple software timer factory function (shared_ptr). */
 template <typename RepT, typename PeriodT, typename ActionT>
-constexpr auto shared_create(const std::chrono::duration<RepT, PeriodT>& period, const size_type repeat_times, ActionT action)
+constexpr auto shared_create(const std::chrono::duration<RepT, PeriodT>& period, const size_type repeat_times, ActionT&& action)
 {
-    return std::make_shared<cun::soft_timer::SoftTimer<RepT, PeriodT, ActionT>>(period, repeat_times, action);
+    return std::make_shared<cun::soft_timer::SoftTimer<RepT, PeriodT, ActionT>>(period, repeat_times, std::forward<ActionT>(action));
 }
 
 /** Simple software timer factory function (shared_ptr). */
 template <typename RepT, typename PeriodT, typename ActionT>
-constexpr auto shared_create(const std::chrono::duration<RepT, PeriodT>& period, const size_type repeat_times, const bool run_immediately, ActionT action)
+constexpr auto shared_create(const std::chrono::duration<RepT, PeriodT>& period, const size_type repeat_times, const bool run_immediately, ActionT&& action)
 {
-    return std::make_shared<cun::soft_timer::SoftTimer<RepT, PeriodT, ActionT>>(period, repeat_times, run_immediately, action);
+    return std::make_shared<cun::soft_timer::SoftTimer<RepT, PeriodT, ActionT>>(period, repeat_times, run_immediately, std::forward<ActionT>(action));
 }
 
 /* ---------------------------------------------------------------------- */
@@ -288,23 +288,23 @@ constexpr auto shared_create(const std::chrono::duration<RepT, PeriodT>& period,
 
 /** Simple software timer factory function (unique_ptr). */
 template <typename RepT, typename PeriodT, typename ActionT>
-constexpr auto unique_create(const std::chrono::duration<RepT, PeriodT>& period, ActionT action)
+constexpr auto unique_create(const std::chrono::duration<RepT, PeriodT>& period, ActionT&& action)
 {
-    return std::make_unique<cun::soft_timer::SoftTimer<RepT, PeriodT, ActionT>>(period, action);
+    return std::make_unique<cun::soft_timer::SoftTimer<RepT, PeriodT, ActionT>>(period, std::forward<ActionT>(action));
 }
 
 /** Simple software timer factory function (unique_ptr). */
 template <typename RepT, typename PeriodT, typename ActionT>
-constexpr auto unique_create(const std::chrono::duration<RepT, PeriodT>& period, const size_type repeat_times, ActionT action)
+constexpr auto unique_create(const std::chrono::duration<RepT, PeriodT>& period, const size_type repeat_times, ActionT&& action)
 {
-    return std::make_unique<cun::soft_timer::SoftTimer<RepT, PeriodT, ActionT>>(period, repeat_times, action);
+    return std::make_unique<cun::soft_timer::SoftTimer<RepT, PeriodT, ActionT>>(period, repeat_times, std::forward<ActionT>(action));
 }
 
 /** Simple software timer factory function (unique_ptr). */
 template <typename RepT, typename PeriodT, typename ActionT>
-constexpr auto unique_create(const std::chrono::duration<RepT, PeriodT>& period, const size_type repeat_times, const bool run_immediately, ActionT action)
+constexpr auto unique_create(const std::chrono::duration<RepT, PeriodT>& period, const size_type repeat_times, const bool run_immediately, ActionT&& action)
 {
-    return std::make_unique<cun::soft_timer::SoftTimer<RepT, PeriodT, ActionT>>(period, repeat_times, run_immediately, action);
+    return std::make_unique<cun::soft_timer::SoftTimer<RepT, PeriodT, ActionT>>(period, repeat_times, run_immediately, std::forward<ActionT>(action));
 }
 
 } // namespace soft_timer
