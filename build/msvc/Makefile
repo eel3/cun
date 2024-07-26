@@ -24,7 +24,7 @@ include_dirs    = $(include_core_dir) $(include_hosted_dir) $(vpath)
 
 object_files    = byte_packer_core.obj \
                   cstrutil_copy.obj cstrutil_is_ctype.obj cstrutil_to_numeric.obj \
-                  misc_basename.obj \
+                  misc_basename.obj misc_hex.obj \
                   sleep.obj \
                   strutil_to_numeric.obj \
                   system_tick.obj
