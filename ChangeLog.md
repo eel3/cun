@@ -7,6 +7,7 @@ ChangeLog
 ### Added
 
 * Library: Miscellaneous: hex_dump: The first implementation.
+* Library: Miscellaneous: to_hex_string: The first implementation.
 
 ### Changed
 

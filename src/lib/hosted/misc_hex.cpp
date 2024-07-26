@@ -8,6 +8,8 @@
 #include <cstdint>
 #include <iomanip>
 #include <ostream>
+#include <sstream>
+#include <string>
 
 // For this library
 #include "misc.hpp"
@@ -31,6 +33,15 @@ void hex_dump(std::ostream& out, const void *obj, const std::size_t size)
     for (; p < end; p++) {
         out << std::hex << std::setw(2)  << std::setfill('0') << static_cast<uint32_t>(*p);
     }
+}
+
+std::string to_hex_string(const void *obj, const std::size_t size)
+{
+    std::ostringstream oss;
+
+    hex_dump(oss, obj, size);
+
+    return oss.str();
 }
 
 } // inline namespace misc

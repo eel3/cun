@@ -434,6 +434,37 @@ void test_basename(UnitTest& ut)
     CUN_UNITTEST_RESET(ut);
 }
 
+void test_to_hex_string(UnitTest& ut)
+{
+    CUN_UNITTEST_TITLE(ut, "Test code: Miscellaneous - to_hex_string.");
+    CUN_UNITTEST_NL(ut);
+
+    CUN_UNITTEST_EXEC(ut, const uint8_t test_data[] { 0, 1, 2, 15, 16, 253, 254, 255 });
+    CUN_UNITTEST_NL(ut);
+
+    CUN_UNITTEST_NAME(ut, "nullptr");
+    CUN_UNITTEST_EVAL(ut, cun::to_hex_string(nullptr, 1) == "");
+    CUN_UNITTEST_NL(ut);
+
+    CUN_UNITTEST_NAME(ut, "0 byte");
+    CUN_UNITTEST_EVAL(ut, cun::to_hex_string(test_data, 0) == "");
+    CUN_UNITTEST_NL(ut);
+
+    CUN_UNITTEST_NAME(ut, "1 byte");
+    CUN_UNITTEST_EVAL(ut, cun::to_hex_string(test_data, 1) == "00");
+    CUN_UNITTEST_NL(ut);
+
+    CUN_UNITTEST_NAME(ut, "2 byte");
+    CUN_UNITTEST_EVAL(ut, cun::to_hex_string(test_data, 2) == "0001");
+    CUN_UNITTEST_NL(ut);
+
+    CUN_UNITTEST_NAME(ut, "all test data");
+    CUN_UNITTEST_EVAL(ut, cun::to_hex_string(test_data, sizeof(test_data)) == "0001020f10fdfeff");
+    CUN_UNITTEST_NL(ut);
+
+    CUN_UNITTEST_RESET(ut);
+}
+
 void test_wait_until(UnitTest& ut)
 {
     using namespace std::literals::chrono_literals;
@@ -513,6 +544,7 @@ int main()
     test_clamp_ex(ut);
     test_remap_range(ut);
     test_basename(ut);
+    test_to_hex_string(ut);
     test_wait_until(ut);
     test_wait_while(ut);
 
