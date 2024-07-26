@@ -11,6 +11,7 @@ ChangeLog
 
 ### Changed
 
+* Library: Miscellaneous: basename: Improve code style.
 * Library: Sleep utility: Use pass by value instead of pass by reference.
 
 [0.0.0.2024042401] - 2024-04-24

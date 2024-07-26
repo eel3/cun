@@ -23,9 +23,9 @@ const string SEP { "/" };
 #if defined(_WIN32) || defined(_WIN64)
     const string WSEP { "\\" };
     const string SEPS { SEP + WSEP };
-#else /* defined(_WIN32) || defined(_WIN64) */
+#else // defined(_WIN32) || defined(_WIN64)
     const string SEPS { SEP };
-#endif /* defined(_WIN32) || defined(_WIN64) */
+#endif // defined(_WIN32) || defined(_WIN64)
 
 /* ---------------------------------------------------------------------- */
 /*  */
