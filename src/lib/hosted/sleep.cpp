@@ -16,7 +16,7 @@
 namespace {
 
 template <typename T>
-void delay(const typename T::rep& r) noexcept
+void delay(const typename T::rep r) noexcept
 {
     try {
         std::this_thread::sleep_for(T { r });
@@ -40,22 +40,22 @@ using std::chrono::milliseconds;
 using std::chrono::microseconds;
 using std::chrono::nanoseconds;
 
-void secs(const seconds::rep& r) noexcept
+void secs(const seconds::rep r) noexcept
 {
     delay<seconds>(r);
 }
 
-void millis(const milliseconds::rep& r) noexcept
+void millis(const milliseconds::rep r) noexcept
 {
     delay<milliseconds>(r);
 }
 
-void micros(const microseconds::rep& r) noexcept
+void micros(const microseconds::rep r) noexcept
 {
     delay<microseconds>(r);
 }
 
-void nanos(const nanoseconds::rep& r) noexcept
+void nanos(const nanoseconds::rep r) noexcept
 {
     delay<nanoseconds>(r);
 }

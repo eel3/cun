@@ -1,6 +1,13 @@
 ChangeLog
 =========
 
+[0.0.0.2024072601] - 2024-07-26
+-------------------------------
+
+### Changed
+
+* Library: Sleep utility: Use pass by value instead of pass by reference.
+
 [0.0.0.2024042401] - 2024-04-24
 -------------------------------
 
