@@ -9,6 +9,7 @@
 // C++ standard library
 #include <chrono>
 #include <cstddef>
+#include <cstdio>
 #include <ostream>
 #include <string>
 #include <thread>
@@ -28,6 +29,7 @@ inline namespace misc {
 extern std::string basename(const std::string& s);
 extern std::string basename(const char * const s);
 
+extern void hex_dump(FILE *out, const void *obj, const std::size_t size) noexcept;
 extern void hex_dump(std::ostream& out, const void *obj, const std::size_t size);
 extern std::string to_hex_string(const void *obj, const std::size_t size);
 

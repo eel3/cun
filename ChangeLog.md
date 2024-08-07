@@ -1,12 +1,19 @@
 ChangeLog
 =========
 
+[0.0.0.2024080701] - 2024-08-07
+-------------------------------
+
+### Added
+
+* Library: Miscellaneous: hex_dump (FILE): The first implementation.
+
 [0.0.0.2024072601] - 2024-07-26
 -------------------------------
 
 ### Added
 
-* Library: Miscellaneous: hex_dump: The first implementation.
+* Library: Miscellaneous: hex_dump (ostream): The first implementation.
 * Library: Miscellaneous: to_hex_string: The first implementation.
 
 ### Changed

@@ -6,6 +6,7 @@
 // C++ standard library
 #include <cstddef>
 #include <cstdint>
+#include <cstdio>
 #include <iomanip>
 #include <ostream>
 #include <sstream>
@@ -21,6 +22,19 @@
 namespace cun {
 
 inline namespace misc {
+
+void hex_dump(FILE *out, const void *obj, const std::size_t size) noexcept
+{
+    if ((out == nullptr) || (obj == nullptr) || (size == 0)) {
+        return;
+    }
+
+    auto p = static_cast<const uint8_t *>(obj);
+    auto end = p + size;
+    for (; p < end; p++) {
+        (void) std::fprintf(out, "%02x", *p);
+    }
+}
 
 void hex_dump(std::ostream& out, const void *obj, const std::size_t size)
 {
