@@ -1,12 +1,14 @@
-﻿// -*- coding: utf-8-with-signature-dos -*-
-// vim:fileencoding=utf-8:ff=dos
-//
-// Byte data pack/unpack functions (ISO C interface).
+﻿/*
+ * -*- coding: utf-8-with-signature-dos -*-
+ * vim:fileencoding=utf-8:ff=dos
+ *
+ * Byte data pack/unpack functions (ISO C interface).
+ */
 
 #ifndef CUN_BYTE_PACKER_H_INCLUDED
 #define CUN_BYTE_PACKER_H_INCLUDED
 
-// C standard library
+/* C standard library */
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
@@ -34,4 +36,4 @@ extern bool cun_byte_packer_Unpack(const uint8_t * const buf,
 } /* extern "C" */
 #endif /* def __cplusplus */
 
-#endif // ndef CUN_BYTE_PACKER_H_INCLUDED
+#endif /* ndef CUN_BYTE_PACKER_H_INCLUDED */
