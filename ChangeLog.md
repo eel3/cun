@@ -8,6 +8,7 @@ ChangeLog
 
 * Library: Byte packer / unpacker: Use C-style comment in byte_packer.h.
 * Library: C-string utility: Use C-style comment in cstrutil.h.
+* Library: Miscellaneous: Use C-style comment in misc.h.
 
 [0.0.0.2024080701] - 2024-08-07
 -------------------------------

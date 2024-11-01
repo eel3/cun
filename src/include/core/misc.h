@@ -1,12 +1,14 @@
-﻿// -*- coding: utf-8-with-signature-dos -*-
-// vim:fileencoding=utf-8:ff=dos
-//
-// Utility functions (ISO C interface).
+﻿/*
+ * -*- coding: utf-8-with-signature-dos -*-
+ * vim:fileencoding=utf-8:ff=dos
+ *
+ * Utility functions (ISO C interface).
+ */
 
 #ifndef CUN_MISC_H_INCLUDED
 #define CUN_MISC_H_INCLUDED
 
-// C++ standard library
+/* C standard library */
 #include <string.h>
 
 /* ---------------------------------------------------------------------- */
@@ -25,4 +27,4 @@
 #define CUN_NELEMS(ary) \
     (sizeof(ary) / sizeof((ary)[0]))
 
-#endif // ndef CUN_MISC_H_INCLUDED
+#endif /* ndef CUN_MISC_H_INCLUDED */
