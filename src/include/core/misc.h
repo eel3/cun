@@ -29,4 +29,6 @@
 
 #define CUN_STR(x)  #x
 
+#define CUN_XSTR(x) CUN_STR(x)
+
 #endif /* ndef CUN_MISC_H_INCLUDED */

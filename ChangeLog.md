@@ -7,6 +7,7 @@ ChangeLog
 ### Added
 
 * Library: Miscellaneous: CUN_STR: The first implementation.
+* Library: Miscellaneous: CUN_XSTR: The first implementation.
 
 ### Fixed
 

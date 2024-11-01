@@ -150,6 +150,26 @@ void test_STR(UnitTest& ut)
     CUN_UNITTEST_RESET(ut);
 }
 
+void test_XSTR(UnitTest& ut)
+{
+    CUN_UNITTEST_TITLE(ut, "Test code: Miscellaneous - CUN_XSTR.");
+    CUN_UNITTEST_NL(ut);
+
+    CUN_UNITTEST_NAME(ut, "symbol");
+    CUN_UNITTEST_EVAL(ut, std::strcmp(CUN_XSTR(symbol), "symbol") == 0);
+    CUN_UNITTEST_NL(ut);
+
+    CUN_UNITTEST_NAME(ut, "macro");
+    CUN_UNITTEST_ECHO(ut, "#define MACRO macro");
+#   define MACRO macro
+    CUN_UNITTEST_EVAL(ut, std::strcmp(CUN_XSTR(MACRO), "macro") == 0);
+    CUN_UNITTEST_ECHO(ut, "#undef MACRO");
+#   undef MACRO
+    CUN_UNITTEST_NL(ut);
+
+    CUN_UNITTEST_RESET(ut);
+}
+
 void test_nelems(UnitTest& ut)
 {
     CUN_UNITTEST_TITLE(ut, "Test code: Miscellaneous - nelems.");
@@ -557,6 +577,7 @@ int main()
     test_CSTREQ(ut);
     test_NELEMS(ut);
     test_STR(ut);
+    test_XSTR(ut);
     test_nelems(ut);
     test_max(ut);
     test_min(ut);
