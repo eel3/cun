@@ -4,6 +4,10 @@ ChangeLog
 [0.0.0.2024110101] - 2024-11-01
 -------------------------------
 
+### Added
+
+* Library: Miscellaneous: CUN_STR: The first implementation.
+
 ### Fixed
 
 * Library: Byte packer / unpacker: Use C-style comment in byte_packer.h.

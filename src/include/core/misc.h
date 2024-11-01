@@ -27,4 +27,6 @@
 #define CUN_NELEMS(ary) \
     (sizeof(ary) / sizeof((ary)[0]))
 
+#define CUN_STR(x)  #x
+
 #endif /* ndef CUN_MISC_H_INCLUDED */
