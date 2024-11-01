@@ -8,6 +8,7 @@ ChangeLog
 
 * Library: Miscellaneous: CUN_STR: The first implementation.
 * Library: Miscellaneous: CUN_XSTR: The first implementation.
+* Library: Mockable / Mockout: The first implementation.
 
 ### Fixed
 

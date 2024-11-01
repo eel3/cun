@@ -32,6 +32,8 @@ target_name       = test_binary_writer.exe \
                     test_logger.exe \
                     test_mailbox.exe \
                     test_misc.exe \
+                    test_mockable.exe \
+                    test_mockout.exe \
                     test_repeat_call.exe \
                     test_sequtil.exe \
                     test_sleep.exe \

@@ -32,6 +32,8 @@ target-name      := test_binary_writer \
                     test_logger \
                     test_mailbox \
                     test_misc \
+                    test_mockable \
+                    test_mockout \
                     test_repeat_call \
                     test_sequtil \
                     test_sleep \

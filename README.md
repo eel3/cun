@@ -141,6 +141,20 @@ None.
 * hosted
     * mailbox.hpp
 
+### Mockable / Mockout
+
+Mock out helpers for unit test.
+
+#### Dependencies
+
+None.
+
+#### Files
+
+* core
+    * mockable.h
+    * mockout.h
+
 ### Miscellaneous
 
 Miscellaneous utility functions.
