@@ -1,12 +1,14 @@
-﻿// -*- coding: utf-8-with-signature-dos -*-
-// vim:fileencoding=utf-8:ff=dos
-//
-// C-string utility functions (ISO C interface).
+﻿/*
+ * -*- coding: utf-8-with-signature-dos -*-
+ * vim:fileencoding=utf-8:ff=dos
+ *
+ * C-string utility functions (ISO C interface).
+ */
 
 #ifndef CUN_CSTRUTIL_H_INCLUDED
 #define CUN_CSTRUTIL_H_INCLUDED
 
-// C++ standard library
+/* C standard library */
 #include <stdbool.h>
 #include <stddef.h>
 
@@ -39,4 +41,4 @@ extern char *cun_cstrutil_copy(char * const buf,
 } /* extern "C" */
 #endif /* def __cplusplus */
 
-#endif // ndef CUN_CSTRUTIL_H_INCLUDED
+#endif /* ndef CUN_CSTRUTIL_H_INCLUDED */
