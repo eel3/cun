@@ -13,11 +13,15 @@
 /* ---------------------------------------------------------------------- */
 
 #ifndef CUN_MOCKABLE
-#define CUN_MOCKABLE(fun) fun
+#define CUN_MOCKABLE(sym) sym
 #endif /* ndef CUN_MOCKABLE */
 
-#ifndef CUN_RENAMABLE
-#define CUN_RENAMABLE(fun) fun
-#endif /* ndef CUN_RENAMABLE */
+#ifndef CUN_STUBREADY
+#define CUN_STUBREADY(sym) sym
+#endif /* ndef CUN_STUBREADY */
+
+#ifndef CUN_REALNAME
+#define CUN_REALNAME(sym) sym
+#endif /* ndef CUN_REALNAME */
 
 #endif /* ndef CUN_MOCKABLE_H_INCLUDED */

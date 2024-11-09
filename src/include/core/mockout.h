@@ -14,10 +14,24 @@
 
 #define CUN_ADD_PREFIX(prefix, sym) prefix##sym
 
-#define CUN_MOCKOUT(prefix, fun) CUN_ADD_PREFIX(prefix, fun)
-#define CUN_RENAME(prefix, fun) CUN_ADD_PREFIX(prefix, fun)
+#define CUN_MOCKOUT(prefix, sym) CUN_ADD_PREFIX(prefix, sym)
+#define CUN_STUBILIZE(prefix, sym) CUN_ADD_PREFIX(prefix, sym)
+#define CUN_RENAME(prefix, sym) CUN_ADD_PREFIX(prefix, sym)
 
-#define CUN_MOCKABLE(fun) CUN_MOCKOUT(mock_, fun)
-#define CUN_RENAMABLE(fun) CUN_RENAME(real_, fun)
+/* ---------------------------------------------------------------------- */
+/*  */
+/* ---------------------------------------------------------------------- */
+
+#ifndef CUN_MOCKABLE
+#define CUN_MOCKABLE(sym) CUN_MOCKOUT(mock_, sym)
+#endif /* ndef CUN_MOCKABLE */
+
+#ifndef CUN_STUBREADY
+#define CUN_STUBREADY(sym) CUN_STUBILIZE(stub_, sym)
+#endif /* ndef CUN_STUBREADY */
+
+#ifndef CUN_REALNAME
+#define CUN_REALNAME(sym) CUN_RENAME(real_, sym)
+#endif /* ndef CUN_REALNAME */
 
 #endif /* ndef CUN_MOCKOUT_H_INCLUDED */

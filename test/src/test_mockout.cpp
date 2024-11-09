@@ -29,19 +29,27 @@ int main()
     CUN_UNITTEST_NL(ut);
 
     CUN_UNITTEST_NAME(ut, "CUN_MOCKOUT");
-    CUN_UNITTEST_EVAL(ut, std::strcmp(CUN_XSTR(CUN_MOCKOUT(mock_, name)), "mock_name") == 0);
+    CUN_UNITTEST_EVAL(ut, std::strcmp(CUN_XSTR(CUN_MOCKOUT(_mock_, name)), "_mock_name") == 0);
+    CUN_UNITTEST_NL(ut);
+
+    CUN_UNITTEST_NAME(ut, "CUN_STUBILIZE");
+    CUN_UNITTEST_EVAL(ut, std::strcmp(CUN_XSTR(CUN_STUBILIZE(_stub_, name)), "_stub_name") == 0);
     CUN_UNITTEST_NL(ut);
 
     CUN_UNITTEST_NAME(ut, "CUN_RENAME");
-    CUN_UNITTEST_EVAL(ut, std::strcmp(CUN_XSTR(CUN_RENAME(renamed_, name)), "renamed_name") == 0);
+    CUN_UNITTEST_EVAL(ut, std::strcmp(CUN_XSTR(CUN_RENAME(_real_, name)), "_real_name") == 0);
     CUN_UNITTEST_NL(ut);
 
     CUN_UNITTEST_NAME(ut, "CUN_MOCKABLE");
     CUN_UNITTEST_EVAL(ut, std::strcmp(CUN_XSTR(CUN_MOCKABLE(fun)), "mock_fun") == 0);
     CUN_UNITTEST_NL(ut);
 
-    CUN_UNITTEST_NAME(ut, "CUN_RENAMABLE");
-    CUN_UNITTEST_EVAL(ut, std::strcmp(CUN_XSTR(CUN_RENAMABLE(fun)), "real_fun") == 0);
+    CUN_UNITTEST_NAME(ut, "CUN_STUBREADY");
+    CUN_UNITTEST_EVAL(ut, std::strcmp(CUN_XSTR(CUN_STUBREADY(fun)), "stub_fun") == 0);
+    CUN_UNITTEST_NL(ut);
+
+    CUN_UNITTEST_NAME(ut, "CUN_REALNAME");
+    CUN_UNITTEST_EVAL(ut, std::strcmp(CUN_XSTR(CUN_REALNAME(fun)), "real_fun") == 0);
     CUN_UNITTEST_NL(ut);
 
     return EXIT_SUCCESS;
