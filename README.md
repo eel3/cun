@@ -259,6 +259,19 @@ None.
     * system_tick.cpp
     * system_tick.hpp
 
+### Time measuring
+
+A time measuring class.
+
+#### Dependencies
+
+None.
+
+#### Files
+
+* hosted
+    * time_measuring.hpp
+
 ### Unit test utility
 
 Utility functions for unit test.

@@ -15,7 +15,7 @@ CXX            := $(PREFIX)$(CXX)
 CXXFLAGS        =
 CPPFLAGS        =
 LDFLAGS         =
-LDLIBS         := -lc++
+LDLIBS         := -lm -lc++
 
 WARNADD        := -Wno-sizeof-pointer-div
 

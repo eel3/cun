@@ -39,7 +39,8 @@ target_name       = test_binary_writer.exe \
                     test_sleep.exe \
                     test_soft_timer.exe \
                     test_strutil.exe \
-                    test_system_tick.exe
+                    test_system_tick.exe \
+                    test_time_measuring.exe
 
 lib_object_files  = 
 

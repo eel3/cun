@@ -39,7 +39,8 @@ target-name      := test_binary_writer \
                     test_sleep \
                     test_soft_timer \
                     test_strutil \
-                    test_system_tick
+                    test_system_tick \
+                    test_time_measuring
 
 lib-object-files := 
 
