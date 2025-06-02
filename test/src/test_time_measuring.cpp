@@ -85,6 +85,17 @@ void test_ElapsedTime(UnitTest& ut)
         CUN_UNITTEST_EVAL(ut, report.max == 100ms);
         CUN_UNITTEST_EVAL(ut, report.mean == 100ms);
         CUN_UNITTEST_EVAL(ut, report.stdev == 0ms);
+        CUN_UNITTEST_NL(ut);
+
+        CUN_UNITTEST_COMMENT(ut, "Clean up");
+        CUN_UNITTEST_EXEC(ut, constexpr auto TAG2 { "Clean up" });
+        CUN_UNITTEST_EVAL(ut, !tm.empty());
+        CUN_UNITTEST_EVAL(ut, tm.size() > 0);
+        CUN_UNITTEST_EVAL(ut, tm.tag() != TAG2);
+        CUN_UNITTEST_EXEC(ut, tm.reset(TAG2));
+        CUN_UNITTEST_EVAL(ut, tm.empty());
+        CUN_UNITTEST_EVAL(ut, tm.size() == 0);
+        CUN_UNITTEST_EVAL(ut, tm.tag() == TAG2);
     }
     CUN_UNITTEST_NL(ut);
 
@@ -134,6 +145,17 @@ void test_ElapsedTime(UnitTest& ut)
         CUN_UNITTEST_EVAL(ut, report.max == 200ms);
         CUN_UNITTEST_EVAL(ut, report.mean == 150ms);
         CUN_UNITTEST_EVAL(ut, report.stdev == 50ms);
+        CUN_UNITTEST_NL(ut);
+
+        CUN_UNITTEST_COMMENT(ut, "Clean up");
+        CUN_UNITTEST_EXEC(ut, constexpr auto TAG2 { "Clean up" });
+        CUN_UNITTEST_EVAL(ut, !tm.empty());
+        CUN_UNITTEST_EVAL(ut, tm.size() > 0);
+        CUN_UNITTEST_EVAL(ut, tm.tag() != TAG2);
+        CUN_UNITTEST_EXEC(ut, tm.reset(TAG2));
+        CUN_UNITTEST_EVAL(ut, tm.empty());
+        CUN_UNITTEST_EVAL(ut, tm.size() == 0);
+        CUN_UNITTEST_EVAL(ut, tm.tag() == TAG2);
     }
     CUN_UNITTEST_NL(ut);
 
@@ -195,6 +217,19 @@ void test_TimeInterval(UnitTest& ut)
         CUN_UNITTEST_EVAL(ut, report.max == 100ms);
         CUN_UNITTEST_EVAL(ut, report.mean == 100ms);
         CUN_UNITTEST_EVAL(ut, report.stdev == 0ms);
+        CUN_UNITTEST_NL(ut);
+
+        CUN_UNITTEST_COMMENT(ut, "Clean up");
+        CUN_UNITTEST_EXEC(ut, constexpr auto TAG2 { "Clean up" });
+        CUN_UNITTEST_EVAL(ut, !ti.empty());
+        CUN_UNITTEST_EVAL(ut, ti.size() > 0);
+        CUN_UNITTEST_EVAL(ut, ti.tag() != TAG2);
+        CUN_UNITTEST_EVAL(ut, ti.m_being_measured);
+        CUN_UNITTEST_EXEC(ut, ti.reset(TAG2));
+        CUN_UNITTEST_EVAL(ut, ti.empty());
+        CUN_UNITTEST_EVAL(ut, ti.size() == 0);
+        CUN_UNITTEST_EVAL(ut, ti.tag() == TAG2);
+        CUN_UNITTEST_EVAL(ut, !ti.m_being_measured);
     }
     CUN_UNITTEST_NL(ut);
 
@@ -238,6 +273,19 @@ void test_TimeInterval(UnitTest& ut)
         CUN_UNITTEST_EVAL(ut, report.max == 200ms);
         CUN_UNITTEST_EVAL(ut, report.mean == 150ms);
         CUN_UNITTEST_EVAL(ut, report.stdev == 50ms);
+        CUN_UNITTEST_NL(ut);
+
+        CUN_UNITTEST_COMMENT(ut, "Clean up");
+        CUN_UNITTEST_EXEC(ut, constexpr auto TAG2 { "Clean up" });
+        CUN_UNITTEST_EVAL(ut, !ti.empty());
+        CUN_UNITTEST_EVAL(ut, ti.size() > 0);
+        CUN_UNITTEST_EVAL(ut, ti.tag() != TAG2);
+        CUN_UNITTEST_EVAL(ut, ti.m_being_measured);
+        CUN_UNITTEST_EXEC(ut, ti.reset(TAG2));
+        CUN_UNITTEST_EVAL(ut, ti.empty());
+        CUN_UNITTEST_EVAL(ut, ti.size() == 0);
+        CUN_UNITTEST_EVAL(ut, ti.tag() == TAG2);
+        CUN_UNITTEST_EVAL(ut, !ti.m_being_measured);
     }
     CUN_UNITTEST_NL(ut);
 

@@ -7,6 +7,7 @@ ChangeLog
 ### Added
 
 * Library: Time measuring: clear: The first implementation.
+* Library: Time measuring: reset: The first implementation.
 
 ### Changed
 

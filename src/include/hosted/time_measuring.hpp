@@ -43,10 +43,9 @@ public:
     };
 
 protected:
-    const std::string m_tag;
-
     duration m_data[MAX_LOG];
     size_type m_num_log { 0 };
+    std::string m_tag;
     size_type m_wp { 0 };
 
 public:
@@ -106,6 +105,11 @@ public:
 
     size_type max_size() const noexcept {
         return MAX_LOG;
+    }
+
+    void reset(const std::string& tag) {
+        clear();
+        m_tag = tag;
     }
 
     size_type size() const noexcept {
