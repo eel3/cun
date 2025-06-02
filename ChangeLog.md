@@ -12,6 +12,7 @@ ChangeLog
 ### Changed
 
 * Library: Time measuring: Use `super' to access the base class.
+* Library: Time measuring: Use helper functions.
 
 ### Fixed
 

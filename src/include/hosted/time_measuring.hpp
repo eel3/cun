@@ -48,6 +48,14 @@ protected:
     std::string m_tag;
     size_type m_wp { 0 };
 
+    static size_type next_count_of(const size_type n) noexcept {
+        return n >= MAX_LOG ? MAX_LOG : n + 1;
+    }
+
+    static size_type next_index_of(const size_type i) noexcept {
+        return (i + 1) >= MAX_LOG ? 0 : i + 1;
+    }
+
 public:
     TimeMeasuring() : TimeMeasuring("") {};
 
@@ -155,13 +163,9 @@ public:
             return;
         }
 
-        this->m_data[this->m_wp++] = CLOCK::now() - m_begin_time;
-        if (this->m_wp >= MAX_LOG) {
-            this->m_wp = 0;
-        }
-        if (this->m_num_log < MAX_LOG) {
-            this->m_num_log++;
-        }
+        this->m_data[this->m_wp] = CLOCK::now() - m_begin_time;
+        this->m_wp = super::next_index_of(this->m_wp);
+        this->m_num_log = super::next_count_of(this->m_num_log);
 
         this->m_being_measured = false;
     }
@@ -195,14 +199,10 @@ public:
             this->m_being_measured = true;
         } else {
             const auto current_time = CLOCK::now();
-            this->m_data[this->m_wp++] = current_time - m_begin_time;
+            this->m_data[this->m_wp] = current_time - m_begin_time;
             m_begin_time = current_time;
-            if (this->m_wp >= MAX_LOG) {
-                this->m_wp = 0;
-            }
-            if (this->m_num_log < MAX_LOG) {
-                this->m_num_log++;
-            }
+            this->m_wp = super::next_index_of(this->m_wp);
+            this->m_num_log = super::next_count_of(this->m_num_log);
         }
     }
 };
