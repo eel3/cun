@@ -54,6 +54,8 @@ public:
     explicit TimeMeasuring(const std::string& tag) : m_tag { tag } {}
     explicit TimeMeasuring(std::string&& tag) : m_tag { tag } {}
 
+    virtual ~TimeMeasuring() noexcept = default;
+
     const char *c_tag() const noexcept {
         return m_tag.c_str();
     }

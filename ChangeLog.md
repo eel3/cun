@@ -16,6 +16,7 @@ ChangeLog
 ### Fixed
 
 * Library: Time measuring: Fix the constructor issue.
+* Library: Time measuring: Add a virtual destructor.
 
 [0.0.0.2025042001] - 2025-04-20
 -------------------------------
