@@ -59,6 +59,11 @@ public:
         return m_tag.c_str();
     }
 
+    virtual void clear() noexcept {
+        this->m_num_log = 0;
+        this->m_wp = 0;
+    }
+
     bool empty() const noexcept {
         return size() == 0;
     }
@@ -129,10 +134,9 @@ private:
 public:
     using super::TimeMeasuring;
 
-    void clear() noexcept {
+    virtual void clear() noexcept override {
+        super::clear();
         m_being_measured = false;
-        this->m_num_log = 0;
-        this->m_wp = 0;
     }
 
     void notify_begin() noexcept {
@@ -174,10 +178,9 @@ private:
 public:
     using super::TimeMeasuring;
 
-    void clear() noexcept {
+    virtual void clear() noexcept override {
+        super::clear();
         m_being_measured = false;
-        this->m_num_log = 0;
-        this->m_wp = 0;
     }
 
     void emit() {

@@ -4,6 +4,10 @@ ChangeLog
 [0.0.0.2025060201] - 2025-06-02
 -------------------------------
 
+### Added
+
+* Library: Time measuring: clear: The first implementation.
+
 ### Changed
 
 * Library: Time measuring: Use `super' to access the base class.
