@@ -120,13 +120,14 @@ template <
 >
 class ElapsedTime final : public TimeMeasuring<MAX_LOG, UNIT, CLOCK> {
 private:
+    using super = TimeMeasuring<MAX_LOG, UNIT, CLOCK>;
     using time_point = typename CLOCK::time_point;
 
     time_point m_begin_time;
     bool m_being_measured { false };
 
 public:
-    using TimeMeasuring<MAX_LOG, UNIT, CLOCK>::TimeMeasuring;
+    using super::TimeMeasuring;
 
     void clear() noexcept {
         m_being_measured = false;
@@ -164,13 +165,14 @@ template <
 >
 class TimeInterval final : public TimeMeasuring<MAX_LOG, UNIT, CLOCK> {
 private:
+    using super = TimeMeasuring<MAX_LOG, UNIT, CLOCK>;
     using time_point = typename CLOCK::time_point;
 
     time_point m_begin_time;
     bool m_being_measured { false };
 
 public:
-    using TimeMeasuring<MAX_LOG, UNIT, CLOCK>::TimeMeasuring;
+    using super::TimeMeasuring;
 
     void clear() noexcept {
         m_being_measured = false;

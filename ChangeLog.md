@@ -4,6 +4,10 @@ ChangeLog
 [0.0.0.2025060201] - 2025-06-02
 -------------------------------
 
+### Changed
+
+* Library: Time measuring: Use `super' to access the base class.
+
 ### Fixed
 
 * Library: Time measuring: Fix the constructor issue.
