@@ -52,6 +52,7 @@ void test_ElapsedTime(UnitTest& ut)
         CUN_UNITTEST_COMMENT(ut, "Initial values");
         CUN_UNITTEST_EVAL(ut, std::strcmp(tm.c_tag(), TAG.c_str()) == 0);
         CUN_UNITTEST_EVAL(ut, tm.empty());
+        CUN_UNITTEST_EVAL(ut, tm.last_value() == milliseconds::zero());
         CUN_UNITTEST_EVAL(ut, tm.max_size() == 1);
         CUN_UNITTEST_EVAL(ut, tm.size() == 0);
         CUN_UNITTEST_EVAL(ut, tm.tag() == TAG);
@@ -66,6 +67,7 @@ void test_ElapsedTime(UnitTest& ut)
         CUN_UNITTEST_EVAL(ut, !tm.empty());
         CUN_UNITTEST_EVAL(ut, tm.size() == 1);
         CUN_UNITTEST_EVAL(ut, tm.m_data[0] >= duration_cast<ElapsedTime<1, milliseconds>::duration>(100ms));
+        CUN_UNITTEST_EVAL(ut, tm.last_value() >= duration_cast<ElapsedTime<1, milliseconds>::duration>(100ms));
         CUN_UNITTEST_NL(ut);
 
         CUN_UNITTEST_COMMENT(ut, "Elapsed time (2)");
@@ -75,6 +77,7 @@ void test_ElapsedTime(UnitTest& ut)
         CUN_UNITTEST_EVAL(ut, !tm.empty());
         CUN_UNITTEST_EVAL(ut, tm.size() == 1);
         CUN_UNITTEST_EVAL(ut, tm.m_data[0] >= duration_cast<ElapsedTime<1, milliseconds>::duration>(200ms));
+        CUN_UNITTEST_EVAL(ut, tm.last_value() >= duration_cast<ElapsedTime<1, milliseconds>::duration>(200ms));
         CUN_UNITTEST_NL(ut);
 
         CUN_UNITTEST_COMMENT(ut, "Make report");
@@ -90,10 +93,12 @@ void test_ElapsedTime(UnitTest& ut)
         CUN_UNITTEST_COMMENT(ut, "Clean up");
         CUN_UNITTEST_EXEC(ut, constexpr auto TAG2 { "Clean up" });
         CUN_UNITTEST_EVAL(ut, !tm.empty());
+        CUN_UNITTEST_EVAL(ut, tm.last_value() != milliseconds::zero());
         CUN_UNITTEST_EVAL(ut, tm.size() > 0);
         CUN_UNITTEST_EVAL(ut, tm.tag() != TAG2);
         CUN_UNITTEST_EXEC(ut, tm.reset(TAG2));
         CUN_UNITTEST_EVAL(ut, tm.empty());
+        CUN_UNITTEST_EVAL(ut, tm.last_value() == milliseconds::zero());
         CUN_UNITTEST_EVAL(ut, tm.size() == 0);
         CUN_UNITTEST_EVAL(ut, tm.tag() == TAG2);
     }
@@ -109,6 +114,7 @@ void test_ElapsedTime(UnitTest& ut)
         CUN_UNITTEST_COMMENT(ut, "Initial values");
         CUN_UNITTEST_EVAL(ut, std::strcmp(tm.c_tag(), TAG) == 0);
         CUN_UNITTEST_EVAL(ut, tm.empty());
+        CUN_UNITTEST_EVAL(ut, tm.last_value() == milliseconds::zero());
         CUN_UNITTEST_EVAL(ut, tm.max_size() == 2);
         CUN_UNITTEST_EVAL(ut, tm.size() == 0);
         CUN_UNITTEST_EVAL(ut, tm.tag() == TAG);
@@ -125,6 +131,7 @@ void test_ElapsedTime(UnitTest& ut)
         CUN_UNITTEST_EVAL(ut, tm.size() == 2);
         CUN_UNITTEST_EVAL(ut, tm.m_data[0] >= duration_cast<ElapsedTime<1, milliseconds>::duration>(100ms));
         CUN_UNITTEST_EVAL(ut, tm.m_data[1] >= duration_cast<ElapsedTime<1, milliseconds>::duration>(200ms));
+        CUN_UNITTEST_EVAL(ut, tm.last_value() >= duration_cast<ElapsedTime<1, milliseconds>::duration>(200ms));
         CUN_UNITTEST_EXEC(ut, tm.notify_begin());
         CUN_UNITTEST_EXEC(ut, sleep_for(300ms));
         CUN_UNITTEST_EXEC(ut, tm.notify_begin());
@@ -134,6 +141,7 @@ void test_ElapsedTime(UnitTest& ut)
         CUN_UNITTEST_EVAL(ut, tm.size() == 2);
         CUN_UNITTEST_EVAL(ut, tm.m_data[0] <= duration_cast<ElapsedTime<1, milliseconds>::duration>(250ms));
         CUN_UNITTEST_EVAL(ut, tm.m_data[1] >= duration_cast<ElapsedTime<1, milliseconds>::duration>(200ms));
+        CUN_UNITTEST_EVAL(ut, tm.last_value() >= duration_cast<ElapsedTime<1, milliseconds>::duration>(200ms));
         CUN_UNITTEST_NL(ut);
 
         CUN_UNITTEST_COMMENT(ut, "Make report");
@@ -150,10 +158,12 @@ void test_ElapsedTime(UnitTest& ut)
         CUN_UNITTEST_COMMENT(ut, "Clean up");
         CUN_UNITTEST_EXEC(ut, constexpr auto TAG2 { "Clean up" });
         CUN_UNITTEST_EVAL(ut, !tm.empty());
+        CUN_UNITTEST_EVAL(ut, tm.last_value() != milliseconds::zero());
         CUN_UNITTEST_EVAL(ut, tm.size() > 0);
         CUN_UNITTEST_EVAL(ut, tm.tag() != TAG2);
         CUN_UNITTEST_EXEC(ut, tm.reset(TAG2));
         CUN_UNITTEST_EVAL(ut, tm.empty());
+        CUN_UNITTEST_EVAL(ut, tm.last_value() == milliseconds::zero());
         CUN_UNITTEST_EVAL(ut, tm.size() == 0);
         CUN_UNITTEST_EVAL(ut, tm.tag() == TAG2);
     }
@@ -185,6 +195,7 @@ void test_TimeInterval(UnitTest& ut)
         CUN_UNITTEST_COMMENT(ut, "Initial values");
         CUN_UNITTEST_EVAL(ut, std::strcmp(ti.c_tag(), TAG.c_str()) == 0);
         CUN_UNITTEST_EVAL(ut, ti.empty());
+        CUN_UNITTEST_EVAL(ut, ti.last_value() == milliseconds::zero());
         CUN_UNITTEST_EVAL(ut, ti.max_size() == 1);
         CUN_UNITTEST_EVAL(ut, ti.size() == 0);
         CUN_UNITTEST_EVAL(ut, ti.tag() == TAG);
@@ -199,6 +210,7 @@ void test_TimeInterval(UnitTest& ut)
         CUN_UNITTEST_EVAL(ut, !ti.empty());
         CUN_UNITTEST_EVAL(ut, ti.size() == 1);
         CUN_UNITTEST_EVAL(ut, ti.m_data[0] >= duration_cast<ElapsedTime<1, milliseconds>::duration>(100ms));
+        CUN_UNITTEST_EVAL(ut, ti.last_value() >= duration_cast<ElapsedTime<1, milliseconds>::duration>(100ms));
         CUN_UNITTEST_NL(ut);
 
         CUN_UNITTEST_COMMENT(ut, "Time interval (2)");
@@ -207,6 +219,7 @@ void test_TimeInterval(UnitTest& ut)
         CUN_UNITTEST_EVAL(ut, !ti.empty());
         CUN_UNITTEST_EVAL(ut, ti.size() == 1);
         CUN_UNITTEST_EVAL(ut, ti.m_data[0] >= duration_cast<ElapsedTime<1, milliseconds>::duration>(200ms));
+        CUN_UNITTEST_EVAL(ut, ti.last_value() >= duration_cast<ElapsedTime<1, milliseconds>::duration>(200ms));
         CUN_UNITTEST_NL(ut);
 
         CUN_UNITTEST_COMMENT(ut, "Make report");
@@ -222,11 +235,13 @@ void test_TimeInterval(UnitTest& ut)
         CUN_UNITTEST_COMMENT(ut, "Clean up");
         CUN_UNITTEST_EXEC(ut, constexpr auto TAG2 { "Clean up" });
         CUN_UNITTEST_EVAL(ut, !ti.empty());
+        CUN_UNITTEST_EVAL(ut, ti.last_value() != milliseconds::zero());
         CUN_UNITTEST_EVAL(ut, ti.size() > 0);
         CUN_UNITTEST_EVAL(ut, ti.tag() != TAG2);
         CUN_UNITTEST_EVAL(ut, ti.m_being_measured);
         CUN_UNITTEST_EXEC(ut, ti.reset(TAG2));
         CUN_UNITTEST_EVAL(ut, ti.empty());
+        CUN_UNITTEST_EVAL(ut, ti.last_value() == milliseconds::zero());
         CUN_UNITTEST_EVAL(ut, ti.size() == 0);
         CUN_UNITTEST_EVAL(ut, ti.tag() == TAG2);
         CUN_UNITTEST_EVAL(ut, !ti.m_being_measured);
@@ -242,6 +257,7 @@ void test_TimeInterval(UnitTest& ut)
         CUN_UNITTEST_COMMENT(ut, "Initial values");
         CUN_UNITTEST_EVAL(ut, std::strcmp(ti.c_tag(), TAG) == 0);
         CUN_UNITTEST_EVAL(ut, ti.empty());
+        CUN_UNITTEST_EVAL(ut, ti.last_value() == milliseconds::zero());
         CUN_UNITTEST_EVAL(ut, ti.max_size() == 2);
         CUN_UNITTEST_EVAL(ut, ti.size() == 0);
         CUN_UNITTEST_EVAL(ut, ti.tag() == TAG);
@@ -257,11 +273,13 @@ void test_TimeInterval(UnitTest& ut)
         CUN_UNITTEST_EVAL(ut, ti.size() == 2);
         CUN_UNITTEST_EVAL(ut, ti.m_data[0] >= duration_cast<ElapsedTime<1, milliseconds>::duration>(100ms));
         CUN_UNITTEST_EVAL(ut, ti.m_data[1] >= duration_cast<ElapsedTime<1, milliseconds>::duration>(200ms));
+        CUN_UNITTEST_EVAL(ut, ti.last_value() >= duration_cast<ElapsedTime<1, milliseconds>::duration>(200ms));
         CUN_UNITTEST_EXEC(ut, sleep_for(300ms));
         CUN_UNITTEST_EXEC(ut, ti.emit());
         CUN_UNITTEST_EVAL(ut, ti.size() == 2);
         CUN_UNITTEST_EVAL(ut, ti.m_data[0] >= duration_cast<ElapsedTime<1, milliseconds>::duration>(300ms));
         CUN_UNITTEST_EVAL(ut, ti.m_data[1] >= duration_cast<ElapsedTime<1, milliseconds>::duration>(200ms));
+        CUN_UNITTEST_EVAL(ut, ti.last_value() >= duration_cast<ElapsedTime<1, milliseconds>::duration>(200ms));
         CUN_UNITTEST_NL(ut);
 
         CUN_UNITTEST_COMMENT(ut, "Make report");
@@ -278,11 +296,13 @@ void test_TimeInterval(UnitTest& ut)
         CUN_UNITTEST_COMMENT(ut, "Clean up");
         CUN_UNITTEST_EXEC(ut, constexpr auto TAG2 { "Clean up" });
         CUN_UNITTEST_EVAL(ut, !ti.empty());
+        CUN_UNITTEST_EVAL(ut, ti.last_value() != milliseconds::zero());
         CUN_UNITTEST_EVAL(ut, ti.size() > 0);
         CUN_UNITTEST_EVAL(ut, ti.tag() != TAG2);
         CUN_UNITTEST_EVAL(ut, ti.m_being_measured);
         CUN_UNITTEST_EXEC(ut, ti.reset(TAG2));
         CUN_UNITTEST_EVAL(ut, ti.empty());
+        CUN_UNITTEST_EVAL(ut, ti.last_value() == milliseconds::zero());
         CUN_UNITTEST_EVAL(ut, ti.size() == 0);
         CUN_UNITTEST_EVAL(ut, ti.tag() == TAG2);
         CUN_UNITTEST_EVAL(ut, !ti.m_being_measured);

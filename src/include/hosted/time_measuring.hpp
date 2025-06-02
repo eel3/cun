@@ -56,6 +56,10 @@ protected:
         return (i + 1) >= MAX_LOG ? 0 : i + 1;
     }
 
+    static size_type prev_index_of(const size_type i) noexcept {
+        return i == 0 ? (MAX_LOG - 1) : i - 1;
+    }
+
 public:
     TimeMeasuring() : TimeMeasuring("") {};
 
@@ -75,6 +79,10 @@ public:
 
     bool empty() const noexcept {
         return size() == 0;
+    }
+
+    UNIT last_value() const noexcept {
+        return std::chrono::duration_cast<UNIT>(empty() ? duration::zero() : m_data[prev_index_of(m_wp)]);
     }
 
     bool make_report(report_type& report) const noexcept {
