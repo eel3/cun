@@ -44,13 +44,13 @@ void test_ElapsedTime(UnitTest& ut)
 
     CUN_UNITTEST_NAME(ut, "Minimul log size");
     {
-        CUN_UNITTEST_EXEC(ut, constexpr auto TAG { "Minimul log size" });
+        CUN_UNITTEST_EXEC(ut, const std::string TAG { "Minimul log size" });
         CUN_UNITTEST_EXEC(ut, ElapsedTime<1, milliseconds> tm { TAG });
         CUN_UNITTEST_EXEC(ut, ElapsedTime<1, milliseconds>::report_type report);
         CUN_UNITTEST_NL(ut);
 
         CUN_UNITTEST_COMMENT(ut, "Initial values");
-        CUN_UNITTEST_EVAL(ut, std::strcmp(tm.c_tag(), TAG) == 0);
+        CUN_UNITTEST_EVAL(ut, std::strcmp(tm.c_tag(), TAG.c_str()) == 0);
         CUN_UNITTEST_EVAL(ut, tm.empty());
         CUN_UNITTEST_EVAL(ut, tm.max_size() == 1);
         CUN_UNITTEST_EVAL(ut, tm.size() == 0);
@@ -155,13 +155,13 @@ void test_TimeInterval(UnitTest& ut)
 
     CUN_UNITTEST_NAME(ut, "Minimul log size");
     {
-        CUN_UNITTEST_EXEC(ut, constexpr auto TAG { "Minimul log size" });
+        CUN_UNITTEST_EXEC(ut, const std::string TAG { "Minimul log size" });
         CUN_UNITTEST_EXEC(ut, TimeInterval<1, milliseconds> ti { TAG });
         CUN_UNITTEST_EXEC(ut, TimeInterval<1, milliseconds>::report_type report);
         CUN_UNITTEST_NL(ut);
 
         CUN_UNITTEST_COMMENT(ut, "Initial values");
-        CUN_UNITTEST_EVAL(ut, std::strcmp(ti.c_tag(), TAG) == 0);
+        CUN_UNITTEST_EVAL(ut, std::strcmp(ti.c_tag(), TAG.c_str()) == 0);
         CUN_UNITTEST_EVAL(ut, ti.empty());
         CUN_UNITTEST_EVAL(ut, ti.max_size() == 1);
         CUN_UNITTEST_EVAL(ut, ti.size() == 0);

@@ -52,6 +52,7 @@ protected:
 public:
     TimeMeasuring() : TimeMeasuring("") {};
 
+    explicit TimeMeasuring(const std::string& tag) : m_tag { tag } {}
     explicit TimeMeasuring(std::string&& tag) : m_tag { tag } {}
 
     const char *c_tag() const noexcept {
