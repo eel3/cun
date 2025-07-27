@@ -72,7 +72,7 @@ OPTIM          +=
 WARN_COMMON    ?= -pedantic -Wall -Wextra
 WARN_CXX       ?=
 
-CXXWARN        ?= -std=c++17 $(WARN_COMMON) $(WARN_CXX)
+CXXWARN        ?= -std=c++20 $(WARN_COMMON) $(WARN_CXX)
 
 CXXFLAGS       += $(OPTIM) $(CXXWARN) $(WARNADD)
 CPPFLAGS       += $(include-dirs)

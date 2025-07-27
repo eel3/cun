@@ -83,13 +83,13 @@ void test_CSTREQ(UnitTest& ut)
     CUN_UNITTEST_EVAL(ut, !CUN_CSTREQ(s1, s2));
     CUN_UNITTEST_EXEC(ut, (void) strcpy(buf1, "abc"));
     CUN_UNITTEST_EXEC(ut, (void) strcpy(buf2, "abc"));
-    CUN_UNITTEST_EVAL(ut, CUN_CSTREQ(buf1, buf2));
+    CUN_UNITTEST_EVAL(ut, CUN_CSTREQ(&buf1[0], &buf2[0]));
     CUN_UNITTEST_NL(ut);
 
     CUN_UNITTEST_NAME(ut, "compare a zero-length string");
     CUN_UNITTEST_EXEC(ut, buf1[0] = '\0');
     CUN_UNITTEST_EXEC(ut, buf2[0] = '\0');
-    CUN_UNITTEST_EVAL(ut, CUN_CSTREQ(buf1, buf2));
+    CUN_UNITTEST_EVAL(ut, CUN_CSTREQ(&buf1[0], &buf2[0]));
     CUN_UNITTEST_NL(ut);
 
     CUN_UNITTEST_NAME(ut, "compare a null pointer");

@@ -55,7 +55,7 @@ StringT<CharT> join(const ContainerT<StringT<CharT>>& container, const CharT *se
     auto p = container.cbegin();
     ++p;
 
-    return std::accumulate(p, container.cend(), *container.cbegin(), [sep](auto& acc, auto& s){
+    return std::accumulate(p, container.cend(), *container.cbegin(), [sep](auto acc, auto& s){
         return acc + sep + s;
     });
 }
@@ -83,7 +83,7 @@ StringT<CharT> join(const std::array<StringT<CharT>, N>& container, const CharT 
     auto p = container.cbegin();
     ++p;
 
-    return std::accumulate(p, container.cend(), *container.cbegin(), [sep](auto& acc, auto& s){
+    return std::accumulate(p, container.cend(), *container.cbegin(), [sep](auto acc, auto& s){
         return acc + sep + s;
     });
 }
