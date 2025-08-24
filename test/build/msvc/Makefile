@@ -26,6 +26,7 @@ include_dirs      = $(include_core_dir) $(include_hosted_dir) $(machdep_logger_d
 
 target_name       = test_binary_writer.exe \
                     test_byte_packer.exe \
+                    test_byteorder.exe \
                     test_circular_buffer.exe \
                     test_cstrutil.exe \
                     test_event_loop.exe \

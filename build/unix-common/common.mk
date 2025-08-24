@@ -23,6 +23,7 @@ VPATH          := $(lib-core-dir) $(lib-hosted-dir)
 include-dirs   := $(addprefix -I ,$(include-core-dir) $(include-hosted-dir) $(VPATH) .)
 
 object-files   := byte_packer_core.o \
+                  byteorder.o \
                   cstrutil_copy.o cstrutil_is_ctype.o cstrutil_to_numeric.o \
                   misc_basename.o misc_hex.o \
                   sleep.o \

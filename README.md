@@ -40,6 +40,21 @@ An abstraction layer of binary data writing.
 * hosted
     * binary_writer.hpp
 
+### Byte order
+
+Byte order conversion functions.
+
+#### Dependencies
+
+None.
+
+#### Files
+
+* core
+    * byteorder.cpp
+    * byteorder.h
+    * byteorder.hpp
+
 ### Byte packer / unpacker
 
 Binary data pack / unpack functions.

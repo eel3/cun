@@ -26,6 +26,7 @@ include-dirs     := $(addprefix -I ,$(include-core-dir) $(include-hosted-dir) $(
 
 target-name      := test_binary_writer \
                     test_byte_packer \
+                    test_byteorder \
                     test_circular_buffer \
                     test_cstrutil \
                     test_event_loop \
