@@ -7,6 +7,7 @@ ChangeLog
 ### Added
 
 * Library: Byte order: The first implementation.
+* Library: Object pool: The first implementation.
 
 [0.0.0.2025072701] - 2025-07-27
 -------------------------------

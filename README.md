@@ -189,6 +189,19 @@ None.
     * misc.hpp
     * misc_basename.cpp
 
+### Object pool
+
+An Object pool class without implicit dynamic memory allocation.
+
+#### Dependencies
+
+None.
+
+#### Files
+
+* core
+    * object_pool.hpp
+
 ### Repeat call function utility
 
 A state machine class to repeat function call.
