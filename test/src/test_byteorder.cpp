@@ -18,6 +18,29 @@ namespace {
 using namespace cun::byteorder;
 using cun::UnitTest;
 
+union union16_t {
+    uint8_t b[2];
+    int16_t i;
+    uint16_t u;
+};
+static_assert(sizeof(union16_t) == sizeof(uint16_t));
+
+union union32_t {
+    uint8_t b[4];
+    float f;
+    int32_t i;
+    uint32_t u;
+};
+static_assert(sizeof(union32_t) == sizeof(uint32_t));
+
+union union64_t {
+    uint8_t b[8];
+    double f;
+    int64_t i;
+    uint64_t u;
+};
+static_assert(sizeof(union64_t) == sizeof(uint64_t));
+
 template <typename UnionT>
 struct test_data_t final {
     UnionT native;
@@ -76,19 +99,6 @@ constexpr test_data_t<union64_t> TEST_DATA_64 {
         static_cast<uint8_t>(0x01u),
     }},
 };
-
-void test_union_t(UnitTest& ut)
-{
-    CUN_UNITTEST_TITLE(ut, "Test code: Byte order conversion functions - union??_t.");
-    CUN_UNITTEST_NL(ut);
-
-    CUN_UNITTEST_EVAL(ut, sizeof(union16_t) == 2);
-    CUN_UNITTEST_EVAL(ut, sizeof(union32_t) == 4);
-    CUN_UNITTEST_EVAL(ut, sizeof(union64_t) == 8);
-    CUN_UNITTEST_NL(ut);
-
-    CUN_UNITTEST_RESET(ut);
-}
 
 void test_to_big(UnitTest& ut)
 {
@@ -214,12 +224,6 @@ void test_pack_to_big(UnitTest& ut)
 void test_unpack_from_big(UnitTest& ut)
 {
     CUN_UNITTEST_TITLE(ut, "Test code: Byte order conversion functions - unpack_from_big.");
-    CUN_UNITTEST_NL(ut);
-
-    CUN_UNITTEST_NAME(ut, "Core functions.");
-    CUN_UNITTEST_EVAL(ut, static_cast<union16_t>(unpack_from_big(TEST_DATA_16.be.b)).u == TEST_DATA_16.native.u);
-    CUN_UNITTEST_EVAL(ut, static_cast<union32_t>(unpack_from_big(TEST_DATA_32.be.b)).u == TEST_DATA_32.native.u);
-    CUN_UNITTEST_EVAL(ut, static_cast<union64_t>(unpack_from_big(TEST_DATA_64.be.b)).u == TEST_DATA_64.native.u);
     CUN_UNITTEST_NL(ut);
 
     CUN_UNITTEST_NAME(ut, "16bit primitive data types.");
@@ -372,12 +376,6 @@ void test_pack_to_little(UnitTest& ut)
 void test_unpack_from_little(UnitTest& ut)
 {
     CUN_UNITTEST_TITLE(ut, "Test code: Byte order conversion functions - unpack_from_little.");
-    CUN_UNITTEST_NL(ut);
-
-    CUN_UNITTEST_NAME(ut, "Core functions.");
-    CUN_UNITTEST_EVAL(ut, static_cast<union16_t>(unpack_from_little(TEST_DATA_16.le.b)).u == TEST_DATA_16.native.u);
-    CUN_UNITTEST_EVAL(ut, static_cast<union32_t>(unpack_from_little(TEST_DATA_32.le.b)).u == TEST_DATA_32.native.u);
-    CUN_UNITTEST_EVAL(ut, static_cast<union64_t>(unpack_from_little(TEST_DATA_64.le.b)).u == TEST_DATA_64.native.u);
     CUN_UNITTEST_NL(ut);
 
     CUN_UNITTEST_NAME(ut, "16bit primitive data types.");
@@ -564,8 +562,6 @@ void test_c_api(UnitTest& ut)
 int main()
 {
     auto ut = CUN_UNITTEST_MAKE();
-
-    test_union_t(ut);
 
     test_to_big(ut);
     test_from_big(ut);
