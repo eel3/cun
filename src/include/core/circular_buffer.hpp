@@ -145,6 +145,10 @@ public:
         return m_buf[m_rp];
     }
 
+    bool full() const noexcept {
+        return free_size() == 0;
+    }
+
     size_type max_size() const noexcept {
         return MAX_SIZE;
     }

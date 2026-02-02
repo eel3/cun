@@ -8,6 +8,7 @@ ChangeLog
 
 * Library: Circular buffer: drop: The first implementation.
 * Library: Circular buffer: free_size: The first implementation.
+* Library: Circular buffer: full: The first implementation.
 
 [0.0.0.2025101901] - 2025-10-19
 -------------------------------

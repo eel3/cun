@@ -28,6 +28,7 @@ int main()
     CUN_UNITTEST_EXEC(ut, CircularBuffer<uint8_t, 1> cb1);
     CUN_UNITTEST_EVAL(ut, cb1.empty());
     CUN_UNITTEST_EVAL(ut, cb1.free_size() == 1);
+    CUN_UNITTEST_EVAL(ut, !cb1.full());
     CUN_UNITTEST_EVAL(ut, cb1.max_size() == 1);
     CUN_UNITTEST_EVAL(ut, cb1.size() == 0);
     CUN_UNITTEST_NL(ut);
@@ -36,6 +37,7 @@ int main()
     CUN_UNITTEST_EVAL(ut, cb1.push(1));
     CUN_UNITTEST_EVAL(ut, !cb1.empty());
     CUN_UNITTEST_EVAL(ut, cb1.free_size() == 0);
+    CUN_UNITTEST_EVAL(ut, cb1.full());
     CUN_UNITTEST_EVAL(ut, cb1.size() == 1);
     CUN_UNITTEST_NL(ut);
 
@@ -45,6 +47,7 @@ int main()
     CUN_UNITTEST_EVAL(ut, val == 1);
     CUN_UNITTEST_EVAL(ut, cb1.empty());
     CUN_UNITTEST_EVAL(ut, cb1.free_size() == 1);
+    CUN_UNITTEST_EVAL(ut, !cb1.full());
     CUN_UNITTEST_EVAL(ut, cb1.size() == 0);
     CUN_UNITTEST_NL(ut);
 
@@ -55,6 +58,7 @@ int main()
     CUN_UNITTEST_EVAL(ut, cb1.back() == 2);
     CUN_UNITTEST_EVAL(ut, !cb1.empty());
     CUN_UNITTEST_EVAL(ut, cb1.free_size() == 0);
+    CUN_UNITTEST_EVAL(ut, cb1.full());
     CUN_UNITTEST_EVAL(ut, cb1.size() == 1);
     CUN_UNITTEST_NL(ut);
 
@@ -62,6 +66,7 @@ int main()
     CUN_UNITTEST_EVAL(ut, cb1.drop());
     CUN_UNITTEST_EVAL(ut, cb1.empty());
     CUN_UNITTEST_EVAL(ut, cb1.free_size() == 1);
+    CUN_UNITTEST_EVAL(ut, !cb1.full());
     CUN_UNITTEST_EVAL(ut, cb1.size() == 0);
     CUN_UNITTEST_NL(ut);
 
@@ -69,10 +74,12 @@ int main()
     CUN_UNITTEST_EVAL(ut, cb1.push(4));
     CUN_UNITTEST_EVAL(ut, !cb1.empty());
     CUN_UNITTEST_EVAL(ut, cb1.free_size() == 0);
+    CUN_UNITTEST_EVAL(ut, cb1.full());
     CUN_UNITTEST_EVAL(ut, cb1.size() == 1);
     CUN_UNITTEST_EXEC(ut, cb1.clear());
     CUN_UNITTEST_EVAL(ut, cb1.empty());
     CUN_UNITTEST_EVAL(ut, cb1.free_size() == 1);
+    CUN_UNITTEST_EVAL(ut, !cb1.full());
     CUN_UNITTEST_EVAL(ut, cb1.size() == 0);
     CUN_UNITTEST_NL(ut);
 
