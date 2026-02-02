@@ -129,6 +129,10 @@ public:
         return size() == 0;
     }
 
+    size_type free_size() const noexcept {
+        return size_of_free(m_rp, m_wp);
+    }
+
     reference front() {
         assert(!empty());
 
