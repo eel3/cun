@@ -86,6 +86,45 @@ public:
         m_wp = 0;
     }
 
+    bool drop() noexcept {
+        return drop(1) == 1;
+    }
+
+    size_type drop(const size_t n) noexcept {
+        if (n == 0) {
+            return 0;
+        }
+
+        size_type rp = m_rp;
+        size_type wp = m_wp;
+
+        size_type ndata = size_of_used(rp, wp);
+        if (ndata > n) {
+            ndata = n;
+        }
+
+        size_type ndropped { 0 };
+
+        if (wp < rp) {
+            auto remain = BUF_SIZE - rp;
+
+            if (remain <= ndata) {
+                ndata -= remain;
+                ndropped = remain;
+                rp = 0;
+            }
+        }
+
+        if (ndata > 0) {
+            ndropped += ndata;
+            rp += ndata;
+        }
+
+        m_rp = rp;
+
+        return ndropped;
+    }
+
     bool empty() const noexcept {
         return size() == 0;
     }

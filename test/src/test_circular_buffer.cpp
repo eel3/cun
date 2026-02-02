@@ -50,9 +50,18 @@ int main()
     CUN_UNITTEST_EVAL(ut, !cb1.push(3));
     CUN_UNITTEST_EVAL(ut, cb1.front() == 2);
     CUN_UNITTEST_EVAL(ut, cb1.back() == 2);
+    CUN_UNITTEST_EVAL(ut, !cb1.empty());
+    CUN_UNITTEST_EVAL(ut, cb1.size() == 1);
+    CUN_UNITTEST_NL(ut);
+
+    CUN_UNITTEST_NAME(ut, "drop data");
+    CUN_UNITTEST_EVAL(ut, cb1.drop());
+    CUN_UNITTEST_EVAL(ut, cb1.empty());
+    CUN_UNITTEST_EVAL(ut, cb1.size() == 0);
     CUN_UNITTEST_NL(ut);
 
     CUN_UNITTEST_NAME(ut, "clear all data");
+    CUN_UNITTEST_EVAL(ut, cb1.push(4));
     CUN_UNITTEST_EVAL(ut, !cb1.empty());
     CUN_UNITTEST_EXEC(ut, cb1.clear());
     CUN_UNITTEST_EVAL(ut, cb1.empty());
