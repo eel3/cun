@@ -43,14 +43,14 @@ private:
     value_type m_buf[BUF_SIZE];
 
     template <typename U = T>
-    static std::enable_if_t<std::is_trivially_copyable<value_type>::value && std::is_same<U, T>::value, void>
-    copy(value_type *dst, const value_type *src, size_type n) noexcept {
+    requires std::is_trivially_copyable_v<value_type>
+    static void copy(value_type *dst, const value_type *src, size_type n) noexcept {
         (void) std::memcpy(dst, src, sizeof(value_type) * n);
     }
 
     template <typename U = T>
-    static std::enable_if_t<!std::is_trivially_copyable<value_type>::value && std::is_same<U, T>::value, void>
-    copy(value_type *dst, const value_type *src, size_type n) {
+    requires (!std::is_trivially_copyable_v<value_type>)
+    static void copy(value_type *dst, const value_type *src, size_type n) {
         for (; n > 0; ++dst, ++src, --n) {
             *dst = *src;
         }
