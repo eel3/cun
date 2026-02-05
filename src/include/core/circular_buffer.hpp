@@ -98,7 +98,7 @@ public:
         size_type rp = m_rp;
         size_type wp = m_wp;
 
-        size_type ndata = size_of_used(rp, wp);
+        auto ndata = size_of_used(rp, wp);
         if (ndata > n) {
             ndata = n;
         }
@@ -165,7 +165,7 @@ public:
         size_type rp = m_rp;
         size_type wp = m_wp;
 
-        size_type ndata = size_of_used(rp, wp);
+        auto ndata = size_of_used(rp, wp);
         if (ndata > n) {
             ndata = n;
         }
