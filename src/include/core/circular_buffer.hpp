@@ -10,8 +10,8 @@
 #include <atomic>
 #include <cassert>
 #include <cstddef>
-#include <cstdint>
 #include <cstring>
+#include <limits>
 #include <type_traits>
 
 /* ---------------------------------------------------------------------- */
@@ -26,7 +26,7 @@ inline namespace circular_buffer {
 template <typename T, std::size_t N, typename IndexT = std::atomic_size_t>
 class CircularBuffer final {
     static_assert(N > 0, "CircularBuffer: 0 size buffer is not allowed.");
-    static_assert(N < SIZE_MAX, "CircularBuffer: buffer size must be less than SIZE_MAX.");
+    static_assert(N < std::numeric_limits<std::size_t>::max(), "CircularBuffer: buffer size must be less than SIZE_MAX.");
 
 public:
     using size_type = std::size_t;

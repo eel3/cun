@@ -7,6 +7,7 @@ ChangeLog
 ### Changed
 
 * Library: Circular buffer: Use auto instead of size_type.
+* Library: Circular buffer: Use std::numeric_limits::max() instead of SIZE_MAX.
 
 [0.0.0.2026020201] - 2026-02-02
 -------------------------------
