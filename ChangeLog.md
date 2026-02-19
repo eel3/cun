@@ -1,6 +1,13 @@
 ChangeLog
 =========
 
+[0.0.0.2026021901] - 2026-02-19
+-------------------------------
+
+### Changed
+
+* Library: Event loop toolbox: Make it possible to use pointer like objects for context pointers.
+
 [0.0.0.2026020501] - 2026-02-05
 -------------------------------
 

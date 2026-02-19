@@ -7,6 +7,7 @@
 #define EVENT_LOOP_HPP_INCLUDED
 
 // C++ standard library
+#include <concepts>
 #include <functional>
 #include <future>
 #include <map>
@@ -26,17 +27,31 @@ namespace cun {
 
 inline namespace event_loop {
 
+/** A concept for pointer like objects. */
+template <typename T>
+concept PointerLike = requires(T p) {
+    *p;
+    p.operator->();
+    { p == nullptr } -> std::convertible_to<bool>;
+    { p != nullptr } -> std::convertible_to<bool>;
+    { static_cast<bool>(p) } -> std::same_as<bool>;
+};
+
+/** A concept for EventLoop's context pointers. */
+template <typename T>
+concept ContextPtr =
+    std::is_pointer_v<T> ||
+    PointerLike<T>;
+
 /** Event loop toolbox class. */
 template <
     typename EventTypeT,
-    typename ContextPtrT = void *,
+    ContextPtr ContextPtrT = void *,
     typename ReturnT = bool,
     ReturnT ERROR = false,
     EventTypeT ON_DESTROY = EventTypeT::on_destroy_event_loop
 >
 class EventLoop {
-    static_assert(std::is_pointer<ContextPtrT>(), "CircularBuffer: ContextPtrT must be a pointer type.");
-
 public:
     using event_proc = std::function<ReturnT (ContextPtrT, void *, void *)>;
 

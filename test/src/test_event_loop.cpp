@@ -120,14 +120,14 @@ void test_no_ctx(UnitTest& ut)
 }
 
 /* ---------------------------------------------------------------------- */
-/* Test code: with a context object. */
+/* Test code: with a context object (using raw pointer). */
 /* ---------------------------------------------------------------------- */
 
 struct Context final {
     int32_t count = 0;
 };
 
-bool test_with_ctx_1(Context *ctx, void *args, void *results)
+bool test_with_ctx_rawptr_1(Context *ctx, void *args, void *results)
 {
     auto& ut = *static_cast<UnitTest *>(args);
 
@@ -139,7 +139,7 @@ bool test_with_ctx_1(Context *ctx, void *args, void *results)
     return false;
 }
 
-bool test_with_ctx_2(Context *ctx, void *args, void *results)
+bool test_with_ctx_rawptr_2(Context *ctx, void *args, void *results)
 {
     auto& ut = *static_cast<UnitTest *>(args);
 
@@ -151,7 +151,7 @@ bool test_with_ctx_2(Context *ctx, void *args, void *results)
     return true;
 }
 
-bool test_with_ctx_3(Context *ctx, void *args, void *results)
+bool test_with_ctx_rawptr_3(Context *ctx, void *args, void *results)
 {
     auto& ut = *static_cast<UnitTest *>(args);
 
@@ -163,15 +163,15 @@ bool test_with_ctx_3(Context *ctx, void *args, void *results)
     return false;
 }
 
-void test_with_ctx(UnitTest& ut)
+void test_with_ctx_rawptr(UnitTest& ut)
 {
-    CUN_UNITTEST_TITLE(ut, "Test code: Event loop toolbox - with a context object.");
+    CUN_UNITTEST_TITLE(ut, "Test code: Event loop toolbox - with a context object (using raw pointer).");
     CUN_UNITTEST_NL(ut);
 
     std::map<EventType, EventLoop<EventType, Context *>::event_proc> entry {
-        make_pair(EventType::on_test_1, test_with_ctx_1),
-        make_pair(EventType::on_test_2, test_with_ctx_2),
-        make_pair(EventType::on_test_3, test_with_ctx_3),
+        make_pair(EventType::on_test_1, test_with_ctx_rawptr_1),
+        make_pair(EventType::on_test_2, test_with_ctx_rawptr_2),
+        make_pair(EventType::on_test_3, test_with_ctx_rawptr_3),
     };
 
     CUN_UNITTEST_EXEC(ut, Context context);
@@ -184,6 +184,74 @@ void test_with_ctx(UnitTest& ut)
     CUN_UNITTEST_EVAL(ut, el.send_event(EventType::on_test_2, &ut, results));
     CUN_UNITTEST_EVAL(ut, !el.send_event(EventType::on_test_3, &ut, results));
     CUN_UNITTEST_EVAL(ut, context.count == 3);
+    CUN_UNITTEST_NL(ut);
+
+    CUN_UNITTEST_RESET(ut);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Test code: with a context object (using smart pointer). */
+/* ---------------------------------------------------------------------- */
+
+using SharedContext = std::shared_ptr<Context>;
+
+bool test_with_ctx_smartptr_1(SharedContext ctx, void *args, void *results)
+{
+    auto& ut = *static_cast<UnitTest *>(args);
+
+    ostringstream oss;
+    oss << "test_1: results = " << results;
+    CUN_UNITTEST_ECHO(ut, oss.str().c_str());
+    CUN_UNITTEST_EXEC(ut, ctx->count++);
+
+    return false;
+}
+
+bool test_with_ctx_smartptr_2(SharedContext ctx, void *args, void *results)
+{
+    auto& ut = *static_cast<UnitTest *>(args);
+
+    ostringstream oss;
+    oss << "test_2: results = " << results;
+    CUN_UNITTEST_ECHO(ut, oss.str().c_str());
+    CUN_UNITTEST_EXEC(ut, ctx->count++);
+
+    return true;
+}
+
+bool test_with_ctx_smartptr_3(SharedContext ctx, void *args, void *results)
+{
+    auto& ut = *static_cast<UnitTest *>(args);
+
+    ostringstream oss;
+    oss << "test_3: results = " << results;
+    CUN_UNITTEST_ECHO(ut, oss.str().c_str());
+    CUN_UNITTEST_EXEC(ut, ctx->count++);
+
+    return false;
+}
+
+void test_with_ctx_smartptr(UnitTest& ut)
+{
+    CUN_UNITTEST_TITLE(ut, "Test code: Event loop toolbox - with a context object (using smart pointer).");
+    CUN_UNITTEST_NL(ut);
+
+    std::map<EventType, EventLoop<EventType, SharedContext>::event_proc> entry {
+        make_pair(EventType::on_test_1, test_with_ctx_smartptr_1),
+        make_pair(EventType::on_test_2, test_with_ctx_smartptr_2),
+        make_pair(EventType::on_test_3, test_with_ctx_smartptr_3),
+    };
+
+    CUN_UNITTEST_EXEC(ut, auto context = std::make_shared<Context>());
+    CUN_UNITTEST_EXEC(ut, EventLoop<EventType, SharedContext> el { entry, context });
+    CUN_UNITTEST_EXEC(ut, auto results = reinterpret_cast<void *>(static_cast<uintptr_t>(0xDEADBEEF)));
+    CUN_UNITTEST_NL(ut);
+
+    CUN_UNITTEST_EVAL(ut, context->count == 0);
+    CUN_UNITTEST_EVAL(ut, el.post_event(EventType::on_test_1, &ut));
+    CUN_UNITTEST_EVAL(ut, el.send_event(EventType::on_test_2, &ut, results));
+    CUN_UNITTEST_EVAL(ut, !el.send_event(EventType::on_test_3, &ut, results));
+    CUN_UNITTEST_EVAL(ut, context->count == 3);
     CUN_UNITTEST_NL(ut);
 
     CUN_UNITTEST_RESET(ut);
@@ -300,7 +368,8 @@ int main()
 
     test_no_event(ut);
     test_no_ctx(ut);
-    test_with_ctx(ut);
+    test_with_ctx_rawptr(ut);
+    test_with_ctx_smartptr(ut);
     test_inherited_class(ut);
 
     return EXIT_SUCCESS;
