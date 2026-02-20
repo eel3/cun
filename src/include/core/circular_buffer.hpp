@@ -1,7 +1,7 @@
 ﻿// -*- coding: utf-8-with-signature-dos -*-
 // vim:fileencoding=utf-8:ff=dos
 //
-// A circular buffer.
+// A circular buffer (SPSC: Single-Producer, Single-Consumer).
 
 #ifndef CUN_CIRCULAR_BUFFER_HPP_INCLUDED
 #define CUN_CIRCULAR_BUFFER_HPP_INCLUDED
@@ -23,7 +23,7 @@ namespace cun {
 
 inline namespace circular_buffer {
 
-/** A circular buffer class. */
+/** A circular buffer class (SPSC: Single-Producer, Single-Consumer). */
 template <typename T, std::size_t N>
 requires std::default_initializable<T>
 class CircularBuffer final {
@@ -74,18 +74,18 @@ public:
     reference back() {
         assert(!empty());
 
-        return m_buf[prev_index(m_wp)];
+        return m_buf[prev_index(m_wp.load(std::memory_order_acquire))];
     }
 
     const_reference back() const {
         assert(!empty());
 
-        return m_buf[prev_index(m_wp)];
+        return m_buf[prev_index(m_wp.load(std::memory_order_acquire))];
     }
 
     void clear() noexcept {
-        m_rp = 0;
-        m_wp = 0;
+        m_rp.store(0, std::memory_order_relaxed);
+        m_wp.store(0, std::memory_order_relaxed);
     }
 
     bool drop() noexcept {
@@ -97,8 +97,8 @@ public:
             return 0;
         }
 
-        size_type rp = m_rp;
-        size_type wp = m_wp;
+        size_type rp = m_rp.load(std::memory_order_relaxed);
+        size_type wp = m_wp.load(std::memory_order_acquire);
 
         auto ndata = size_of_used(rp, wp);
         if (ndata > n) {
@@ -122,7 +122,7 @@ public:
             rp += ndata;
         }
 
-        m_rp = rp;
+        m_rp.store(rp, std::memory_order_release);
 
         return ndropped;
     }
@@ -132,19 +132,19 @@ public:
     }
 
     size_type free_size() const noexcept {
-        return size_of_free(m_rp, m_wp);
+        return size_of_free(m_rp.load(std::memory_order_relaxed), m_wp.load(std::memory_order_relaxed));
     }
 
     reference front() {
         assert(!empty());
 
-        return m_buf[m_rp];
+        return m_buf[m_rp.load(std::memory_order_relaxed)];
     }
 
     const_reference front() const {
         assert(!empty());
 
-        return m_buf[m_rp];
+        return m_buf[m_rp.load(std::memory_order_relaxed)];
     }
 
     bool full() const noexcept {
@@ -164,8 +164,8 @@ public:
             return 0;
         }
 
-        size_type rp = m_rp;
-        size_type wp = m_wp;
+        size_type rp = m_rp.load(std::memory_order_relaxed);
+        size_type wp = m_wp.load(std::memory_order_acquire);
 
         auto ndata = size_of_used(rp, wp);
         if (ndata > n) {
@@ -191,7 +191,7 @@ public:
             rp += ndata;
         }
 
-        m_rp = rp;
+        m_rp.store(rp, std::memory_order_release);
 
         return ncopied;
     }
@@ -205,8 +205,8 @@ public:
             return 0;
         }
 
-        size_type rp = m_rp;
-        size_type wp = m_wp;
+        size_type rp = m_rp.load(std::memory_order_acquire);
+        size_type wp = m_wp.load(std::memory_order_relaxed);
 
         auto nfree = size_of_free(rp, wp);
         if (nfree == 0) {
@@ -234,13 +234,13 @@ public:
             wp += nwrite;
         }
 
-        m_wp = wp;
+        m_wp.store(wp, std::memory_order_release);
 
         return nwritten;
     }
 
     size_type size() const noexcept {
-        return size_of_used(m_rp, m_wp);
+        return size_of_used(m_rp.load(std::memory_order_relaxed), m_wp.load(std::memory_order_relaxed));
     }
 };
 

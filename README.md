@@ -76,7 +76,7 @@ Binary data pack / unpack functions.
 
 ### Circular buffer
 
-A circular buffer class without implicit dynamic memory allocation.
+A circular buffer class (SPSC: Single-Producer, Single-Consumer), without implicit dynamic memory allocation.
 
 #### Dependencies
 
