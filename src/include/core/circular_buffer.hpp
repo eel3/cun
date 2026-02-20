@@ -24,7 +24,7 @@ namespace cun {
 inline namespace circular_buffer {
 
 /** A circular buffer class. */
-template <typename T, std::size_t N, typename IndexT = std::atomic_size_t>
+template <typename T, std::size_t N>
 requires std::default_initializable<T>
 class CircularBuffer final {
     static_assert(N > 0, "CircularBuffer: 0 size buffer is not allowed.");
@@ -40,8 +40,8 @@ private:
     static constexpr size_type MAX_SIZE { N };
     static constexpr size_type BUF_SIZE { MAX_SIZE + 1 };
 
-    IndexT m_rp { 0 };
-    IndexT m_wp { 0 };
+    std::atomic_size_t m_rp { 0 };
+    std::atomic_size_t m_wp { 0 };
     value_type m_buf[BUF_SIZE];
 
     template <typename U = T>

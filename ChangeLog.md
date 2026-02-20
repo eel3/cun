@@ -8,6 +8,7 @@ ChangeLog
 
 * Library: Circular buffer: Use size_type instead of size_t.
 * Library: Circular buffer: Add requirements to template parameters by using concepts.
+* Library: Circular buffer: Remove template parameter `IndexT'.
 
 [0.0.0.2026021901] - 2026-02-19
 -------------------------------
