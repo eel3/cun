@@ -90,7 +90,7 @@ public:
         return drop(1) == 1;
     }
 
-    size_type drop(const size_t n) noexcept {
+    size_type drop(const size_type n) noexcept {
         if (n == 0) {
             return 0;
         }
