@@ -9,6 +9,7 @@
 // C++ standard library
 #include <atomic>
 #include <cassert>
+#include <concepts>
 #include <cstddef>
 #include <cstring>
 #include <limits>
@@ -24,6 +25,7 @@ inline namespace circular_buffer {
 
 /** A circular buffer class. */
 template <typename T, std::size_t N, typename IndexT = std::atomic_size_t>
+requires std::default_initializable<T>
 class CircularBuffer final {
     static_assert(N > 0, "CircularBuffer: 0 size buffer is not allowed.");
     static_assert(N < std::numeric_limits<std::size_t>::max(), "CircularBuffer: buffer size must be less than SIZE_MAX.");
