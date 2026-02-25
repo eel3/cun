@@ -55,34 +55,35 @@ void test_no_event(UnitTest& ut)
 /* Test code: without a context object. */
 /* ---------------------------------------------------------------------- */
 
-bool test_no_ctx_1(void *ctx, void *args, void *results)
+bool test_no_ctx_1(void *ctx, std::any& args, std::any& results)
 {
-    auto& ut = *static_cast<UnitTest *>(args);
+    auto& ut = *std::any_cast<UnitTest *>(args);
+    const auto res = results.has_value() ? "NG" : "(empty)";
 
     ostringstream oss;
-    oss << "test_1: ctx = " << ctx << " : results = " << results;
+    oss << "test_1: ctx = " << ctx << " : results = " << res;
     CUN_UNITTEST_ECHO(ut, oss.str().c_str());
 
     return false;
 }
 
-bool test_no_ctx_2(void *args, void *results)
+bool test_no_ctx_2(std::any& args, std::any& results)
 {
-    auto& ut = *static_cast<UnitTest *>(args);
+    auto& ut = *std::any_cast<UnitTest *>(args);
 
     ostringstream oss;
-    oss << "test_2: results = " << results;
+    oss << "test_2: results = " << std::any_cast<void *>(results);
     CUN_UNITTEST_ECHO(ut, oss.str().c_str());
 
     return true;
 }
 
-bool test_no_ctx_3(void *args, void *results)
+bool test_no_ctx_3(std::any& args, std::any& results)
 {
-    auto& ut = *static_cast<UnitTest *>(args);
+    auto& ut = *std::any_cast<UnitTest *>(args);
 
     ostringstream oss;
-    oss << "test_3: results = " << results;
+    oss << "test_3: results = " << std::any_cast<void *>(results);
     CUN_UNITTEST_ECHO(ut, oss.str().c_str());
 
     return false;
@@ -98,7 +99,7 @@ void test_no_ctx(UnitTest& ut)
         make_pair(EventType::on_test_1, test_no_ctx_1),
 
 #define ENTRY(type, fn) \
-        make_pair(EventType::type, [](void *, void *args, void *results) { return fn(args, results); })
+        make_pair(EventType::type, [](void *, std::any& args, std::any& results) { return fn(args, results); })
 
         // function without a unused context pointer.
         ENTRY(on_test_2, test_no_ctx_2),
@@ -127,36 +128,37 @@ struct Context final {
     int32_t count = 0;
 };
 
-bool test_with_ctx_rawptr_1(Context *ctx, void *args, void *results)
+bool test_with_ctx_rawptr_1(Context *ctx, std::any& args, std::any& results)
 {
-    auto& ut = *static_cast<UnitTest *>(args);
+    auto& ut = *std::any_cast<UnitTest *>(args);
+    const auto res = results.has_value() ? "NG" : "(empty)";
 
     ostringstream oss;
-    oss << "test_1: results = " << results;
+    oss << "test_1: results = " << res;
     CUN_UNITTEST_ECHO(ut, oss.str().c_str());
     CUN_UNITTEST_EXEC(ut, ctx->count++);
 
     return false;
 }
 
-bool test_with_ctx_rawptr_2(Context *ctx, void *args, void *results)
+bool test_with_ctx_rawptr_2(Context *ctx, std::any& args, std::any& results)
 {
-    auto& ut = *static_cast<UnitTest *>(args);
+    auto& ut = *std::any_cast<UnitTest *>(args);
 
     ostringstream oss;
-    oss << "test_2: results = " << results;
+    oss << "test_2: results = " << std::any_cast<void *>(results);
     CUN_UNITTEST_ECHO(ut, oss.str().c_str());
     CUN_UNITTEST_EXEC(ut, ctx->count++);
 
     return true;
 }
 
-bool test_with_ctx_rawptr_3(Context *ctx, void *args, void *results)
+bool test_with_ctx_rawptr_3(Context *ctx, std::any& args, std::any& results)
 {
-    auto& ut = *static_cast<UnitTest *>(args);
+    auto& ut = *std::any_cast<UnitTest *>(args);
 
     ostringstream oss;
-    oss << "test_3: results = " << results;
+    oss << "test_3: results = " << std::any_cast<void *>(results);
     CUN_UNITTEST_ECHO(ut, oss.str().c_str());
     CUN_UNITTEST_EXEC(ut, ctx->count++);
 
@@ -195,36 +197,37 @@ void test_with_ctx_rawptr(UnitTest& ut)
 
 using SharedContext = std::shared_ptr<Context>;
 
-bool test_with_ctx_smartptr_1(SharedContext ctx, void *args, void *results)
+bool test_with_ctx_smartptr_1(SharedContext ctx, std::any& args, std::any& results)
 {
-    auto& ut = *static_cast<UnitTest *>(args);
+    auto& ut = *std::any_cast<UnitTest *>(args);
+    const auto res = results.has_value() ? "NG" : "(empty)";
 
     ostringstream oss;
-    oss << "test_1: results = " << results;
+    oss << "test_1: results = " << res;
     CUN_UNITTEST_ECHO(ut, oss.str().c_str());
     CUN_UNITTEST_EXEC(ut, ctx->count++);
 
     return false;
 }
 
-bool test_with_ctx_smartptr_2(SharedContext ctx, void *args, void *results)
+bool test_with_ctx_smartptr_2(SharedContext ctx, std::any& args, std::any& results)
 {
-    auto& ut = *static_cast<UnitTest *>(args);
+    auto& ut = *std::any_cast<UnitTest *>(args);
 
     ostringstream oss;
-    oss << "test_2: results = " << results;
+    oss << "test_2: results = " << std::any_cast<void *>(results);
     CUN_UNITTEST_ECHO(ut, oss.str().c_str());
     CUN_UNITTEST_EXEC(ut, ctx->count++);
 
     return true;
 }
 
-bool test_with_ctx_smartptr_3(SharedContext ctx, void *args, void *results)
+bool test_with_ctx_smartptr_3(SharedContext ctx, std::any& args, std::any& results)
 {
-    auto& ut = *static_cast<UnitTest *>(args);
+    auto& ut = *std::any_cast<UnitTest *>(args);
 
     ostringstream oss;
-    oss << "test_3: results = " << results;
+    oss << "test_3: results = " << std::any_cast<void *>(results);
     CUN_UNITTEST_ECHO(ut, oss.str().c_str());
     CUN_UNITTEST_EXEC(ut, ctx->count++);
 
@@ -268,33 +271,39 @@ private:
 
     UnitTest& m_ut;
 
-    static bool on_test_1(InheritedEventLoop *thiz, void *args, void *results) {
+    static bool on_test_1(InheritedEventLoop *thiz, std::any& args, std::any& results) {
+        const auto res = results.has_value() ? "NG" : "(empty)";
         ostringstream oss;
-        oss << "test_1: thiz = " << thiz << " : args = " << args << " : results = " << results;
+        oss << "test_1: thiz = " << thiz << " : args = " << std::any_cast<void *>(args) << " : results = " << res;
         CUN_UNITTEST_ECHO(thiz->m_ut, oss.str().c_str());
 
         return false;
     }
 
-    bool on_test_2(InheritedEventLoop *thiz, void *args, void *results) {
+    bool on_test_2(InheritedEventLoop *thiz, std::any& args, std::any& results) {
         ostringstream oss;
-        oss << "test_2: thiz = " << thiz << " : args = " << args << " : results = " << results;
+        oss << "test_2: thiz = " << thiz << " : args = " << std::any_cast<void *>(args) << " : results = " << std::any_cast<void *>(results);
         CUN_UNITTEST_ECHO(thiz->m_ut, oss.str().c_str());
         CUN_UNITTEST_EVAL(m_ut, thiz == this);
 
         return true;
     }
 
-    bool on_test_3(void *args, void *results) {
+    bool on_test_3(std::any& args, std::any& results) {
         ostringstream oss;
-        oss << "test_3: args = " << args << " : results = " << results;
+        oss << "test_3: args = " << std::any_cast<void *>(args) << " : results = " << std::any_cast<void *>(results);
         CUN_UNITTEST_ECHO(m_ut, oss.str().c_str());
 
         return false;
     }
 
-    bool on_destroy(void *, void *) {
-        CUN_UNITTEST_ECHO(m_ut, "on_destroy");
+    bool on_destroy(std::any& args, std::any& results) {
+        const auto arg = args.has_value() ? "NG" : "(empty)";
+        const auto res = results.has_value() ? "NG" : "(empty)";
+        ostringstream oss;
+        oss << "on_destroy: args = " << arg << " : results = " << res;
+        CUN_UNITTEST_ECHO(m_ut, oss.str().c_str());
+
         return true;
     }
 
@@ -305,12 +314,12 @@ public:
             make_pair(EventType::on_test_1, on_test_1),
 
             // non-static member function with a context object.
-            make_pair(EventType::on_test_2, [this](InheritedEventLoop *thiz, void *args, void *results) {
+            make_pair(EventType::on_test_2, [this](InheritedEventLoop *thiz, std::any& args, std::any& results) {
                 return on_test_2(thiz, args, results);
             }),
 
 #define ENTRY(type, fn) \
-        make_pair(EventType::type, [this](InheritedEventLoop *, void *args, void *results) { return fn(args, results); })
+        make_pair(EventType::type, [this](InheritedEventLoop *, std::any& args,std::any& results) { return fn(args, results); })
 
             // non-static member function without a context object.
             ENTRY(on_test_3, on_test_3),
@@ -356,6 +365,79 @@ void test_inherited_class(UnitTest& ut)
     CUN_UNITTEST_RESET(ut);
 }
 
+/* ---------------------------------------------------------------------- */
+/* Test code: various argument types. */
+/* ---------------------------------------------------------------------- */
+
+bool test_argument_type_1(std::any& args, std::any& results)
+{
+    auto& ut = *std::any_cast<UnitTest *>(args);
+
+    ostringstream oss;
+    oss << "test_1: results = " << std::any_cast<uintptr_t>(results);
+    CUN_UNITTEST_ECHO(ut, oss.str().c_str());
+
+    return true;
+}
+
+bool test_argument_type_2(std::any& args, std::any& results)
+{
+    auto& ut = *std::any_cast<UnitTest *>(args);
+
+    ostringstream oss;
+    oss << "test_2: results = " << std::any_cast<uintptr_t *>(results);
+    CUN_UNITTEST_ECHO(ut, oss.str().c_str());
+
+    return true;
+}
+
+bool test_argument_type_3(std::any& args, std::any& results)
+{
+    auto& ut = *std::any_cast<UnitTest *>(args);
+
+    ostringstream oss;
+    oss << "test_3: results = " << std::any_cast<uintptr_t&>(results);
+    CUN_UNITTEST_ECHO(ut, oss.str().c_str());
+
+    return true;
+}
+
+void test_argument_type(UnitTest& ut)
+{
+    CUN_UNITTEST_TITLE(ut, "Test code: Event loop toolbox - various argument types.");
+    CUN_UNITTEST_NL(ut);
+
+    std::map<EventType, EventLoop<EventType>::event_proc> entry {
+#define ENTRY(type, fn) \
+        make_pair(EventType::type, [](void *, std::any& args, std::any& results) { return fn(args, results); })
+
+        // function without a unused context pointer.
+        ENTRY(on_test_1, test_argument_type_1),
+        ENTRY(on_test_2, test_argument_type_2),
+        ENTRY(on_test_3, test_argument_type_3),
+
+#undef ENTRY
+    };
+
+    CUN_UNITTEST_EXEC(ut, EventLoop<EventType> el { entry });
+    CUN_UNITTEST_EXEC(ut, uintptr_t results = 0xDEADBEEF);
+    CUN_UNITTEST_EXEC(ut, auto& results_ref = results);
+    CUN_UNITTEST_NL(ut);
+
+    CUN_UNITTEST_EVAL(ut, el.send_event(EventType::on_test_1, &ut, results));
+    CUN_UNITTEST_EVAL(ut, el.send_event(EventType::on_test_1, &ut, results_ref));
+    CUN_UNITTEST_EVAL(ut, el.send_event(EventType::on_test_1, &ut, uintptr_t { 0xFACEFEED }));
+    CUN_UNITTEST_EVAL(ut, el.send_event(EventType::on_test_2, &ut, &results));
+    CUN_UNITTEST_EVAL(ut, el.send_event(EventType::on_test_2, &ut, &results_ref));
+    CUN_UNITTEST_EVAL(ut, el.send_event(EventType::on_test_3, &ut, results));
+    CUN_UNITTEST_EVAL(ut, el.send_event(EventType::on_test_3, &ut, results_ref));
+    CUN_UNITTEST_EVAL(ut, el.send_event(EventType::on_test_3, &ut, uintptr_t { 0xFACEFEED }));
+    CUN_UNITTEST_EVAL(ut, el.send_event(EventType::on_test_1, &ut, std::move(results_ref)));
+    CUN_UNITTEST_NL(ut);
+
+    CUN_UNITTEST_RESET(ut);
+}
+
 } // namespace
 
 /* ---------------------------------------------------------------------- */
@@ -371,6 +453,7 @@ int main()
     test_with_ctx_rawptr(ut);
     test_with_ctx_smartptr(ut);
     test_inherited_class(ut);
+    test_argument_type(ut);
 
     return EXIT_SUCCESS;
 }

@@ -7,6 +7,7 @@
 #define EVENT_LOOP_HPP_INCLUDED
 
 // C++ standard library
+#include <any>
 #include <concepts>
 #include <functional>
 #include <future>
@@ -53,10 +54,10 @@ template <
 >
 class EventLoop {
 public:
-    using event_proc = std::function<ReturnT (ContextPtrT, void *, void *)>;
+    using event_proc = std::function<ReturnT (ContextPtrT, std::any&, std::any&)>;
 
 private:
-    using mail_type = std::tuple<EventTypeT, std::promise<ReturnT>, void *, void *>;
+    using mail_type = std::tuple<EventTypeT, std::promise<ReturnT>, std::any, std::any>;
 
     ContextPtrT m_context;
     Mailbox<mail_type> m_mailbox;
@@ -87,11 +88,30 @@ private:
         }
     }
 
-    static mail_type to_mail(const EventTypeT type,
-                             std::promise<ReturnT> pr,
-                             void *args = nullptr,
-                             void *results = nullptr) noexcept {
-        return std::make_tuple(type, std::move(pr), args, results);
+    ReturnT send_event(const EventTypeT type,
+                       std::any&& args,
+                       std::any&& results) noexcept {
+        try {
+            std::promise<ReturnT> pr;
+            auto fu = pr.get_future();
+            auto mail = std::make_tuple(type, std::move(pr), args, results);
+            m_mailbox.emplace(std::move(mail));
+            return fu.get();
+        } catch (...) {
+            return false;
+        }
+    }
+
+    ReturnT post_event(const EventTypeT type,
+                       std::any&& args) noexcept {
+        try {
+            std::promise<ReturnT> pr;
+            auto mail = std::make_tuple(type, std::move(pr), args, std::any {});
+            m_mailbox.emplace(std::move(mail));
+            return true;
+        } catch (...) {
+            return false;
+        }
     }
 
 public:
@@ -107,30 +127,35 @@ public:
         m_thread.join();
     }
 
+    template <typename ArgsT, typename ResultsT>
     ReturnT send_event(const EventTypeT type,
-                       void *args = nullptr,
-                       void *results = nullptr) noexcept {
-        try {
-            std::promise<ReturnT> pr;
-            auto fu = pr.get_future();
-            auto mail = to_mail(type, std::move(pr), args, results);
-            m_mailbox.emplace(std::move(mail));
-            return fu.get();
-        } catch (...) {
-            return false;
-        }
+                       ArgsT&& args,
+                       ResultsT&& results) noexcept {
+        return send_event(type,
+                          std::make_any<ArgsT>(std::forward<ArgsT>(args)),
+                          std::make_any<ResultsT>(std::forward<ResultsT>(results)));
     }
 
+    template <typename ArgsT>
+    ReturnT send_event(const EventTypeT type,
+                       ArgsT&& args) noexcept {
+        return send_event(type,
+                          std::make_any<ArgsT>(std::forward<ArgsT>(args)),
+                          std::any {});
+    }
+
+    ReturnT send_event(const EventTypeT type) noexcept {
+        return send_event(type, std::any {}, std::any {});
+    }
+
+    template <typename ArgsT>
     ReturnT post_event(const EventTypeT type,
-                       void *args = nullptr) noexcept {
-        try {
-            std::promise<ReturnT> pr;
-            auto mail = to_mail(type, std::move(pr), args);
-            m_mailbox.emplace(std::move(mail));
-            return true;
-        } catch (...) {
-            return false;
-        }
+                       ArgsT&& args) noexcept {
+        return post_event(type, std::make_any<ArgsT>(std::forward<ArgsT>(args)));
+    }
+
+    ReturnT post_event(const EventTypeT type) noexcept {
+        return post_event(type, std::any {});
     }
 };
 
