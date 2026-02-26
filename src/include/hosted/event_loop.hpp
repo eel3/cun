@@ -8,6 +8,7 @@
 
 // C++ standard library
 #include <any>
+#include <cassert>
 #include <concepts>
 #include <functional>
 #include <future>
@@ -16,6 +17,7 @@
 #include <tuple>
 #include <type_traits>
 #include <utility>
+#include <variant>
 
 // C++ user library
 #include "mailbox.hpp"
@@ -46,22 +48,25 @@ concept ContextPtr =
 
 /** Event loop toolbox class. */
 template <
-    typename EventTypeT,
+    typename UserEventT,
     ContextPtr ContextPtrT = void *,
     typename ReturnT = bool,
-    ReturnT ERROR = false,
-    EventTypeT ON_DESTROY = EventTypeT::on_destroy_event_loop
+    ReturnT ERROR = false
 >
 class EventLoop {
 public:
     using event_proc = std::function<ReturnT (ContextPtrT, std::any&, std::any&)>;
 
 private:
-    using mail_type = std::tuple<EventTypeT, std::promise<ReturnT>, std::any, std::any>;
+    enum class InternalEvent {
+        destroy
+    };
+    using event_type = std::variant<InternalEvent, UserEventT>;
+    using mail_type = std::tuple<event_type, std::promise<ReturnT>, std::any, std::any>;
 
     ContextPtrT m_context;
     Mailbox<mail_type> m_mailbox;
-    std::map<EventTypeT, event_proc> m_event_entry;
+    std::map<UserEventT, event_proc> m_event_entry;
     std::thread m_thread;
 
     void main_loop() noexcept {
@@ -71,7 +76,14 @@ private:
             mail_type mail;
 
             m_mailbox.pop(mail);
-            const auto request = get<0>(mail);
+            const auto event = get<0>(mail);
+            if (std::holds_alternative<InternalEvent>(event)) {
+                assert(get<InternalEvent>(event) == InternalEvent::destroy);
+                break;
+            }
+
+            assert(std::holds_alternative<UserEventT>(event));
+            const auto request = get<UserEventT>(event);
 
             auto retval = ERROR;
             auto p = m_event_entry.find(request);
@@ -81,16 +93,10 @@ private:
 
             auto pr = std::move(get<1>(mail));
             pr.set_value(retval);
-
-            if (request == ON_DESTROY) {
-                break;
-            }
         }
     }
 
-    ReturnT send_event(const EventTypeT type,
-                       std::any&& args,
-                       std::any&& results) noexcept {
+    ReturnT send_event(event_type&& type, std::any&& args, std::any&& results) noexcept {
         try {
             std::promise<ReturnT> pr;
             auto fu = pr.get_future();
@@ -102,8 +108,7 @@ private:
         }
     }
 
-    ReturnT post_event(const EventTypeT type,
-                       std::any&& args) noexcept {
+    ReturnT post_event(event_type&& type, std::any&& args) noexcept {
         try {
             std::promise<ReturnT> pr;
             auto mail = std::make_tuple(type, std::move(pr), args, std::any {});
@@ -115,7 +120,7 @@ private:
     }
 
 public:
-    EventLoop(std::map<EventTypeT, event_proc> event_entry = {},
+    EventLoop(std::map<UserEventT, event_proc> event_entry = {},
               ContextPtrT context = nullptr) :
         m_context { context },
         m_event_entry { event_entry } {
@@ -123,39 +128,35 @@ public:
     }
 
     virtual ~EventLoop() {
-        (void) post_event(ON_DESTROY);
+        (void) post_event(event_type { InternalEvent::destroy }, std::any {});
         m_thread.join();
     }
 
     template <typename ArgsT, typename ResultsT>
-    ReturnT send_event(const EventTypeT type,
-                       ArgsT&& args,
-                       ResultsT&& results) noexcept {
-        return send_event(type,
+    ReturnT send_event(const UserEventT type, ArgsT&& args, ResultsT&& results) noexcept {
+        return send_event(event_type { type },
                           std::make_any<ArgsT>(std::forward<ArgsT>(args)),
                           std::make_any<ResultsT>(std::forward<ResultsT>(results)));
     }
 
     template <typename ArgsT>
-    ReturnT send_event(const EventTypeT type,
-                       ArgsT&& args) noexcept {
-        return send_event(type,
+    ReturnT send_event(const UserEventT type, ArgsT&& args) noexcept {
+        return send_event(event_type { type },
                           std::make_any<ArgsT>(std::forward<ArgsT>(args)),
                           std::any {});
     }
 
-    ReturnT send_event(const EventTypeT type) noexcept {
-        return send_event(type, std::any {}, std::any {});
+    ReturnT send_event(const UserEventT type) noexcept {
+        return send_event(event_type { type }, std::any {}, std::any {});
     }
 
     template <typename ArgsT>
-    ReturnT post_event(const EventTypeT type,
-                       ArgsT&& args) noexcept {
-        return post_event(type, std::make_any<ArgsT>(std::forward<ArgsT>(args)));
+    ReturnT post_event(const UserEventT type, ArgsT&& args) noexcept {
+        return post_event(event_type { type }, std::make_any<ArgsT>(std::forward<ArgsT>(args)));
     }
 
-    ReturnT post_event(const EventTypeT type) noexcept {
-        return post_event(type, std::any {});
+    ReturnT post_event(const UserEventT type) noexcept {
+        return post_event(event_type { type }, std::any {});
     }
 };
 

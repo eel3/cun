@@ -29,8 +29,7 @@ enum class EventType {
     on_test_1,
     on_test_2,
     on_test_3,
-    on_destroy,
-    on_destroy_event_loop
+    on_destroy
 };
 
 /* ---------------------------------------------------------------------- */
