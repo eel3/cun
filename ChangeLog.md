@@ -12,6 +12,7 @@ ChangeLog
 ### Fixed
 
 * Library: Event loop toolbox: Use `ERROR' instead of false.
+* Library: Event loop toolbox: Add template parameter `OK'.
 
 [0.0.0.2026022501] - 2026-02-25
 -------------------------------

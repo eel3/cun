@@ -51,6 +51,7 @@ template <
     typename UserEventT,
     ContextPtr ContextPtrT = void *,
     typename ReturnT = bool,
+    ReturnT OK = true,
     ReturnT ERROR = false
 >
 class EventLoop {
@@ -114,7 +115,7 @@ private:
             std::promise<ReturnT> pr;
             auto mail = std::make_tuple(type, std::move(pr), args, std::any {});
             m_mailbox.emplace(std::move(mail));
-            return true;
+            return OK;
         } catch (...) {
             return ERROR;
         }
