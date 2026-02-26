@@ -56,6 +56,7 @@ template <
 class EventLoop {
 public:
     using event_proc = std::function<ReturnT (ContextPtrT, std::any&, std::any&)>;
+    using event_entry = std::map<UserEventT, event_proc>;
 
 private:
     enum class InternalEvent {
@@ -66,7 +67,7 @@ private:
 
     ContextPtrT m_context;
     Mailbox<mail_type> m_mailbox;
-    std::map<UserEventT, event_proc> m_event_entry;
+    event_entry m_event_entry;
     std::thread m_thread;
 
     void main_loop() noexcept {
@@ -120,7 +121,7 @@ private:
     }
 
 public:
-    EventLoop(std::map<UserEventT, event_proc> event_entry = {},
+    EventLoop(event_entry event_entry = {},
               ContextPtrT context = nullptr) :
         m_context { context },
         m_event_entry { event_entry } {

@@ -93,7 +93,7 @@ void test_no_ctx(UnitTest& ut)
     CUN_UNITTEST_TITLE(ut, "Test code: Event loop toolbox - without a context object.");
     CUN_UNITTEST_NL(ut);
 
-    std::map<EventType, EventLoop<EventType>::event_proc> entry {
+    EventLoop<EventType>::event_entry entry {
         // function with a unused context pointer.
         make_pair(EventType::on_test_1, test_no_ctx_1),
 
@@ -169,7 +169,7 @@ void test_with_ctx_rawptr(UnitTest& ut)
     CUN_UNITTEST_TITLE(ut, "Test code: Event loop toolbox - with a context object (using raw pointer).");
     CUN_UNITTEST_NL(ut);
 
-    std::map<EventType, EventLoop<EventType, Context *>::event_proc> entry {
+    EventLoop<EventType, Context *>::event_entry entry {
         make_pair(EventType::on_test_1, test_with_ctx_rawptr_1),
         make_pair(EventType::on_test_2, test_with_ctx_rawptr_2),
         make_pair(EventType::on_test_3, test_with_ctx_rawptr_3),
@@ -238,7 +238,7 @@ void test_with_ctx_smartptr(UnitTest& ut)
     CUN_UNITTEST_TITLE(ut, "Test code: Event loop toolbox - with a context object (using smart pointer).");
     CUN_UNITTEST_NL(ut);
 
-    std::map<EventType, EventLoop<EventType, SharedContext>::event_proc> entry {
+    EventLoop<EventType, SharedContext>::event_entry entry {
         make_pair(EventType::on_test_1, test_with_ctx_smartptr_1),
         make_pair(EventType::on_test_2, test_with_ctx_smartptr_2),
         make_pair(EventType::on_test_3, test_with_ctx_smartptr_3),
@@ -406,7 +406,7 @@ void test_argument_type(UnitTest& ut)
     CUN_UNITTEST_TITLE(ut, "Test code: Event loop toolbox - various argument types.");
     CUN_UNITTEST_NL(ut);
 
-    std::map<EventType, EventLoop<EventType>::event_proc> entry {
+    EventLoop<EventType>::event_entry entry {
 #define ENTRY(type, fn) \
         make_pair(EventType::type, [](void *, std::any& args, std::any& results) { return fn(args, results); })
 
