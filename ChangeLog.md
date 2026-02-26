@@ -9,6 +9,10 @@ ChangeLog
 * Library: Event loop toolbox: Remove `on_destroy_event_loop'.
 * Library: Event loop toolbox: Add data type `event_entry'.
 
+### Fixed
+
+* Library: Event loop toolbox: Use `ERROR' instead of false.
+
 [0.0.0.2026022501] - 2026-02-25
 -------------------------------
 

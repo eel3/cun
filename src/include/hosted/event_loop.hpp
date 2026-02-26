@@ -105,7 +105,7 @@ private:
             m_mailbox.emplace(std::move(mail));
             return fu.get();
         } catch (...) {
-            return false;
+            return ERROR;
         }
     }
 
@@ -116,7 +116,7 @@ private:
             m_mailbox.emplace(std::move(mail));
             return true;
         } catch (...) {
-            return false;
+            return ERROR;
         }
     }
 
