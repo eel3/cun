@@ -7,6 +7,7 @@ ChangeLog
 ### Changed
 
 * Library: Event loop toolbox: Implement return value traits.
+* Library: Event loop toolbox: Remove unnecessary promise.
 
 [0.0.0.2026022601] - 2026-02-26
 -------------------------------

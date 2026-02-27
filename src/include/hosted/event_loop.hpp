@@ -13,6 +13,7 @@
 #include <functional>
 #include <future>
 #include <map>
+#include <optional>
 #include <thread>
 #include <tuple>
 #include <type_traits>
@@ -85,7 +86,8 @@ private:
         destroy
     };
     using event_type = std::variant<InternalEvent, UserEventT>;
-    using mail_type = std::tuple<event_type, std::promise<return_type>, std::any, std::any>;
+    using promise_type = std::promise<return_type>;
+    using mail_type = std::tuple<event_type, std::optional<promise_type>, std::any, std::any>;
 
     ContextPtrT m_context;
     Mailbox<mail_type> m_mailbox;
@@ -114,16 +116,17 @@ private:
                 retval = p->second(m_context, get<2>(mail), get<3>(mail));
             }
 
-            auto pr = std::move(get<1>(mail));
-            pr.set_value(retval);
+            if (auto pr = std::move(get<1>(mail)); pr) {
+                pr->set_value(retval);
+            }
         }
     }
 
     return_type send_event(event_type&& type, std::any&& args, std::any&& results) noexcept {
         try {
-            std::promise<return_type> pr;
+            promise_type pr;
             auto fu = pr.get_future();
-            auto mail = std::make_tuple(type, std::move(pr), args, results);
+            auto mail = std::make_tuple(type, std::make_optional(std::move(pr)), args, results);
             m_mailbox.emplace(std::move(mail));
             return fu.get();
         } catch (...) {
@@ -133,8 +136,7 @@ private:
 
     return_type post_event(event_type&& type, std::any&& args) noexcept {
         try {
-            std::promise<return_type> pr;
-            auto mail = std::make_tuple(type, std::move(pr), args, std::any {});
+            auto mail = std::make_tuple(type, std::optional<promise_type> {}, args, std::any {});
             m_mailbox.emplace(std::move(mail));
             return RVTraitsT::ok();
         } catch (...) {
