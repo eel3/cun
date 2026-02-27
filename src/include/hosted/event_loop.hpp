@@ -46,17 +46,38 @@ concept ContextPtr =
     std::is_pointer_v<T> ||
     PointerLike<T>;
 
+/** A concept for return value traits. */
+template <typename T>
+concept RVTraits = requires {
+    typename T::type;
+    { T::ok() } -> std::same_as<typename T::type>;
+    { T::ng() } -> std::same_as<typename T::type>;
+    { T::event_not_found() } -> std::same_as<typename T::type>;
+};
+
+/** A traits for return values (base). */
+template <typename T>
+struct ReturnTraits;
+
+/** A traits for return values: bool. */
+template<>
+struct ReturnTraits<bool> {
+    using type = bool;
+    static type ok() noexcept { return true; }
+    static type ng() noexcept { return false; }
+    static type event_not_found() noexcept { return false; }
+};
+
 /** Event loop toolbox class. */
 template <
     typename UserEventT,
     ContextPtr ContextPtrT = void *,
-    typename ReturnT = bool,
-    ReturnT OK = true,
-    ReturnT ERROR = false
+    RVTraits RVTraitsT = ReturnTraits<bool>
 >
 class EventLoop {
 public:
-    using event_proc = std::function<ReturnT (ContextPtrT, std::any&, std::any&)>;
+    using return_type = typename RVTraitsT::type;
+    using event_proc = std::function<return_type (ContextPtrT, std::any&, std::any&)>;
     using event_entry = std::map<UserEventT, event_proc>;
 
 private:
@@ -64,7 +85,7 @@ private:
         destroy
     };
     using event_type = std::variant<InternalEvent, UserEventT>;
-    using mail_type = std::tuple<event_type, std::promise<ReturnT>, std::any, std::any>;
+    using mail_type = std::tuple<event_type, std::promise<return_type>, std::any, std::any>;
 
     ContextPtrT m_context;
     Mailbox<mail_type> m_mailbox;
@@ -87,7 +108,7 @@ private:
             assert(std::holds_alternative<UserEventT>(event));
             const auto request = get<UserEventT>(event);
 
-            auto retval = ERROR;
+            auto retval = RVTraitsT::event_not_found();
             auto p = m_event_entry.find(request);
             if (p != m_event_entry.end()) {
                 retval = p->second(m_context, get<2>(mail), get<3>(mail));
@@ -98,26 +119,26 @@ private:
         }
     }
 
-    ReturnT send_event(event_type&& type, std::any&& args, std::any&& results) noexcept {
+    return_type send_event(event_type&& type, std::any&& args, std::any&& results) noexcept {
         try {
-            std::promise<ReturnT> pr;
+            std::promise<return_type> pr;
             auto fu = pr.get_future();
             auto mail = std::make_tuple(type, std::move(pr), args, results);
             m_mailbox.emplace(std::move(mail));
             return fu.get();
         } catch (...) {
-            return ERROR;
+            return RVTraitsT::ng();
         }
     }
 
-    ReturnT post_event(event_type&& type, std::any&& args) noexcept {
+    return_type post_event(event_type&& type, std::any&& args) noexcept {
         try {
-            std::promise<ReturnT> pr;
+            std::promise<return_type> pr;
             auto mail = std::make_tuple(type, std::move(pr), args, std::any {});
             m_mailbox.emplace(std::move(mail));
-            return OK;
+            return RVTraitsT::ok();
         } catch (...) {
-            return ERROR;
+            return RVTraitsT::ng();
         }
     }
 
@@ -135,29 +156,29 @@ public:
     }
 
     template <typename ArgsT, typename ResultsT>
-    ReturnT send_event(const UserEventT type, ArgsT&& args, ResultsT&& results) noexcept {
+    return_type send_event(const UserEventT type, ArgsT&& args, ResultsT&& results) noexcept {
         return send_event(event_type { type },
                           std::make_any<ArgsT>(std::forward<ArgsT>(args)),
                           std::make_any<ResultsT>(std::forward<ResultsT>(results)));
     }
 
     template <typename ArgsT>
-    ReturnT send_event(const UserEventT type, ArgsT&& args) noexcept {
+    return_type send_event(const UserEventT type, ArgsT&& args) noexcept {
         return send_event(event_type { type },
                           std::make_any<ArgsT>(std::forward<ArgsT>(args)),
                           std::any {});
     }
 
-    ReturnT send_event(const UserEventT type) noexcept {
+    return_type send_event(const UserEventT type) noexcept {
         return send_event(event_type { type }, std::any {}, std::any {});
     }
 
     template <typename ArgsT>
-    ReturnT post_event(const UserEventT type, ArgsT&& args) noexcept {
+    return_type post_event(const UserEventT type, ArgsT&& args) noexcept {
         return post_event(event_type { type }, std::make_any<ArgsT>(std::forward<ArgsT>(args)));
     }
 
-    ReturnT post_event(const UserEventT type) noexcept {
+    return_type post_event(const UserEventT type) noexcept {
         return post_event(event_type { type }, std::any {});
     }
 };
