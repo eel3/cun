@@ -32,7 +32,7 @@ constexpr size_type FOREVER { -1 };
 
 /** Simple software timer context class. */
 template <typename RepT, typename PeriodT, typename ActionT>
-class SoftTimer final {
+class SoftTimer {
 private:
     using duration = std::chrono::duration<RepT, PeriodT>;
 
