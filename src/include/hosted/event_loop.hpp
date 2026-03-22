@@ -147,10 +147,17 @@ private:
     }
 
 public:
-    EventLoop(event_entry event_entry = {},
-              ContextPtrT context = nullptr) :
-        m_context { context },
-        m_event_entry { event_entry } {
+    explicit EventLoop(event_entry&& event_entry = {},
+                       ContextPtrT context = nullptr) :
+            m_context { context },
+            m_event_entry { std::move(event_entry) } {
+        m_thread = std::thread { [this]{ main_loop(); } };
+    }
+
+    explicit EventLoop(const event_entry& event_entry,
+                       ContextPtrT context = nullptr) :
+            m_context { context },
+            m_event_entry { event_entry } {
         m_thread = std::thread { [this]{ main_loop(); } };
     }
 

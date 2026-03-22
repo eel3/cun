@@ -7,6 +7,7 @@ ChangeLog
 ### Changed
 
 * Library: Event loop toolbox: Fix some issues.
+* Library: Event loop toolbox: Reimplement constructors.
 
 [0.0.0.2026031101] - 2026-03-11
 -------------------------------
