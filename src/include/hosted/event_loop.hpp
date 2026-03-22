@@ -126,7 +126,8 @@ private:
         try {
             promise_type pr;
             auto fu = pr.get_future();
-            auto mail = std::make_tuple(type, std::make_optional(std::move(pr)), args, results);
+            auto mail = std::make_tuple(std::move(type), std::make_optional(std::move(pr)),
+                                        std::move(args), std::move(results));
             m_mailbox.emplace(std::move(mail));
             return fu.get();
         } catch (...) {
@@ -136,7 +137,8 @@ private:
 
     return_type post_event(event_type&& type, std::any&& args) noexcept {
         try {
-            auto mail = std::make_tuple(type, std::optional<promise_type> {}, args, std::any {});
+            auto mail = std::make_tuple(std::move(type), std::optional<promise_type> {},
+                                        std::move(args), std::any {});
             m_mailbox.emplace(std::move(mail));
             return RVTraitsT::ok();
         } catch (...) {
@@ -160,14 +162,14 @@ public:
     template <typename ArgsT, typename ResultsT>
     return_type send_event(const UserEventT type, ArgsT&& args, ResultsT&& results) noexcept {
         return send_event(event_type { type },
-                          std::make_any<ArgsT>(std::forward<ArgsT>(args)),
-                          std::make_any<ResultsT>(std::forward<ResultsT>(results)));
+                          std::make_any<std::decay_t<ArgsT>>(std::forward<ArgsT>(args)),
+                          std::make_any<std::decay_t<ResultsT>>(std::forward<ResultsT>(results)));
     }
 
     template <typename ArgsT>
     return_type send_event(const UserEventT type, ArgsT&& args) noexcept {
         return send_event(event_type { type },
-                          std::make_any<ArgsT>(std::forward<ArgsT>(args)),
+                          std::make_any<std::decay_t<ArgsT>>(std::forward<ArgsT>(args)),
                           std::any {});
     }
 
@@ -177,7 +179,8 @@ public:
 
     template <typename ArgsT>
     return_type post_event(const UserEventT type, ArgsT&& args) noexcept {
-        return post_event(event_type { type }, std::make_any<ArgsT>(std::forward<ArgsT>(args)));
+        return post_event(event_type { type },
+                          std::make_any<std::decay_t<ArgsT>>(std::forward<ArgsT>(args)));
     }
 
     return_type post_event(const UserEventT type) noexcept {
