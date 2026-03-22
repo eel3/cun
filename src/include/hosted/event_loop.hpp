@@ -162,8 +162,12 @@ public:
     }
 
     virtual ~EventLoop() {
-        (void) post_event(event_type { InternalEvent::destroy }, std::any {});
-        m_thread.join();
+        const auto rc = post_event(event_type { InternalEvent::destroy }, std::any {});
+        if (rc == RVTraitsT::ok()) {
+            m_thread.join();
+        } else {
+            m_thread.detach();
+        }
     }
 
     template <typename ArgsT, typename ResultsT>

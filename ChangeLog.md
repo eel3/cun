@@ -8,6 +8,7 @@ ChangeLog
 
 * Library: Event loop toolbox: Fix some issues.
 * Library: Event loop toolbox: Reimplement constructors.
+* Library: Event loop toolbox: Fix a possible infinite blocking in the destructor.
 
 [0.0.0.2026031101] - 2026-03-11
 -------------------------------
