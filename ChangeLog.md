@@ -6,6 +6,7 @@ ChangeLog
 
 ### Changed
 
+* Library: Event loop toolbox: Improve a thread stopping sequence.
 * Library: Mailbox: Make it possible to handle a stop_token object.
 
 [0.0.0.2026032201] - 2026-03-22

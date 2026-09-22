@@ -18,7 +18,6 @@
 #include <tuple>
 #include <type_traits>
 #include <utility>
-#include <variant>
 
 // C++ user library
 #include "mailbox.hpp"
@@ -71,7 +70,7 @@ struct ReturnTraits<bool> {
 
 /** Event loop toolbox class. */
 template <
-    typename UserEventT,
+    typename EventTypeT,
     ContextPtr ContextPtrT = void *,
     RVTraits RVTraitsT = ReturnTraits<bool>
 >
@@ -79,36 +78,28 @@ class EventLoop {
 public:
     using return_type = typename RVTraitsT::type;
     using event_proc = std::function<return_type (ContextPtrT, std::any&, std::any&)>;
-    using event_entry = std::map<UserEventT, event_proc>;
+    using event_entry = std::map<EventTypeT, event_proc>;
 
 private:
-    enum class InternalEvent {
-        destroy
-    };
-    using event_type = std::variant<InternalEvent, UserEventT>;
     using promise_type = std::promise<return_type>;
-    using mail_type = std::tuple<event_type, std::optional<promise_type>, std::any, std::any>;
+    using mail_type = std::tuple<EventTypeT, std::optional<promise_type>, std::any, std::any>;
 
     ContextPtrT m_context;
     Mailbox<mail_type> m_mailbox;
     event_entry m_event_entry;
-    std::thread m_thread;
+    std::jthread m_thread;
 
-    void main_loop() noexcept {
+    void main_loop(const std::stop_token& stoken) noexcept {
         using std::get;
 
         for (;;) {
             mail_type mail;
 
-            m_mailbox.pop(mail);
-            const auto event = get<0>(mail);
-            if (std::holds_alternative<InternalEvent>(event)) {
-                assert(get<InternalEvent>(event) == InternalEvent::destroy);
+            (void) m_mailbox.pop(mail, stoken);
+            if (stoken.stop_requested()) {
                 break;
             }
-
-            assert(std::holds_alternative<UserEventT>(event));
-            const auto request = get<UserEventT>(event);
+            const auto request = get<0>(mail);
 
             auto retval = RVTraitsT::event_not_found();
             auto p = m_event_entry.find(request);
@@ -122,11 +113,15 @@ private:
         }
     }
 
-    return_type send_event(event_type&& type, std::any&& args, std::any&& results) noexcept {
+    return_type send_event(const EventTypeT type, std::any&& args, std::any&& results) noexcept {
         try {
+            if (m_thread.get_stop_token().stop_requested()) {
+                return RVTraitsT::ng();
+            }
+
             promise_type pr;
             auto fu = pr.get_future();
-            auto mail = std::make_tuple(std::move(type), std::make_optional(std::move(pr)),
+            auto mail = std::make_tuple(type, std::make_optional(std::move(pr)),
                                         std::move(args), std::move(results));
             m_mailbox.emplace(std::move(mail));
             return fu.get();
@@ -135,9 +130,13 @@ private:
         }
     }
 
-    return_type post_event(event_type&& type, std::any&& args) noexcept {
+    return_type post_event(const EventTypeT type, std::any&& args) noexcept {
         try {
-            auto mail = std::make_tuple(std::move(type), std::optional<promise_type> {},
+            if (m_thread.get_stop_token().stop_requested()) {
+                return RVTraitsT::ng();
+            }
+
+            auto mail = std::make_tuple(type, std::optional<promise_type> {},
                                         std::move(args), std::any {});
             m_mailbox.emplace(std::move(mail));
             return RVTraitsT::ok();
@@ -151,51 +150,47 @@ public:
                        ContextPtrT context = nullptr) :
             m_context { context },
             m_event_entry { std::move(event_entry) } {
-        m_thread = std::thread { [this]{ main_loop(); } };
+        m_thread = std::jthread { [this](auto stoken){ main_loop(stoken); } };
     }
 
     explicit EventLoop(const event_entry& event_entry,
                        ContextPtrT context = nullptr) :
             m_context { context },
             m_event_entry { event_entry } {
-        m_thread = std::thread { [this]{ main_loop(); } };
+        m_thread = std::jthread { [this](auto stoken){ main_loop(stoken); } };
     }
 
     virtual ~EventLoop() {
-        const auto rc = post_event(event_type { InternalEvent::destroy }, std::any {});
-        if (rc == RVTraitsT::ok()) {
-            m_thread.join();
-        } else {
-            m_thread.detach();
-        }
+        m_thread.request_stop();
+        m_thread.join();
     }
 
     template <typename ArgsT, typename ResultsT>
-    return_type send_event(const UserEventT type, ArgsT&& args, ResultsT&& results) noexcept {
-        return send_event(event_type { type },
+    return_type send_event(const EventTypeT type, ArgsT&& args, ResultsT&& results) noexcept {
+        return send_event(type,
                           std::make_any<std::decay_t<ArgsT>>(std::forward<ArgsT>(args)),
                           std::make_any<std::decay_t<ResultsT>>(std::forward<ResultsT>(results)));
     }
 
     template <typename ArgsT>
-    return_type send_event(const UserEventT type, ArgsT&& args) noexcept {
-        return send_event(event_type { type },
+    return_type send_event(const EventTypeT type, ArgsT&& args) noexcept {
+        return send_event(type,
                           std::make_any<std::decay_t<ArgsT>>(std::forward<ArgsT>(args)),
                           std::any {});
     }
 
-    return_type send_event(const UserEventT type) noexcept {
-        return send_event(event_type { type }, std::any {}, std::any {});
+    return_type send_event(const EventTypeT type) noexcept {
+        return send_event(type, std::any {}, std::any {});
     }
 
     template <typename ArgsT>
-    return_type post_event(const UserEventT type, ArgsT&& args) noexcept {
-        return post_event(event_type { type },
+    return_type post_event(const EventTypeT type, ArgsT&& args) noexcept {
+        return post_event(type,
                           std::make_any<std::decay_t<ArgsT>>(std::forward<ArgsT>(args)));
     }
 
-    return_type post_event(const UserEventT type) noexcept {
-        return post_event(event_type { type }, std::any {});
+    return_type post_event(const EventTypeT type) noexcept {
+        return post_event(type, std::any {});
     }
 };
 
