@@ -30,7 +30,7 @@ public:
 
 private:
     mutable std::mutex m_mutex;
-    std::condition_variable m_cond;
+    std::condition_variable_any m_cond;
     std::queue<value_type> m_queue;
 
 public:
@@ -51,6 +51,11 @@ public:
         return val;
     }
 
+    value_type pop(const std::stop_token& stoken, const value_type& altval) {
+        value_type val;
+        return pop(val, stoken) ? val : altval;
+    }
+
     void pop(value_type& val) {
         std::unique_lock<std::mutex> lck(m_mutex);
         m_cond.wait(lck, [this]{ return !m_queue.empty(); });
@@ -58,11 +63,34 @@ public:
         m_queue.pop();
     }
 
+    bool pop(value_type& val, const std::stop_token& stoken) {
+        std::unique_lock<std::mutex> lck(m_mutex);
+        const auto have_some =
+            m_cond.wait(lck, stoken, [this]{ return !m_queue.empty(); });
+        if (have_some) {
+            val = std::move(m_queue.front());
+            m_queue.pop();
+        }
+        return have_some;
+    }
+
     template <typename RepT, typename PeriodT>
     bool pop(value_type& val, const std::chrono::duration<RepT, PeriodT>& timeout) {
         std::unique_lock<std::mutex> lck(m_mutex);
         const auto have_some =
             m_cond.wait_for(lck, timeout, [this]{ return !m_queue.empty(); });
+        if (have_some) {
+            val = std::move(m_queue.front());
+            m_queue.pop();
+        }
+        return have_some;
+    }
+
+    template <typename RepT, typename PeriodT>
+    bool pop(value_type& val, const std::stop_token& stoken, const std::chrono::duration<RepT, PeriodT>& timeout) {
+        std::unique_lock<std::mutex> lck(m_mutex);
+        const auto have_some =
+            m_cond.wait_for(lck, stoken, timeout, [this]{ return !m_queue.empty(); });
         if (have_some) {
             val = std::move(m_queue.front());
             m_queue.pop();
