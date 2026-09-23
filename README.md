@@ -130,6 +130,19 @@ An event loop toolbox.
 * hosted
     * event_loop.hpp
 
+### Lockable semaphore
+
+An inter-thread lockable counting semaphore.
+
+#### Dependencies
+
+None.
+
+#### Files
+
+* hosted
+    * lockable_semaphore.hpp
+
 ### Logger
 
 A logger class.

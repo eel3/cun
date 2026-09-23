@@ -30,6 +30,7 @@ target-name      := test_binary_writer \
                     test_circular_buffer \
                     test_cstrutil \
                     test_event_loop \
+                    test_lockable_semaphore \
                     test_logger \
                     test_mailbox \
                     test_misc \
